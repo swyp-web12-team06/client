@@ -1,8 +1,10 @@
 @import "tailwindcss";
+@import "@radix-ui/themes/styles.css";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --color-main: #00E6A8;
 }
 
 @theme inline {
