@@ -4,7 +4,11 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --color-main: #00E6A8;
+  --color-main: #FF3400;
+  --color-point: #BF2700;
+  --light-color: #FFEBE6;
+  --light-hover: #FFC0B0;
+  --main-hover: #591200;
 }
 
 @theme inline {
