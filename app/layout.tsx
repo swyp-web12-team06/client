@@ -29,7 +29,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Theme>
+        <Theme accentColor="mint" className="max-w-7xl m-auto">
+          <Header isLoggedIn={true} creditAmount={100} userName="John Doe" />
           {children}
         </Theme>
       </body>
