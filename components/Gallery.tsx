@@ -1,16 +1,7 @@
-"use client";
-
 import Image from "next/image";
 import { LookbookImage } from "@/type/lookbook";
-import { useEffect, useState } from "react";
 
-export default function Gallery() {
-  const [data, setData] = useState<LookbookImage[]>([]);
-  useEffect(() => {
-    fetch("/mock/LOOKBOOK_IMAGE_MOCK_DATA.json")
-      .then((res) => res.json())
-      .then((json) => setData(json));
-  }, []);
+export default function Gallery({data}: {data: LookbookImage[]}) {
 
   const arr = [500, 600, 1000, 1200];
   return (

@@ -1,9 +1,9 @@
 import Image from "next/image";
-import lookbookData from "@/public/mock/LOOKBOOK_IMAGE_MOCK_DATA.json";
 import { LookbookImage } from "@/type/lookbook";
 
-export default function Lookbook() {
-  const groupedImages = lookbookData.reduce((acc, image) => {
+export default function Lookbook({data}: {data: LookbookImage[]}) {
+
+  const groupedImages = data.reduce((acc, image) => {
     const promptId = image.prompt_id;
     if (!acc[promptId]) {
       acc[promptId] = [];

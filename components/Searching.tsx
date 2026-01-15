@@ -4,14 +4,9 @@ import Image from "next/image";
 export default function Searching() {
     return (
         <div className="flex px-4 gap-2">
-            <TextField.Root className="min-h-10 w-full" placeholder="Search the gallery…">
-                <TextField.Slot>
-                    <Image className="ml-3" src="/magnifying-glass-icon.svg" alt="Search Icon" width={16} height={16} />
-                </TextField.Slot>
-            </TextField.Root>
             <Select.Root defaultValue="new">
-                <Select.Trigger className="min-h-10!"/>
-                <Select.Content>
+                <Select.Trigger className="min-h-10! min-w-48! px-8! cursor-pointer!" radius="full" />
+                <Select.Content className="rounded-2xl! p-1! mt-2! bg-(--color-bg-content-2)!" position="popper">
                     <Select.Group>
                         <Select.Item value="new">Newest first</Select.Item>
                         <Select.Item value="old">Oldest first</Select.Item>
@@ -22,15 +17,14 @@ export default function Searching() {
                     </Select.Group>
                     <Select.Separator />
                     <Select.Group>
-                        <Select.Label>Sort by price</Select.Label>
                         <Select.Item value="low">Lowest price first</Select.Item>
                         <Select.Item value="high">Highest price first</Select.Item>
                     </Select.Group>
                 </Select.Content>
             </Select.Root>
             <Select.Root defaultValue="Portraits">
-                <Select.Trigger className="min-h-10!"/>
-                <Select.Content>
+                <Select.Trigger className="min-h-10! min-w-48! px-8! cursor-pointer!" radius="full" />
+                <Select.Content className="rounded-2xl! p-1! mt-2! bg-(--color-bg-content-2)!" position="popper">
                     <Select.Group>
                         <Select.Item value="Portraits">Portraits</Select.Item>
                         <Select.Item value="Landscapes">Landscapes</Select.Item>
@@ -45,6 +39,11 @@ export default function Searching() {
                     </Select.Group>
                 </Select.Content>
             </Select.Root>
+            <TextField.Root radius="full" className="min-h-10 w-full lg:ml-44 bg-(--color-bg-content-2)!" placeholder="search by model, category and more..">
+                <TextField.Slot>
+                    <Image src="icon/magnifying-glass-icon.svg" alt="Search Icon" width={30} height={30} />
+                </TextField.Slot>
+            </TextField.Root>
         </div>
     );
 }
