@@ -6,7 +6,7 @@ export default function Searching() {
         <div className="flex px-4 gap-2">
             <TextField.Root className="min-h-10 w-full" placeholder="Search the gallery…">
                 <TextField.Slot>
-                    <Image className="ml-3" src="/magnifying-glass-icon.svg" alt="Search Icon" width={16} height={16} />
+                    <Image className="ml-3" src="icon/magnifying-glass-icon.svg" alt="Search Icon" width={16} height={16} />
                 </TextField.Slot>
             </TextField.Root>
             <Select.Root defaultValue="new">
