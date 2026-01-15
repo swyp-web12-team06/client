@@ -1,17 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { LookbookImage } from "@/type/lookbook";
 import { useEffect, useState } from "react";
 
-type Lookbook = {
-  lookbook_image_id: string;
-  image_url: string;
-  is_representive: boolean;
-  created_at: string;
-}
-
 export default function Gallery() {
-  const [data, setData] = useState<Lookbook[]>([]);
+  const [data, setData] = useState<LookbookImage[]>([]);
   useEffect(() => {
     fetch("/mock/LOOKBOOK_IMAGE_MOCK_DATA.json")
       .then((res) => res.json())
@@ -32,7 +26,7 @@ export default function Gallery() {
               alt={image.lookbook_image_id}
               width={800}
               height={randomValue}
-              className="w-full bg-gray-300 h-auto object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full bg-gray-200 h-auto object-cover transition-transform duration-300 group-hover:scale-105"
               loading="lazy"
             />
           </div>)

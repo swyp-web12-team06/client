@@ -1,6 +1,9 @@
+"use client";
+
 import { Button, IconButton, SegmentedControl } from "@radix-ui/themes";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface props {
     isLoggedIn: boolean;
@@ -10,15 +13,25 @@ interface props {
 }
 
 export default function Header({ isLoggedIn, creditAmount, userName, userAvatar }: props) {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const currentView = searchParams.get("view") || "lookbook";
+
+    const handleViewChange = (value: string) => {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("view", value);
+        router.push(`/?${params.toString()}`);
+    };
+
     return (
         <header className="w-full h-20 p-4 flex justify-between items-center">
             <div className="flex items-center gap-14">
                 <Link href="/">
                     <Image src="/logo.svg" alt="Logo" width={133} height={22} />
                 </Link>
-                <SegmentedControl.Root defaultValue="inbox">
-                    <SegmentedControl.Item value="inbox">LOOK BOOK</SegmentedControl.Item>
-                    <SegmentedControl.Item value="drafts">GALLERY</SegmentedControl.Item>
+                <SegmentedControl.Root value={currentView} onValueChange={handleViewChange}>
+                    <SegmentedControl.Item value="lookbook">LOOK BOOK</SegmentedControl.Item>
+                    <SegmentedControl.Item value="gallery">GALLERY</SegmentedControl.Item>
                 </SegmentedControl.Root>
             </div>
             {!isLoggedIn ? (
