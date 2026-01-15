@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Theme } from "@radix-ui/themes";
 import "./globals.css";
 import Header from "@/components/Header";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +31,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Theme accentColor="mint" className="max-w-7xl m-auto">
-          <Header isLoggedIn={true} creditAmount={100} userName="John Doe" />
+          <Suspense fallback={<div className="h-20 w-full"></div>}>
+            <Header isLoggedIn={true} creditAmount={100} userName="John Doe" />
+          </Suspense>
           {children}
         </Theme>
       </body>
