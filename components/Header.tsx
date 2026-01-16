@@ -24,7 +24,7 @@ export default function Header({ isLoggedIn, creditAmount, userName, userAvatar 
     };
 
     return (
-        <header className="w-full h-20 p-4 flex justify-between items-center">
+        <header className="fixed w-full max-w-7xl z-15 bg-(--color-bg-lightest) h-20 p-4 flex justify-between items-center">
             <div className="flex items-center gap-14">
                 <Link href="/">
                     <Image src="icon/logo.svg" alt="Logo" width={133} height={22} />
