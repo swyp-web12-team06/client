@@ -13,9 +13,9 @@ function View() {
   const view = searchParams.get("view") || "lookbook";
 
   useEffect(() => {
-    fetch("/mock/LOOKBOOK_IMAGE_MOCK_DATA.json")
+    fetch("/mock/MOCK_DATA.json")
       .then((res) => res.json())
-      .then((json) => setData(json));
+      .then((json) => setData(json.lookbook_images));
   }, []);
 
   return view === "gallery" ? <Gallery data={data} /> : <Lookbook data={data} />;
