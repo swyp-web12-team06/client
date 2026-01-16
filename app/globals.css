@@ -2,68 +2,206 @@
 @import "@radix-ui/themes/styles.css";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --color-main: #FF3400;
-  --color-point: #BF2700;
-  --light-color: #FFEBE6;
-  --light-hover: #FFC0B0;
+  --light-color: #ffebe6;
+  --light-hover: #ffc0b0;
+  --color-main: #ff3400;
+  --color-point: #bf2700;
   --main-hover: #591200;
 
-  /* 배경색 - 가장 밝은 색 */ 
-  --color-bg-lightest: #FFFFFF; 
-  /* 어두운 배경에서 폰트컬러 */ 
-  --color-font-on-dark: #FAFAFA; 
-  /* 콘텐츠 배경색 */ 
-  --color-bg-content-1: #F7F7F7; 
-  --color-bg-content-2: #E8E8E8; 
-  /* 폰트 색상 단계별 */ 
-  --color-font-1: #D9D9D9; 
-  --color-font-2: #BCBCBC; 
-  --color-font-3: #9E9E9E; 
-  --color-font-4: #818181; 
-  --color-font-5: #4F4F4F; 
-  --color-font-6: #3B3B3B; 
-  /* 가장 어두운 색 */ 
+  --color-bg-lightest: #ffffff;
+  --color-font-on-dark: #fafafa;
+  --color-bg-content-1: #f7f7f7;
+  --color-bg-content-2: #e8e8e8;
+  --color-font-1: #d9d9d9;
+  --color-font-2: #bcbcbc;
+  --color-font-3: #9e9e9e;
+  --color-font-4: #818181;
+  --color-font-5: #4f4f4f;
+  --color-font-6: #3b3b3b;
   --color-darkest: #141414;
+
+  --color-alert-bg: #ffebeb;
+  --color-alert: #fc9595;
+  --color-alert-font: #d83232;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  --color-background: var(--color-bg-lightest);
+  --color-foreground: var(--color-darkest);
+
+  /* brand color */
+  --color-brand-50: var(--light-color);
+  --color-brand-100: #ffe1d9;
+  --color-brand-200: var(--light-hover);
+  --color-brand-300: var(--color-main);
+  --color-brand-400: #e62f00;
+  --color-brand-500: #cc2a00;
+  --color-brand-600: var(--color-point);
+  --color-brand-700: #991f00;
+  --color-brand-800: #731700;
+  --color-brand-900: var(--main-hover);
+
+  /* gray color */
+  --color-white: var(--color-bg-lightest);
+  --color-gray-10: var(--color-font-on-dark);
+  --color-gray-25: var(--color-bg-content-1);
+  --color-gray-50: var(--color-bg-content-2);
+  --color-gray-100: var(--color-font-1);
+  --color-gray-200: var(--color-font-2);
+  --color-gray-300: var(--color-font-3);
+  --color-gray-400: var(--color-font-4);
+  --color-gray-600: var(--color-font-5);
+  --color-gray-700: var(--color-font-6);
+  --color-gray-950: var(--color-darkest);
+
+  /* system color */
+  --color-system-red-bg: var(--color-alert-bg);
+  --color-system-red: var(--color-alert);
+  --color-system-red-font: var(--color-alert-font);
 }
 
-@media (prefers-color-scheme: dark) {
+@utility text-display1 {
+  font-size: 5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 88px; /* 110% */
+  letter-spacing: -2px;
+}
+
+@utility text-display4 {
+  font-size: 3rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 56px; /* 116.667% */
+  letter-spacing: -1px;
+}
+
+@utility text-heading1-bold {
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 40px; /* 125% */
+  letter-spacing: -0.5px;
+}
+
+@utility text-heading1-regular {
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 40px; /* 125% */
+  letter-spacing: -0.5px;
+}
+
+@utility text-heading2-bold {
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px; /* 133.333% */
+  letter-spacing: -0.25px;
+}
+
+@utility text-heading2-medium {
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px; /* 133.333% */
+  letter-spacing: -0.25px;
+}
+
+@utility text-heading2-regular {
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px; /* 133.333% */
+  letter-spacing: -0.25px;
+}
+
+@utility text-heading3-bold {
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 26px; /* 144.444% */
+  letter-spacing: -0.25px;
+}
+
+@utility text-heading3-medium {
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 26px; /* 144.444% */
+  letter-spacing: -0.25px;
+}
+
+@utility text-heading3-regular {
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 26px; /* 144.444% */
+  letter-spacing: -0.25px;
+}
+
+/* Body */
+@utility text-body1-bold {
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 150% */
+}
+
+@utility text-body1-medium {
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+}
+
+@utility text-body2-bold {
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 142.857% */
+}
+
+@utility text-body2-medium {
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 142.857% */
+}
+
+@utility text-caption-bold {
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 166.667% */
+  letter-spacing: 0.25px;
+}
+
+@utility text-caption-medium {
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 166.667% */
+  letter-spacing: 0.25px;
+}
+
+.radix-themes {
+  font-family: var(--font-suit);
+}
+
+html {
+  font-family: var(--font-suit);
+}
+
+body {
+  background: var(--color-bg-lightest);
+  color: var(--color-darkest);
+}
+
+/* 현재 다크모드 지원 안함 - 다크모드 지원 시 사용 */
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.rt-SegmentedControlIndicator:before {
-  background-color: var(--foreground) !important;
-}
-
-.rt-SegmentedControlItemLabelActive {
-  color: var(--background) !important;
-}
-
-.rt-SelectTrigger:where(.rt-variant-surface){
-  background-color: var(--color-bg-content-2) !important;
-}
-
-.rt-TextFieldRoot{
-  box-shadow: inset 0 0 0 1px var(--gray-a7) !important;
-}
-
-.rt-TextFieldRoot:where(.rt-r-size-2) :where(.rt-TextFieldSlot){
-  padding-left: 6px !important;
-}
+} */
