@@ -61,7 +61,7 @@ export default function Home() {
       >
         <Searching />
       </div>
-      <div className="pt-10 sticky">
+      <div className="pt-10">
         <Suspense fallback={<div>Loading...</div>}>
           <View />
         </Suspense>
