@@ -60,6 +60,144 @@
   --color-system-red-font: var(--color-alert-font);
 }
 
+@utility text-display1 {
+  font-size: 5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 88px; /* 110% */
+  letter-spacing: -2px;
+}
+
+@utility text-display4 {
+  font-size: 3rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 56px; /* 116.667% */
+  letter-spacing: -1px;
+}
+
+@utility text-heading1-bold {
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 40px; /* 125% */
+  letter-spacing: -0.5px;
+}
+
+@utility text-heading1-regular {
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 40px; /* 125% */
+  letter-spacing: -0.5px;
+}
+
+@utility text-heading2-bold {
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px; /* 133.333% */
+  letter-spacing: -0.25px;
+}
+
+@utility text-heading2-medium {
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px; /* 133.333% */
+  letter-spacing: -0.25px;
+}
+
+@utility text-heading2-regular {
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px; /* 133.333% */
+  letter-spacing: -0.25px;
+}
+
+@utility text-heading3-bold {
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 26px; /* 144.444% */
+  letter-spacing: -0.25px;
+}
+
+@utility text-heading3-medium {
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 26px; /* 144.444% */
+  letter-spacing: -0.25px;
+}
+
+@utility text-heading3-regular {
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 26px; /* 144.444% */
+  letter-spacing: -0.25px;
+}
+
+/* Body */
+@utility text-body1-bold {
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 150% */
+}
+
+@utility text-body1-medium {
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+}
+
+@utility text-body2-bold {
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 142.857% */
+}
+
+@utility text-body2-medium {
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 142.857% */
+}
+
+@utility text-caption-bold {
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 166.667% */
+  letter-spacing: 0.25px;
+}
+
+@utility text-caption-medium {
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 166.667% */
+  letter-spacing: 0.25px;
+}
+
+.radix-themes {
+  font-family: var(--font-suit);
+}
+
+html {
+  font-family: var(--font-suit);
+}
+
+body {
+  background: var(--color-bg-lightest);
+  color: var(--color-darkest);
+}
+
 /* 현재 다크모드 지원 안함 - 다크모드 지원 시 사용 */
 /* @media (prefers-color-scheme: dark) {
   :root {
@@ -67,9 +205,3 @@
     --foreground: #ededed;
   }
 } */
-
-body {
-  background: var(--background);
-  color: var(--color-darkest);
-  font-family: Arial, Helvetica, sans-serif;
-}
