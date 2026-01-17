@@ -8,6 +8,8 @@ interface props {
   onSelectCategory: (category: string | null) => void;
   sortOrder: string;
   onSortOrderChange: (sortOrder: string) => void;
+  searchTerm: string;
+  onSearchTermChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export default function Searching({
@@ -16,6 +18,8 @@ export default function Searching({
   onSelectCategory,
   sortOrder,
   onSortOrderChange,
+  searchTerm,
+  onSearchTermChange,
 }: props) {
   return (
     <div className="flex px-4 gap-2">
@@ -53,9 +57,15 @@ export default function Searching({
           </Select.Group>
         </Select.Content>
       </Select.Root>
-      <TextField.Root radius="full" className="min-h-10 w-full lg:ml-44 bg-(--color-bg-content-2)!" placeholder="search by model, category and more..">
+      <TextField.Root 
+        radius="full" 
+        className="min-h-10 w-full lg:ml-44 bg-(--color-bg-content-2)!" 
+        placeholder="search by model, category and more.."
+        value={searchTerm}
+        onChange={onSearchTermChange}
+      >
         <TextField.Slot>
-          <Image src="icon/magnifying-glass-icon.svg" alt="Search Icon" width={30} height={30} />
+          <Image src="/icon/magnifying-glass-icon.svg" alt="Search Icon" width={30} height={30} />
         </TextField.Slot>
       </TextField.Root>
     </div>
