@@ -1,49 +1,73 @@
 import { Select, TextField } from "@radix-ui/themes";
 import Image from "next/image";
+import { Category } from "@/type/category";
 
-export default function Searching() {
-    return (
-        <div className="flex px-4 gap-2">
-            <Select.Root defaultValue="new">
-                <Select.Trigger className="min-h-10! min-w-48! px-8! cursor-pointer!" radius="full" />
-                <Select.Content className="rounded-2xl! p-1! mt-2! bg-(--color-bg-content-2)!" position="popper">
-                    <Select.Group>
-                        <Select.Item value="new">Newest first</Select.Item>
-                        <Select.Item value="old">Oldest first</Select.Item>
-                        <Select.Separator />
-                        <Select.Item value="popular">Most popular</Select.Item>
-                        <Select.Item value="liked">Most liked</Select.Item>
-                        <Select.Item value="bookmarked">Most bookmarked</Select.Item>
-                    </Select.Group>
-                    <Select.Separator />
-                    <Select.Group>
-                        <Select.Item value="low">Lowest price first</Select.Item>
-                        <Select.Item value="high">Highest price first</Select.Item>
-                    </Select.Group>
-                </Select.Content>
-            </Select.Root>
-            <Select.Root defaultValue="Portraits">
-                <Select.Trigger className="min-h-10! min-w-48! px-8! cursor-pointer!" radius="full" />
-                <Select.Content className="rounded-2xl! p-1! mt-2! bg-(--color-bg-content-2)!" position="popper">
-                    <Select.Group>
-                        <Select.Item value="Portraits">Portraits</Select.Item>
-                        <Select.Item value="Landscapes">Landscapes</Select.Item>
-                        <Select.Item value="Architecture">Architecture</Select.Item>
-                        <Select.Item value="Animals">Animals</Select.Item>
-                        <Select.Item value="Food">Food</Select.Item>
-                        <Select.Item value="Interior">Interior</Select.Item>
-                        <Select.Item value="Fashion">Fashion</Select.Item>
-                        <Select.Item value="Sci-Fi">Sci-Fi</Select.Item>
-                        <Select.Item value="Abstract">Abstract</Select.Item>
-                        <Select.Item value="Logos/Icons">Logos/Icons</Select.Item>
-                    </Select.Group>
-                </Select.Content>
-            </Select.Root>
-            <TextField.Root radius="full" className="min-h-10 w-full lg:ml-44 bg-(--color-bg-content-2)!" placeholder="search by model, category and more..">
-                <TextField.Slot>
-                    <Image src="icon/magnifying-glass-icon.svg" alt="Search Icon" width={30} height={30} />
-                </TextField.Slot>
-            </TextField.Root>
-        </div>
-    );
+interface props {
+  categories: Category[];
+  selectedCategory: string | null;
+  onSelectCategory: (category: string | null) => void;
+  sortOrder: string;
+  onSortOrderChange: (sortOrder: string) => void;
+  searchTerm: string;
+  onSearchTermChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+export default function Searching({
+  categories,
+  selectedCategory,
+  onSelectCategory,
+  sortOrder,
+  onSortOrderChange,
+  searchTerm,
+  onSearchTermChange,
+}: props) {
+  return (
+    <div className="flex px-4 gap-2 mt-20 max-w-7xl w-full m-auto">
+      <Select.Root value={sortOrder} onValueChange={onSortOrderChange}>
+        <Select.Trigger className="min-h-10! min-w-48! px-8! cursor-pointer!" radius="full" />
+        <Select.Content className="rounded-2xl! p-1! mt-2! bg-(--color-bg-content-2)!" position="popper">
+          <Select.Group>
+            <Select.Item value="new">Newest first</Select.Item>
+            <Select.Item value="old">Oldest first</Select.Item>
+            <Select.Separator />
+            <Select.Item value="popular" disabled>Most popular</Select.Item>
+            <Select.Item value="liked" disabled>Most liked</Select.Item>
+            <Select.Item value="bookmarked" disabled>Most bookmarked</Select.Item>
+          </Select.Group>
+          <Select.Separator />
+          <Select.Group>
+            <Select.Item value="low">Lowest price first</Select.Item>
+            <Select.Item value="high">Highest price first</Select.Item>
+          </Select.Group>
+        </Select.Content>
+      </Select.Root>
+      <Select.Root
+        value={selectedCategory || "All"}
+        onValueChange={(value) => onSelectCategory(value === "All" ? null : value)}
+      >
+        <Select.Trigger className="min-h-10! min-w-48! px-8! cursor-pointer!" radius="full" />
+        <Select.Content className="rounded-2xl! p-1! mt-2! bg-(--color-bg-content-2)!" position="popper">
+          <Select.Group>
+            <Select.Item value="All">All</Select.Item>
+            {categories.map((category) => (
+              <Select.Item key={category.category_id} value={category.name}>
+                {category.name}
+              </Select.Item>
+            ))}
+          </Select.Group>
+        </Select.Content>
+      </Select.Root>
+      <TextField.Root 
+        radius="full" 
+        className="min-h-10 w-full lg:ml-44 bg-(--color-bg-content-2)!" 
+        placeholder="search by model, category and more.."
+        value={searchTerm}
+        onChange={onSearchTermChange}
+      >
+        <TextField.Slot>
+          <Image src="/icon/magnifying-glass-icon.svg" alt="Search Icon" width={30} height={30} />
+        </TextField.Slot>
+      </TextField.Root>
+    </div>
+  );
 }
