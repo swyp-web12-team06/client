@@ -2,7 +2,7 @@ import Image from "next/image";
 import { LookbookImage } from "@/type/lookbook";
 import Link from "next/link";
 
-export default function Lookbook({data}: {data: LookbookImage[]}) {
+export default function Lookbook({ data }: { data: LookbookImage[] }) {
 
   const groupedImages = data.reduce((acc, image) => {
     const promptId = image.prompt_id;
@@ -28,6 +28,9 @@ export default function Lookbook({data}: {data: LookbookImage[]}) {
                   fill
                   className="object-cover bg-gray-200"
                 />
+                <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                  {image.image_url}
+                </p>
               </div>
             ))}
           </div>
