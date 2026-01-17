@@ -1081,7 +1081,7 @@
     ],
     "lookbook_images": [
         {
-            "lookbook_image_id": 1000000000000000001,
+            "lookbook_image_id": 10000000001,
             "prompt_id": 4192837465091827364,
             "image_url": "cyber_sam_main",
             "is_representive": true,
@@ -1089,7 +1089,7 @@
             "created_at": "2025-01-10T08:25:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000002,
+            "lookbook_image_id": 10000000002,
             "prompt_id": 4192837465091827364,
             "image_url": "cyber_sam_side",
             "is_representive": false,
@@ -1097,7 +1097,7 @@
             "created_at": "2025-01-10T08:26:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000003,
+            "lookbook_image_id": 10000000003,
             "prompt_id": 4192837465091827364,
             "image_url": "cyber_sam_close",
             "is_representive": false,
@@ -1105,7 +1105,7 @@
             "created_at": "2025-01-10T08:27:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000004,
+            "lookbook_image_id": 10000000004,
             "prompt_id": 5283746152439586710,
             "image_url": "noble_v2_front",
             "is_representive": true,
@@ -1113,7 +1113,7 @@
             "created_at": "2025-02-14T10:20:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000005,
+            "lookbook_image_id": 10000000005,
             "prompt_id": 5283746152439586710,
             "image_url": "noble_v2_detail",
             "is_representive": false,
@@ -1121,7 +1121,7 @@
             "created_at": "2025-02-14T10:21:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000006,
+            "lookbook_image_id": 10000000006,
             "prompt_id": 5283746152439586710,
             "image_url": "noble_v2_alt",
             "is_representive": false,
@@ -1129,7 +1129,7 @@
             "created_at": "2025-02-14T10:22:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000007,
+            "lookbook_image_id": 10000000007,
             "prompt_id": 6374859201928374655,
             "image_url": "logo_fin_black",
             "is_representive": true,
@@ -1137,7 +1137,7 @@
             "created_at": "2025-03-02T10:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000008,
+            "lookbook_image_id": 10000000008,
             "prompt_id": 6374859201928374655,
             "image_url": "logo_fin_white",
             "is_representive": false,
@@ -1145,7 +1145,7 @@
             "created_at": "2025-03-02T10:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000009,
+            "lookbook_image_id": 10000000009,
             "prompt_id": 6374859201928374655,
             "image_url": "logo_fin_mockup",
             "is_representive": false,
@@ -1153,7 +1153,7 @@
             "created_at": "2025-03-02T10:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000010,
+            "lookbook_image_id": 10000000010,
             "prompt_id": 7485960312039485766,
             "image_url": "float_isl_wide",
             "is_representive": true,
@@ -1161,7 +1161,7 @@
             "created_at": "2025-04-13T12:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000011,
+            "lookbook_image_id": 10000000011,
             "prompt_id": 7485960312039485766,
             "image_url": "float_isl_cave",
             "is_representive": false,
@@ -1169,7 +1169,7 @@
             "created_at": "2025-04-13T12:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000012,
+            "lookbook_image_id": 10000000012,
             "prompt_id": 7485960312039485766,
             "image_url": "float_isl_night",
             "is_representive": false,
@@ -1177,7 +1177,7 @@
             "created_at": "2025-04-13T12:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000013,
+            "lookbook_image_id": 10000000013,
             "prompt_id": 8596071423140596877,
             "image_url": "gold_liq_v1",
             "is_representive": true,
@@ -1185,7 +1185,7 @@
             "created_at": "2025-05-06T15:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000014,
+            "lookbook_image_id": 10000000014,
             "prompt_id": 8596071423140596877,
             "image_url": "gold_liq_zoom",
             "is_representive": false,
@@ -1193,7 +1193,7 @@
             "created_at": "2025-05-06T15:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000015,
+            "lookbook_image_id": 10000000015,
             "prompt_id": 9607182534251607988,
             "image_url": "retro_amalfi_main",
             "is_representive": true,
@@ -1201,7 +1201,7 @@
             "created_at": "2025-06-19T11:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000016,
+            "lookbook_image_id": 10000000016,
             "prompt_id": 9607182534251607988,
             "image_url": "retro_amalfi_alt",
             "is_representive": false,
@@ -1209,7 +1209,7 @@
             "created_at": "2025-06-19T11:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000017,
+            "lookbook_image_id": 10000000017,
             "prompt_id": 9607182534251607988,
             "image_url": "retro_amalfi_sepia",
             "is_representive": false,
@@ -1217,7 +1217,7 @@
             "created_at": "2025-06-19T11:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000018,
+            "lookbook_image_id": 10000000018,
             "prompt_id": 1718293645362718099,
             "image_url": "yacht_lux_day",
             "is_representive": true,
@@ -1225,7 +1225,7 @@
             "created_at": "2025-07-23T09:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000019,
+            "lookbook_image_id": 10000000019,
             "prompt_id": 1718293645362718099,
             "image_url": "yacht_lux_night",
             "is_representive": false,
@@ -1233,7 +1233,7 @@
             "created_at": "2025-07-23T09:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000020,
+            "lookbook_image_id": 10000000020,
             "prompt_id": 1718293645362718099,
             "image_url": "yacht_lux_detail",
             "is_representive": false,
@@ -1241,7 +1241,7 @@
             "created_at": "2025-07-23T09:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000021,
+            "lookbook_image_id": 10000000021,
             "prompt_id": 2829304756473829100,
             "image_url": "dragon_shrine_f1",
             "is_representive": true,
@@ -1249,7 +1249,7 @@
             "created_at": "2025-08-11T14:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000022,
+            "lookbook_image_id": 10000000022,
             "prompt_id": 2829304756473829100,
             "image_url": "dragon_shrine_f2",
             "is_representive": false,
@@ -1257,7 +1257,7 @@
             "created_at": "2025-08-11T14:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000023,
+            "lookbook_image_id": 10000000023,
             "prompt_id": 3930415867584930211,
             "image_url": "pixel_forest_day",
             "is_representive": true,
@@ -1265,7 +1265,7 @@
             "created_at": "2025-09-01T10:05:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000024,
+            "lookbook_image_id": 10000000024,
             "prompt_id": 3930415867584930211,
             "image_url": "pixel_forest_rain",
             "is_representive": false,
@@ -1273,7 +1273,7 @@
             "created_at": "2025-09-01T10:06:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000025,
+            "lookbook_image_id": 10000000025,
             "prompt_id": 3930415867584930211,
             "image_url": "pixel_forest_night",
             "is_representive": false,
@@ -1281,7 +1281,7 @@
             "created_at": "2025-09-01T10:07:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000026,
+            "lookbook_image_id": 10000000026,
             "prompt_id": 4041526978695041322,
             "image_url": "gothic_cat_altar",
             "is_representive": true,
@@ -1289,7 +1289,7 @@
             "created_at": "2025-10-16T16:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000027,
+            "lookbook_image_id": 10000000027,
             "prompt_id": 4041526978695041322,
             "image_url": "gothic_cat_window",
             "is_representive": false,
@@ -1297,7 +1297,7 @@
             "created_at": "2025-10-16T16:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000028,
+            "lookbook_image_id": 10000000028,
             "prompt_id": 4041526978695041322,
             "image_url": "gothic_cat_arch",
             "is_representive": false,
@@ -1305,7 +1305,7 @@
             "created_at": "2025-10-16T16:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000029,
+            "lookbook_image_id": 10000000029,
             "prompt_id": 5152637089706152433,
             "image_url": "cyber_ramen_ext",
             "is_representive": true,
@@ -1313,7 +1313,7 @@
             "created_at": "2025-11-01T20:10:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000030,
+            "lookbook_image_id": 10000000030,
             "prompt_id": 5152637089706152433,
             "image_url": "cyber_ramen_bowl",
             "is_representive": false,
@@ -1321,7 +1321,7 @@
             "created_at": "2025-11-01T20:11:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000031,
+            "lookbook_image_id": 10000000031,
             "prompt_id": 5152637089706152433,
             "image_url": "cyber_ramen_neon",
             "is_representive": false,
@@ -1329,7 +1329,7 @@
             "created_at": "2025-11-01T20:12:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000032,
+            "lookbook_image_id": 10000000032,
             "prompt_id": 6263748190817263544,
             "image_url": "brand_man_p1",
             "is_representive": true,
@@ -1337,7 +1337,7 @@
             "created_at": "2025-12-06T12:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000033,
+            "lookbook_image_id": 10000000033,
             "prompt_id": 6263748190817263544,
             "image_url": "brand_man_p2",
             "is_representive": false,
@@ -1345,7 +1345,7 @@
             "created_at": "2025-12-06T12:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000034,
+            "lookbook_image_id": 10000000034,
             "prompt_id": 6263748190817263544,
             "image_url": "brand_man_p3",
             "is_representive": false,
@@ -1353,7 +1353,7 @@
             "created_at": "2025-12-06T12:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000035,
+            "lookbook_image_id": 10000000035,
             "prompt_id": 6263748190817263544,
             "image_url": "brand_man_logo",
             "is_representive": false,
@@ -1361,7 +1361,7 @@
             "created_at": "2025-12-06T12:03:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000036,
+            "lookbook_image_id": 10000000036,
             "prompt_id": 7374859201928374655,
             "image_url": "ice_bot_wide",
             "is_representive": true,
@@ -1369,7 +1369,7 @@
             "created_at": "2026-01-11T10:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000037,
+            "lookbook_image_id": 10000000037,
             "prompt_id": 7374859201928374655,
             "image_url": "ice_bot_scan",
             "is_representive": false,
@@ -1377,7 +1377,7 @@
             "created_at": "2026-01-11T10:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000038,
+            "lookbook_image_id": 10000000038,
             "prompt_id": 7374859201928374655,
             "image_url": "ice_bot_night",
             "is_representive": false,
@@ -1385,7 +1385,7 @@
             "created_at": "2026-01-11T10:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000039,
+            "lookbook_image_id": 10000000039,
             "prompt_id": 8485960312039485766,
             "image_url": "nebula_x1_core",
             "is_representive": true,
@@ -1393,7 +1393,7 @@
             "created_at": "2026-01-16T13:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000040,
+            "lookbook_image_id": 10000000040,
             "prompt_id": 8485960312039485766,
             "image_url": "nebula_x1_dust",
             "is_representive": false,
@@ -1401,7 +1401,7 @@
             "created_at": "2026-01-16T13:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000041,
+            "lookbook_image_id": 10000000041,
             "prompt_id": 8485960312039485766,
             "image_url": "nebula_x1_star",
             "is_representive": false,
@@ -1409,7 +1409,7 @@
             "created_at": "2026-01-16T13:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000042,
+            "lookbook_image_id": 10000000042,
             "prompt_id": 9596071423140596877,
             "image_url": "glass_v2_ext",
             "is_representive": true,
@@ -1417,7 +1417,7 @@
             "created_at": "2025-05-20T12:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000045,
+            "lookbook_image_id": 10000000045,
             "prompt_id": 1607182534251607988,
             "image_url": "zen_main_gate",
             "is_representive": true,
@@ -1425,7 +1425,7 @@
             "created_at": "2025-06-05T15:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000046,
+            "lookbook_image_id": 10000000046,
             "prompt_id": 1607182534251607988,
             "image_url": "zen_main_pond",
             "is_representive": false,
@@ -1433,7 +1433,7 @@
             "created_at": "2025-06-05T15:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000047,
+            "lookbook_image_id": 10000000047,
             "prompt_id": 1607182534251607988,
             "image_url": "zen_main_tree",
             "is_representive": false,
@@ -1441,7 +1441,7 @@
             "created_at": "2025-06-05T15:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000048,
+            "lookbook_image_id": 10000000048,
             "prompt_id": 2718293645362718099,
             "image_url": "phoenix_v5_rise",
             "is_representive": true,
@@ -1449,7 +1449,7 @@
             "created_at": "2025-07-12T11:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000049,
+            "lookbook_image_id": 10000000049,
             "prompt_id": 2718293645362718099,
             "image_url": "phoenix_v5_wing",
             "is_representive": false,
@@ -1457,7 +1457,7 @@
             "created_at": "2025-07-12T11:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000050,
+            "lookbook_image_id": 10000000050,
             "prompt_id": 2718293645362718099,
             "image_url": "phoenix_v5_ash",
             "is_representive": false,
@@ -1465,7 +1465,7 @@
             "created_at": "2025-07-12T11:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000051,
+            "lookbook_image_id": 10000000051,
             "prompt_id": 3829304756473829100,
             "image_url": "px_sword_holy",
             "is_representive": true,
@@ -1473,7 +1473,7 @@
             "created_at": "2025-08-01T16:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000052,
+            "lookbook_image_id": 10000000052,
             "prompt_id": 3829304756473829100,
             "image_url": "px_sword_dark",
             "is_representive": false,
@@ -1481,7 +1481,7 @@
             "created_at": "2025-08-01T16:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000053,
+            "lookbook_image_id": 10000000053,
             "prompt_id": 3829304756473829100,
             "image_url": "px_sword_fire",
             "is_representive": false,
@@ -1489,7 +1489,7 @@
             "created_at": "2025-08-01T16:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000054,
+            "lookbook_image_id": 10000000054,
             "prompt_id": 3829304756473829100,
             "image_url": "px_sword_ice",
             "is_representive": false,
@@ -1497,7 +1497,7 @@
             "created_at": "2025-08-01T16:03:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000055,
+            "lookbook_image_id": 10000000055,
             "prompt_id": 4930415867584930211,
             "image_url": "lib_magic_books",
             "is_representive": true,
@@ -1505,7 +1505,7 @@
             "created_at": "2025-09-11T10:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000056,
+            "lookbook_image_id": 10000000056,
             "prompt_id": 4930415867584930211,
             "image_url": "lib_magic_stairs",
             "is_representive": false,
@@ -1513,7 +1513,7 @@
             "created_at": "2025-09-11T10:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000057,
+            "lookbook_image_id": 10000000057,
             "prompt_id": 4930415867584930211,
             "image_url": "lib_magic_aura",
             "is_representive": false,
@@ -1521,7 +1521,7 @@
             "created_at": "2025-09-11T10:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000058,
+            "lookbook_image_id": 10000000058,
             "prompt_id": 5041526978695041322,
             "image_url": "car_future_front",
             "is_representive": true,
@@ -1529,7 +1529,7 @@
             "created_at": "2025-10-21T11:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000059,
+            "lookbook_image_id": 10000000059,
             "prompt_id": 5041526978695041322,
             "image_url": "car_future_rear",
             "is_representive": false,
@@ -1537,7 +1537,7 @@
             "created_at": "2025-10-21T11:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000060,
+            "lookbook_image_id": 10000000060,
             "prompt_id": 5041526978695041322,
             "image_url": "car_future_wheel",
             "is_representive": false,
@@ -1545,7 +1545,7 @@
             "created_at": "2025-10-21T11:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000061,
+            "lookbook_image_id": 10000000061,
             "prompt_id": 6152637089706152433,
             "image_url": "sketch_01_pose",
             "is_representive": true,
@@ -1553,7 +1553,7 @@
             "created_at": "2025-11-15T10:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000062,
+            "lookbook_image_id": 10000000062,
             "prompt_id": 6152637089706152433,
             "image_url": "sketch_01_hand",
             "is_representive": false,
@@ -1561,7 +1561,7 @@
             "created_at": "2025-11-15T10:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000063,
+            "lookbook_image_id": 10000000063,
             "prompt_id": 6152637089706152433,
             "image_url": "sketch_01_face",
             "is_representive": false,
@@ -1569,7 +1569,7 @@
             "created_at": "2025-11-15T10:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000064,
+            "lookbook_image_id": 10000000064,
             "prompt_id": 7263748190817263544,
             "image_url": "ui_glass_login",
             "is_representive": true,
@@ -1577,7 +1577,7 @@
             "created_at": "2025-12-21T15:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000065,
+            "lookbook_image_id": 10000000065,
             "prompt_id": 7263748190817263544,
             "image_url": "ui_glass_card",
             "is_representive": false,
@@ -1585,7 +1585,7 @@
             "created_at": "2025-12-21T15:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000066,
+            "lookbook_image_id": 10000000066,
             "prompt_id": 7263748190817263544,
             "image_url": "ui_glass_notif",
             "is_representive": false,
@@ -1593,7 +1593,7 @@
             "created_at": "2025-12-21T15:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000067,
+            "lookbook_image_id": 10000000067,
             "prompt_id": 8374859201928374655,
             "image_url": "steam_air_full",
             "is_representive": true,
@@ -1601,7 +1601,7 @@
             "created_at": "2026-01-02T17:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000068,
+            "lookbook_image_id": 10000000068,
             "prompt_id": 8374859201928374655,
             "image_url": "steam_air_gear",
             "is_representive": false,
@@ -1609,7 +1609,7 @@
             "created_at": "2026-01-02T17:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000069,
+            "lookbook_image_id": 10000000069,
             "prompt_id": 8374859201928374655,
             "image_url": "steam_air_cabin",
             "is_representive": false,
@@ -1617,7 +1617,7 @@
             "created_at": "2026-01-02T17:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000070,
+            "lookbook_image_id": 10000000070,
             "prompt_id": 9485960312039485766,
             "image_url": "cyber_sun_v4_wide",
             "is_representive": true,
@@ -1625,7 +1625,7 @@
             "created_at": "2025-02-11T10:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000071,
+            "lookbook_image_id": 10000000071,
             "prompt_id": 9485960312039485766,
             "image_url": "cyber_sun_v4_glow",
             "is_representive": false,
@@ -1633,7 +1633,7 @@
             "created_at": "2025-02-11T10:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000072,
+            "lookbook_image_id": 10000000072,
             "prompt_id": 9485960312039485766,
             "image_url": "cyber_sun_v4_dark",
             "is_representive": false,
@@ -1641,7 +1641,7 @@
             "created_at": "2025-02-11T10:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000073,
+            "lookbook_image_id": 10000000073,
             "prompt_id": 1596071423140596877,
             "image_url": "chair_v1_front",
             "is_representive": true,
@@ -1649,7 +1649,7 @@
             "created_at": "2025-03-15T11:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000074,
+            "lookbook_image_id": 10000000074,
             "prompt_id": 1596071423140596877,
             "image_url": "chair_v1_back",
             "is_representive": false,
@@ -1657,7 +1657,7 @@
             "created_at": "2025-03-15T11:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000077,
+            "lookbook_image_id": 10000000077,
             "prompt_id": 2607182534251607988,
             "image_url": "jungle_path_ray",
             "is_representive": true,
@@ -1665,7 +1665,7 @@
             "created_at": "2025-04-21T12:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000078,
+            "lookbook_image_id": 10000000078,
             "prompt_id": 2607182534251607988,
             "image_url": "jungle_path_mist",
             "is_representive": false,
@@ -1673,7 +1673,7 @@
             "created_at": "2025-04-21T12:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000079,
+            "lookbook_image_id": 10000000079,
             "prompt_id": 2607182534251607988,
             "image_url": "jungle_path_bird",
             "is_representive": false,
@@ -1681,7 +1681,7 @@
             "created_at": "2025-04-21T12:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000080,
+            "lookbook_image_id": 10000000080,
             "prompt_id": 3718293645362718099,
             "image_url": "gryphon_sky_v1",
             "is_representive": true,
@@ -1689,7 +1689,7 @@
             "created_at": "2025-05-31T10:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000081,
+            "lookbook_image_id": 10000000081,
             "prompt_id": 3718293645362718099,
             "image_url": "gryphon_sky_head",
             "is_representive": false,
@@ -1697,7 +1697,7 @@
             "created_at": "2025-05-31T10:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000082,
+            "lookbook_image_id": 10000000082,
             "prompt_id": 3718293645362718099,
             "image_url": "gryphon_sky_land",
             "is_representive": false,
@@ -1705,7 +1705,7 @@
             "created_at": "2025-05-31T10:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000083,
+            "lookbook_image_id": 10000000083,
             "prompt_id": 4829304756473829100,
             "image_url": "px_tavern_room",
             "is_representive": true,
@@ -1713,7 +1713,7 @@
             "created_at": "2025-06-10T13:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000084,
+            "lookbook_image_id": 10000000084,
             "prompt_id": 4829304756473829100,
             "image_url": "px_tavern_bar",
             "is_representive": false,
@@ -1721,7 +1721,7 @@
             "created_at": "2025-06-10T13:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000085,
+            "lookbook_image_id": 10000000085,
             "prompt_id": 4829304756473829100,
             "image_url": "px_tavern_fire",
             "is_representive": false,
@@ -1729,7 +1729,7 @@
             "created_at": "2025-06-10T13:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000086,
+            "lookbook_image_id": 10000000086,
             "prompt_id": 5930415867584930211,
             "image_url": "wiz_tower_top",
             "is_representive": true,
@@ -1737,7 +1737,7 @@
             "created_at": "2025-07-06T16:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000087,
+            "lookbook_image_id": 10000000087,
             "prompt_id": 5930415867584930211,
             "image_url": "wiz_tower_base",
             "is_representive": false,
@@ -1745,7 +1745,7 @@
             "created_at": "2025-07-06T16:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000088,
+            "lookbook_image_id": 10000000088,
             "prompt_id": 5930415867584930211,
             "image_url": "wiz_tower_sky",
             "is_representive": false,
@@ -1753,7 +1753,7 @@
             "created_at": "2025-07-06T16:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000089,
+            "lookbook_image_id": 10000000089,
             "prompt_id": 6041526978695041322,
             "image_url": "mars_dome_v4",
             "is_representive": true,
@@ -1761,7 +1761,7 @@
             "created_at": "2025-08-16T14:00:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000090,
+            "lookbook_image_id": 10000000090,
             "prompt_id": 6041526978695041322,
             "image_url": "mars_dome_rover",
             "is_representive": false,
@@ -1769,7 +1769,7 @@
             "created_at": "2025-08-16T14:01:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000091,
+            "lookbook_image_id": 10000000091,
             "prompt_id": 6041526978695041322,
             "image_url": "mars_dome_int",
             "is_representive": false,
@@ -1777,7 +1777,7 @@
             "created_at": "2025-08-16T14:02:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000092,
+            "lookbook_image_id": 10000000092,
             "prompt_id": 4192837465091827364,
             "image_url": "cyber_sam_v2",
             "is_representive": false,
@@ -1785,7 +1785,7 @@
             "created_at": "2025-01-10T08:30:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000093,
+            "lookbook_image_id": 10000000093,
             "prompt_id": 7485960312039485766,
             "image_url": "float_isl_v5",
             "is_representive": false,
@@ -1793,7 +1793,7 @@
             "created_at": "2025-04-13T12:10:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000094,
+            "lookbook_image_id": 10000000094,
             "prompt_id": 2829304756473829100,
             "image_url": "dragon_shrine_detail",
             "is_representive": false,
@@ -1801,7 +1801,7 @@
             "created_at": "2025-08-11T14:10:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000095,
+            "lookbook_image_id": 10000000095,
             "prompt_id": 5041526978695041322,
             "image_url": "car_future_blueprint",
             "is_representive": false,
@@ -1809,7 +1809,7 @@
             "created_at": "2025-10-21T11:10:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000096,
+            "lookbook_image_id": 10000000096,
             "prompt_id": 8374859201928374655,
             "image_url": "steam_air_cockpit",
             "is_representive": false,
@@ -1817,7 +1817,7 @@
             "created_at": "2026-01-02T17:10:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000097,
+            "lookbook_image_id": 10000000097,
             "prompt_id": 1596071423140596877,
             "image_url": "chair_v1_room",
             "is_representive": false,
@@ -1825,7 +1825,7 @@
             "created_at": "2025-03-15T11:10:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000098,
+            "lookbook_image_id": 10000000098,
             "prompt_id": 3718293645362718099,
             "image_url": "gryphon_feathers",
             "is_representive": false,
@@ -1833,7 +1833,7 @@
             "created_at": "2025-05-31T10:10:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000099,
+            "lookbook_image_id": 10000000099,
             "prompt_id": 5930415867584930211,
             "image_url": "wiz_tower_magic",
             "is_representive": false,
@@ -1841,7 +1841,7 @@
             "created_at": "2025-07-06T16:10:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000100,
+            "lookbook_image_id": 10000000100,
             "prompt_id": 6041526978695041322,
             "image_url": "mars_dome_map",
             "is_representive": false,
@@ -1849,7 +1849,7 @@
             "created_at": "2025-08-16T14:10:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000101,
+            "lookbook_image_id": 10000000101,
             "prompt_id": 4192837465091827364,
             "image_url": "cyber_sam_sword",
             "is_representive": false,
@@ -1857,7 +1857,7 @@
             "created_at": "2025-01-10T08:35:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000102,
+            "lookbook_image_id": 10000000102,
             "prompt_id": 7485960312039485766,
             "image_url": "float_isl_island",
             "is_representive": false,
@@ -1865,7 +1865,7 @@
             "created_at": "2025-04-13T12:15:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000103,
+            "lookbook_image_id": 10000000103,
             "prompt_id": 2829304756473829100,
             "image_url": "dragon_shrine_entrance",
             "is_representive": false,
@@ -1873,7 +1873,7 @@
             "created_at": "2025-08-11T14:15:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000104,
+            "lookbook_image_id": 10000000104,
             "prompt_id": 5041526978695041322,
             "image_url": "car_future_interior",
             "is_representive": false,
@@ -1881,7 +1881,7 @@
             "created_at": "2025-10-21T11:15:00.000000"
         },
         {
-            "lookbook_image_id": 1000000000000000105,
+            "lookbook_image_id": 10000000105,
             "prompt_id": 8374859201928374655,
             "image_url": "steam_air_propeller",
             "is_representive": false,

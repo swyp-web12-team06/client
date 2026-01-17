@@ -21,6 +21,7 @@ export default function Home() {
   const [prompts, setPrompts] = useState<Prompt[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [sortOrder, setSortOrder] = useState('new');
 
   useEffect(() => {
     fetch("/mock/MOCK_DATA.json")
@@ -36,24 +37,41 @@ export default function Home() {
     setSelectedCategory(categoryName);
   };
 
+  const handleSortOrderChange = (order: string) => {
+    setSortOrder(order);
+  };
+
   const filteredImages = useMemo(() => {
     if (!selectedCategory) {
       return lookbookImages;
     }
-
     const category = categories.find(c => c.name === selectedCategory);
     if (!category) {
       return lookbookImages;
     }
-
     const categoryId = category.category_id;
-
     const promptIdsInCategory = prompts
       .filter(p => p.category_id === categoryId)
       .map(p => p.prompt_id);
-
     return lookbookImages.filter(image => promptIdsInCategory.includes(image.prompt_id));
   }, [selectedCategory, categories, prompts, lookbookImages]);
+
+const sortedAndFilteredImages = useMemo(() => {
+  const priceMap = new Map(prompts.map(p => [p.prompt_id, p.price]));
+
+  switch (sortOrder) {
+    case 'new':
+      return filteredImages.toSorted((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    case 'old':
+      return filteredImages.toSorted((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+    case 'low':
+      return filteredImages.toSorted((a, b) => (priceMap.get(a.prompt_id) || 0) - (priceMap.get(b.prompt_id) || 0));
+    case 'high':
+      return filteredImages.toSorted((a, b) => (priceMap.get(b.prompt_id) || 0) - (priceMap.get(a.prompt_id) || 0));
+    default:
+      return filteredImages;
+  }
+}, [sortOrder, filteredImages, prompts]);
 
   return (
     <main>
@@ -61,9 +79,11 @@ export default function Home() {
         categories={categories}
         selectedCategory={selectedCategory}
         onSelectCategory={handleCategorySelect}
+        sortOrder={sortOrder}
+        onSortOrderChange={handleSortOrderChange}
       />
       <Suspense fallback={<div>Loading...</div>}>
-        <View data={filteredImages} />
+        <View data={sortedAndFilteredImages} />
       </Suspense>
     </main>
   );

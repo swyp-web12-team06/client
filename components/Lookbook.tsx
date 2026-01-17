@@ -3,7 +3,6 @@ import { LookbookImage } from "@/type/lookbook";
 import Link from "next/link";
 
 export default function Lookbook({ data }: { data: LookbookImage[] }) {
-
   const groupedImages = data.reduce((acc, image) => {
     const promptId = image.prompt_id;
     if (!acc[promptId]) {
@@ -16,10 +15,10 @@ export default function Lookbook({ data }: { data: LookbookImage[] }) {
   }, {} as Record<number, LookbookImage[]>);
 
   return (
-    <div className="columns-3 gap-4 p-4">
+    <div className="grid grid-cols-3 gap-4 p-4">
       {Object.entries(groupedImages).map(([promptId, images]) => (
-        <Link href={`/lookbook/${promptId}`} key={promptId} className="">
-          <div className="flex rounded-2xl mb-4 overflow-hidden border border-gray-300 divide-x divide-gray-300">
+        <Link href={`/lookbook/${promptId}`} key={promptId} className="break-inside-avoid">
+          <div className="flex rounded-2xl overflow-hidden border border-gray-300 divide-x divide-gray-300">
             {images.map((image) => (
               <div key={image.lookbook_image_id} className="relative w-full h-52">
                 <Image

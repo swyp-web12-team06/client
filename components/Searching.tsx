@@ -6,21 +6,29 @@ interface props {
   categories: Category[];
   selectedCategory: string | null;
   onSelectCategory: (category: string | null) => void;
-}
+  sortOrder: string;
+  onSortOrderChange: (sortOrder: string) => void;
+};
 
-export default function Searching({ categories, selectedCategory, onSelectCategory }: props) {
+export default function Searching({
+  categories,
+  selectedCategory,
+  onSelectCategory,
+  sortOrder,
+  onSortOrderChange,
+}: props) {
   return (
     <div className="flex px-4 gap-2">
-      <Select.Root defaultValue="new">
+      <Select.Root value={sortOrder} onValueChange={onSortOrderChange}>
         <Select.Trigger className="min-h-10! min-w-48! px-8! cursor-pointer!" radius="full" />
         <Select.Content className="rounded-2xl! p-1! mt-2! bg-(--color-bg-content-2)!" position="popper">
           <Select.Group>
             <Select.Item value="new">Newest first</Select.Item>
             <Select.Item value="old">Oldest first</Select.Item>
             <Select.Separator />
-            <Select.Item value="popular">Most popular</Select.Item>
-            <Select.Item value="liked">Most liked</Select.Item>
-            <Select.Item value="bookmarked">Most bookmarked</Select.Item>
+            <Select.Item value="popular" disabled>Most popular</Select.Item>
+            <Select.Item value="liked" disabled>Most liked</Select.Item>
+            <Select.Item value="bookmarked" disabled>Most bookmarked</Select.Item>
           </Select.Group>
           <Select.Separator />
           <Select.Group>
