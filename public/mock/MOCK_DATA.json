@@ -1,0 +1,2324 @@
+{
+    "users": [
+        {
+            "user_id": 2821465050985180700,
+            "email": "john_eb38678b@test.com",
+            "nickname": "evidence",
+            "provider": "address",
+            "provider_id": "last",
+            "role": "admin",
+            "warning_count": 169366,
+            "is_banned": true,
+            "profile_image_url": "current",
+            "bio": "recognize",
+            "is_deleted": true,
+            "seller_level": "former",
+            "credit_balance": 583374,
+            "created_at": "2024-10-21T05:44:57.871397",
+            "updated_at": "2026-01-12T21:12:16.624769",
+            "terms_agreed": true,
+            "terms_agreed_at": "2022-08-09T06:04:50.187699",
+            "marketing_consent": false,
+            "marketing_consented_at": "2021-04-05T11:51:47.315342",
+            "nickname_updated_at": "2024-02-19T19:53:29.123940"
+        },
+        {
+            "user_id": 5295731146633153000,
+            "email": "dillon_8394c1b1@sample.org",
+            "nickname": "smile",
+            "provider": "drug",
+            "provider_id": "example",
+            "role": "admin",
+            "warning_count": 734392,
+            "is_banned": false,
+            "profile_image_url": "across",
+            "bio": "growth",
+            "is_deleted": false,
+            "seller_level": "mind",
+            "credit_balance": 903698,
+            "created_at": "2024-09-06T00:11:50.682993",
+            "updated_at": "2024-07-09T13:09:40.292984",
+            "terms_agreed": false,
+            "terms_agreed_at": "2025-08-23T05:36:26.961433",
+            "marketing_consent": true,
+            "marketing_consented_at": "2023-09-20T11:25:46.585950",
+            "nickname_updated_at": "2024-06-06T22:32:26.869769"
+        },
+        {
+            "user_id": 2366485093489771000,
+            "email": "courtney_80de827b@company.example.com",
+            "nickname": "history",
+            "provider": "energy",
+            "provider_id": "list",
+            "role": "seller",
+            "warning_count": 91554,
+            "is_banned": true,
+            "profile_image_url": "not",
+            "bio": "coach",
+            "is_deleted": true,
+            "seller_level": "effort",
+            "credit_balance": 653958,
+            "created_at": "2025-07-04T17:12:33.524469",
+            "updated_at": "2025-02-19T13:25:28.015991",
+            "terms_agreed": true,
+            "terms_agreed_at": "2026-01-08T23:27:12.952971",
+            "marketing_consent": true,
+            "marketing_consented_at": "2021-09-09T19:45:42.026114",
+            "nickname_updated_at": "2023-11-06T17:35:26.401101"
+        },
+        {
+            "user_id": 6715872043107393000,
+            "email": "david_3906bfc2@mail.example.com",
+            "nickname": "every",
+            "provider": "call",
+            "provider_id": "lay",
+            "role": "user",
+            "warning_count": 901520,
+            "is_banned": true,
+            "profile_image_url": "table",
+            "bio": "stage",
+            "is_deleted": false,
+            "seller_level": "leader",
+            "credit_balance": 894206,
+            "created_at": "2024-11-20T00:41:38.209480",
+            "updated_at": "2023-04-30T17:32:30.992000",
+            "terms_agreed": true,
+            "terms_agreed_at": "2025-08-31T05:14:00.636646",
+            "marketing_consent": false,
+            "marketing_consented_at": "2023-10-03T14:40:54.815558",
+            "nickname_updated_at": "2024-05-21T16:41:03.048853"
+        },
+        {
+            "user_id": 1989149034291259000,
+            "email": "susan_b2287534@corp.example.com",
+            "nickname": "like",
+            "provider": "side",
+            "provider_id": "there",
+            "role": "user",
+            "warning_count": 417459,
+            "is_banned": false,
+            "profile_image_url": "money",
+            "bio": "year",
+            "is_deleted": true,
+            "seller_level": "form",
+            "credit_balance": 173984,
+            "created_at": "2025-03-19T02:10:40.737480",
+            "updated_at": "2023-02-06T00:37:54.363317",
+            "terms_agreed": false,
+            "terms_agreed_at": "2021-10-18T02:07:55.248325",
+            "marketing_consent": true,
+            "marketing_consented_at": "2022-10-18T06:43:42.721497",
+            "nickname_updated_at": "2024-03-24T02:08:27.558769"
+        },
+        {
+            "user_id": 9037402623053407000,
+            "email": "ronald_cffb4a5a@example.net",
+            "nickname": "compare",
+            "provider": "occur",
+            "provider_id": "speak",
+            "role": "user",
+            "warning_count": 363470,
+            "is_banned": false,
+            "profile_image_url": "account",
+            "bio": "best",
+            "is_deleted": false,
+            "seller_level": "dinner",
+            "credit_balance": 787126,
+            "created_at": "2024-12-03T19:07:38.286831",
+            "updated_at": "2023-08-28T22:39:46.646013",
+            "terms_agreed": true,
+            "terms_agreed_at": "2025-01-26T21:33:31.739050",
+            "marketing_consent": false,
+            "marketing_consented_at": "2024-06-16T08:15:28.936981",
+            "nickname_updated_at": "2025-10-25T13:15:57.108571"
+        },
+        {
+            "user_id": 3036367726903664600,
+            "email": "michele_f0b28685@example.com",
+            "nickname": "memory",
+            "provider": "enjoy",
+            "provider_id": "check",
+            "role": "user",
+            "warning_count": 901382,
+            "is_banned": false,
+            "profile_image_url": "upon",
+            "bio": "section",
+            "is_deleted": false,
+            "seller_level": "per",
+            "credit_balance": 296889,
+            "created_at": "2025-05-13T18:45:42.399999",
+            "updated_at": "2025-06-25T08:35:09.764201",
+            "terms_agreed": true,
+            "terms_agreed_at": "2021-08-25T17:15:10.129043",
+            "marketing_consent": false,
+            "marketing_consented_at": "2025-03-26T01:48:29.426179",
+            "nickname_updated_at": "2023-05-07T19:23:30.169777"
+        },
+        {
+            "user_id": 8658369421900716000,
+            "email": "julie_b7914892@sample.org",
+            "nickname": "peace",
+            "provider": "one",
+            "provider_id": "concern",
+            "role": "guest",
+            "warning_count": 65290,
+            "is_banned": false,
+            "profile_image_url": "poor",
+            "bio": "what",
+            "is_deleted": true,
+            "seller_level": "health",
+            "credit_balance": 683963,
+            "created_at": "2023-07-28T03:54:32.668829",
+            "updated_at": "2023-12-25T04:55:54.015295",
+            "terms_agreed": true,
+            "terms_agreed_at": "2025-11-06T03:36:39.249381",
+            "marketing_consent": true,
+            "marketing_consented_at": "2024-01-15T19:28:42.710650",
+            "nickname_updated_at": "2025-08-15T04:12:29.127908"
+        },
+        {
+            "user_id": 6299044474681639000,
+            "email": "raymond_e3da5e5c@company.example.com",
+            "nickname": "true",
+            "provider": "pretty",
+            "provider_id": "receive",
+            "role": "user",
+            "warning_count": 752623,
+            "is_banned": true,
+            "profile_image_url": "take",
+            "bio": "indicate",
+            "is_deleted": true,
+            "seller_level": "for",
+            "credit_balance": 487546,
+            "created_at": "2024-08-25T07:53:19.886719",
+            "updated_at": "2023-08-02T06:37:41.058500",
+            "terms_agreed": true,
+            "terms_agreed_at": "2024-09-11T19:55:11.271516",
+            "marketing_consent": false,
+            "marketing_consented_at": "2024-03-24T11:03:38.211271",
+            "nickname_updated_at": "2023-03-09T04:36:52.826409"
+        },
+        {
+            "user_id": 136991035873743650,
+            "email": "jose_f6fa7028@company.example.com",
+            "nickname": "his",
+            "provider": "bed",
+            "provider_id": "similar",
+            "role": "user",
+            "warning_count": 109442,
+            "is_banned": false,
+            "profile_image_url": "how",
+            "bio": "great",
+            "is_deleted": false,
+            "seller_level": "clear",
+            "credit_balance": 368983,
+            "created_at": "2023-08-08T16:32:10.020428",
+            "updated_at": "2025-04-03T03:28:03.966532",
+            "terms_agreed": false,
+            "terms_agreed_at": "2023-09-23T23:42:35.702650",
+            "marketing_consent": true,
+            "marketing_consented_at": "2025-05-26T13:50:32.441718",
+            "nickname_updated_at": "2025-04-26T14:56:02.012099"
+        }
+    ],
+    "reviews": [
+        {
+            "review_id": 6763036628893636000,
+            "reviewer_id": 4849013334833692000,
+            "image_id": 4171731972515946500,
+            "prompt_id": 4674872595787752000,
+            "rating": 1950,
+            "review_content": "probably",
+            "created_at": "2023-06-03T14:46:51.866484",
+            "updated_at": "2024-09-05T02:52:56.173615"
+        },
+        {
+            "review_id": 1981308644007711500,
+            "reviewer_id": 4939007064095285000,
+            "image_id": 7831630321196056000,
+            "prompt_id": 6246898846710996000,
+            "rating": 53,
+            "review_content": "hot",
+            "created_at": "2023-01-30T18:39:51.936543",
+            "updated_at": "2023-03-26T16:09:19.606202"
+        },
+        {
+            "review_id": 6976076324864322000,
+            "reviewer_id": 5860085209092595000,
+            "image_id": 8261393679049079000,
+            "prompt_id": 3907741442578859500,
+            "rating": 17315,
+            "review_content": "third",
+            "created_at": "2024-12-06T23:08:02.450973",
+            "updated_at": "2023-08-18T12:12:17.292713"
+        },
+        {
+            "review_id": 2040568652805715500,
+            "reviewer_id": 2870610802507882000,
+            "image_id": 1732281881802887400,
+            "prompt_id": 3491093381127718400,
+            "rating": 27364,
+            "review_content": "art",
+            "created_at": "2023-05-08T14:05:35.206355",
+            "updated_at": "2024-11-03T07:16:35.111517"
+        },
+        {
+            "review_id": 8268413170430248000,
+            "reviewer_id": 6433000487220138000,
+            "image_id": 5281612497066267000,
+            "prompt_id": 6203348610408402000,
+            "rating": 9546,
+            "review_content": "a",
+            "created_at": "2023-02-04T16:09:18.409428",
+            "updated_at": "2024-01-25T06:32:45.185167"
+        },
+        {
+            "review_id": 7795691038153509000,
+            "reviewer_id": 2681234588627071500,
+            "image_id": 1078102584532790300,
+            "prompt_id": 8164243451874983000,
+            "rating": 1371,
+            "review_content": "do",
+            "created_at": "2025-11-10T18:31:08.840538",
+            "updated_at": "2023-12-01T10:16:56.204125"
+        },
+        {
+            "review_id": 5313356043890443000,
+            "reviewer_id": 5613382797997273000,
+            "image_id": 5214364387340844000,
+            "prompt_id": 2467855134869056500,
+            "rating": 32170,
+            "review_content": "food",
+            "created_at": "2025-05-03T15:56:17.549391",
+            "updated_at": "2024-11-08T02:16:18.949254"
+        },
+        {
+            "review_id": 3508587949820757000,
+            "reviewer_id": 5296586288159319000,
+            "image_id": 5946627081109418000,
+            "prompt_id": 6096347694057923000,
+            "rating": 229,
+            "review_content": "interview",
+            "created_at": "2023-06-09T11:40:16.661593",
+            "updated_at": "2023-10-31T20:18:17.612230"
+        }
+    ],
+    "credit_transactions": [
+        {
+            "transaction_id": 54193177168306060,
+            "user_id": 7232452929701163000,
+            "type": "charge",
+            "amount": 971550,
+            "bonus": 710890,
+            "created_at": "2025-07-04T22:40:10.474737",
+            "reference_id": 2691361807633348000
+        },
+        {
+            "transaction_id": 3249451386671319000,
+            "user_id": 7617599063380348000,
+            "type": "refund",
+            "amount": 932190,
+            "bonus": 594034,
+            "created_at": "2025-09-21T09:49:34.347631",
+            "reference_id": 3556361587539508000
+        },
+        {
+            "transaction_id": 1799340897760024000,
+            "user_id": 6498720132090419000,
+            "type": "refund",
+            "amount": 800277,
+            "bonus": 986397,
+            "created_at": "2023-09-19T11:03:00.371014",
+            "reference_id": 4100106272275833300
+        },
+        {
+            "transaction_id": 6873524916679867000,
+            "user_id": 1663854422894584000,
+            "type": "charge",
+            "amount": 185992,
+            "bonus": 189222,
+            "created_at": "2024-10-08T19:31:55.909086",
+            "reference_id": 4159640821675648500
+        },
+        {
+            "transaction_id": 7350030453388399000,
+            "user_id": 8184522228151527000,
+            "type": "use",
+            "amount": 289215,
+            "bonus": 321444,
+            "created_at": "2023-03-24T10:49:36.623450",
+            "reference_id": 2305748293980616700
+        },
+        {
+            "transaction_id": 7966452193606688000,
+            "user_id": 851528617646107300,
+            "type": "charge",
+            "amount": 294577,
+            "bonus": 854769,
+            "created_at": "2023-08-13T20:22:17.021145",
+            "reference_id": 1407839617995377000
+        },
+        {
+            "transaction_id": 1027748341653382700,
+            "user_id": 6140944264190608000,
+            "type": "refund",
+            "amount": 833684,
+            "bonus": 115012,
+            "created_at": "2024-03-18T23:14:52.119162",
+            "reference_id": 4381805220468125000
+        },
+        {
+            "transaction_id": 1006169788003356000,
+            "user_id": 1730153083194337300,
+            "type": "refund",
+            "amount": 422857,
+            "bonus": 328336,
+            "created_at": "2024-08-18T20:19:33.994077",
+            "reference_id": 628181651344174100
+        }
+    ],
+    "tags": [
+        {
+            "tag_id": 1825070194624036900,
+            "prompt_id": 3752015886578346500,
+            "tag_name": "town"
+        },
+        {
+            "tag_id": 3552924537758450000,
+            "prompt_id": 5218921373491088000,
+            "tag_name": "early"
+        },
+        {
+            "tag_id": 1328814401285771000,
+            "prompt_id": 3883556351001764000,
+            "tag_name": "possible"
+        },
+        {
+            "tag_id": 8178371215270781000,
+            "prompt_id": 5618436855191739000,
+            "tag_name": "ahead"
+        },
+        {
+            "tag_id": 1438412815203725600,
+            "prompt_id": 989877048446246900,
+            "tag_name": "eight"
+        },
+        {
+            "tag_id": 3194841723577341000,
+            "prompt_id": 4880218853522407000,
+            "tag_name": "produce"
+        },
+        {
+            "tag_id": 2449596056176513500,
+            "prompt_id": 1649224912879957800,
+            "tag_name": "modern"
+        },
+        {
+            "tag_id": 386353860511898240,
+            "prompt_id": 1257119628130365000,
+            "tag_name": "like"
+        }
+    ],
+    "prompts": [
+        {
+            "prompt_id": 4192837465091827364,
+            "user_id": 2821465050985180700,
+            "category_id": 5823191800262812672,
+            "model_id": 1029384756102938475,
+            "title": "Cybernetic Samurai",
+            "description": "Fusion of traditional armor and neon tech",
+            "price": 850000,
+            "tier": "high",
+            "master_prompt": "cyberpunk samurai, katanas, glowing blue circuitry, urban rain",
+            "status": "approved",
+            "preview_image_url": "cyber_sam_01",
+            "clip_score_avg": 92.451234,
+            "is_deleted": false,
+            "created_at": "2025-01-10T08:20:11.123456",
+            "updated_at": "2025-01-11T12:00:00.654321"
+        },
+        {
+            "prompt_id": 5283746152439586710,
+            "user_id": 5295731146633153000,
+            "category_id": 5285002615014401024,
+            "model_id": 2039485761029384756,
+            "title": "Renaissance Portrait",
+            "description": "High-quality oil painting of a noble",
+            "price": 120000,
+            "tier": "low",
+            "master_prompt": "da vinci style, soft lighting, sfumato, historical attire",
+            "status": "approved",
+            "preview_image_url": "noble_portrait_v2",
+            "clip_score_avg": 815.123456,
+            "is_deleted": false,
+            "created_at": "2025-02-14T10:15:22.000000",
+            "updated_at": "2025-02-14T10:15:22.000000"
+        },
+        {
+            "prompt_id": 6374859201928374655,
+            "user_id": 2366485093489771000,
+            "category_id": 2146064847410240256,
+            "model_id": 3049586710293847561,
+            "title": "Minimalist Logo",
+            "description": "Clean geometric symbol for a startup",
+            "price": 450000,
+            "tier": "standard",
+            "master_prompt": "flat vector logo, minimalism, tech brand, white background",
+            "status": "pending",
+            "preview_image_url": "logo_minimal_final",
+            "clip_score_avg": 42.998765,
+            "is_deleted": false,
+            "created_at": "2025-03-01T14:40:00.111222",
+            "updated_at": "2025-03-02T09:30:15.333444"
+        },
+        {
+            "prompt_id": 7485960312039485766,
+            "user_id": 6715872043107393000,
+            "category_id": 3215276154034270208,
+            "model_id": 4059687721029384756,
+            "title": "Floating Islands",
+            "description": "Surreal fantasy landscape with waterfalls",
+            "price": 990000,
+            "tier": "high",
+            "master_prompt": "floating rocks, lush greenery, epic scale, cinematic lighting",
+            "status": "approved",
+            "preview_image_url": "fantasy_float_05",
+            "clip_score_avg": 765.432109,
+            "is_deleted": false,
+            "created_at": "2025-04-12T16:22:33.444555",
+            "updated_at": "2025-04-13T11:11:00.000000"
+        },
+        {
+            "prompt_id": 8596071423140596877,
+            "user_id": 1989149034291259000,
+            "category_id": 7787213427560813568,
+            "model_id": 5060798831029384756,
+            "title": "Abstract Liquid Gold",
+            "description": "Fluid art texture for background",
+            "price": 280000,
+            "tier": "low",
+            "master_prompt": "molten gold, dark obsidian ripples, macro, 8k texture",
+            "status": "rejected",
+            "preview_image_url": "gold_fluid_v1",
+            "clip_score_avg": 123.456789,
+            "is_deleted": true,
+            "created_at": "2025-05-05T09:00:00.000000",
+            "updated_at": "2025-05-06T14:20:11.999888"
+        },
+        {
+            "prompt_id": 9607182534251607988,
+            "user_id": 9037402623053407000,
+            "category_id": 8353212494287518720,
+            "model_id": 6071809941029384756,
+            "title": "Vintage Travel Poster",
+            "description": "1960s aesthetic of a coastal town",
+            "price": 550000,
+            "tier": "standard",
+            "master_prompt": "mid-century modern, travel illustration, Amalfi coast, muted colors",
+            "status": "approved",
+            "preview_image_url": "retro_travel_poster",
+            "clip_score_avg": 664.321098,
+            "is_deleted": false,
+            "created_at": "2025-06-18T12:30:45.123123",
+            "updated_at": "2025-06-19T10:00:00.000000"
+        },
+        {
+            "prompt_id": 1718293645362718099,
+            "user_id": 3036367726903664600,
+            "category_id": 4119367147356691456,
+            "model_id": 7082910051029384756,
+            "title": "Luxury Yacht Interior",
+            "description": "Modern minimalist cabin design",
+            "price": 920000,
+            "tier": "high",
+            "master_prompt": "high-end yacht, wood paneling, oceanic view through window, soft sun",
+            "status": "pending",
+            "preview_image_url": "yacht_int_lux",
+            "clip_score_avg": 312.987654,
+            "is_deleted": false,
+            "created_at": "2025-07-22T15:00:00.555666",
+            "updated_at": "2025-07-23T08:45:12.777888"
+        },
+        {
+            "prompt_id": 2829304756473829100,
+            "user_id": 8658369421900716000,
+            "category_id": 1509643156340635904,
+            "model_id": 8093021161029384756,
+            "title": "Ancient Dragon Shrine",
+            "description": "Detailed stone statue in a cave",
+            "price": 490000,
+            "tier": "standard",
+            "master_prompt": "mythology, dragon sculpture, mossy stones, flickering torches",
+            "status": "approved",
+            "preview_image_url": "dragon_shrine_v4",
+            "clip_score_avg": 881.442233,
+            "is_deleted": false,
+            "created_at": "2025-08-10T11:11:11.111111",
+            "updated_at": "2025-08-11T13:00:00.000000"
+        },
+        {
+            "prompt_id": 3930415867584930211,
+            "user_id": 6299044474681639000,
+            "category_id": 1865458939383456000,
+            "model_id": 9104132271029384756,
+            "title": "8-bit Forest Path",
+            "description": "Game asset for top-down RPG",
+            "price": 150000,
+            "tier": "low",
+            "master_prompt": "pixel art, retro game, forest tileset, sunny atmosphere",
+            "status": "approved",
+            "preview_image_url": "pixel_forest_path",
+            "clip_score_avg": 234.556677,
+            "is_deleted": false,
+            "created_at": "2025-09-01T10:00:00.000000",
+            "updated_at": "2025-09-01T10:00:00.000000"
+        },
+        {
+            "prompt_id": 4041526978695041322,
+            "user_id": 136991035873743650,
+            "category_id": 5143197419683917824,
+            "model_id": 1115243381029384756,
+            "title": "Gothic Cathedral Interior",
+            "description": "Majestic architecture with light rays",
+            "price": 600000,
+            "tier": "standard",
+            "master_prompt": "stained glass, gothic arches, dust motes, divine lighting",
+            "status": "approved",
+            "preview_image_url": "gothic_int_main",
+            "clip_score_avg": 559.123123,
+            "is_deleted": false,
+            "created_at": "2025-10-15T09:30:00.999000",
+            "updated_at": "2025-10-16T15:20:00.000000"
+        },
+        {
+            "prompt_id": 5152637089706152433,
+            "user_id": 2821465050985180700,
+            "category_id": 5285002615014401024,
+            "model_id": 2126354491029384756,
+            "title": "Cyberpunk Street Food",
+            "description": "Neon stall in a busy alley",
+            "price": 320000,
+            "tier": "low",
+            "master_prompt": "futuristic ramen shop, glowing signs, rainy night, cinematic",
+            "status": "pending",
+            "preview_image_url": "cyber_food_v1",
+            "clip_score_avg": 442.887766,
+            "is_deleted": false,
+            "created_at": "2025-11-01T20:00:00.000000",
+            "updated_at": "2025-11-01T20:00:00.000000"
+        },
+        {
+            "prompt_id": 6263748190817263544,
+            "user_id": 5295731146633153000,
+            "category_id": 2146064847410240256,
+            "model_id": 3137465501029384756,
+            "title": "Corporate Brand Manual",
+            "description": "Modern typography and layout",
+            "price": 950000,
+            "tier": "high",
+            "master_prompt": "branding guide, helvetica style, minimal grid, professional",
+            "status": "approved",
+            "preview_image_url": "brand_manual_set",
+            "clip_score_avg": 91.554433,
+            "is_deleted": false,
+            "created_at": "2025-12-05T14:30:00.123456",
+            "updated_at": "2025-12-06T11:00:00.000000"
+        },
+        {
+            "prompt_id": 7374859201928374655,
+            "user_id": 2366485093489771000,
+            "category_id": 3215276154034270208,
+            "model_id": 4148576611029384756,
+            "title": "Space Explorer Robot",
+            "description": "Cute drone on an ice planet",
+            "price": 520000,
+            "tier": "standard",
+            "master_prompt": "small robot, snowstorm, blue glowing eyes, sci-fi",
+            "status": "rejected",
+            "preview_image_url": "space_bot_ice",
+            "clip_score_avg": 11.223344,
+            "is_deleted": true,
+            "created_at": "2026-01-10T10:00:00.000000",
+            "updated_at": "2026-01-11T09:00:00.000000"
+        },
+        {
+            "prompt_id": 8485960312039485766,
+            "user_id": 6715872043107393000,
+            "category_id": 7787213427560813568,
+            "model_id": 5159687721029384756,
+            "title": "Ethereal Nebula Art",
+            "description": "Cosmic explosion of colors",
+            "price": 250000,
+            "tier": "low",
+            "master_prompt": "deep space, galaxy, purple and teal stars, astronomical photography",
+            "status": "approved",
+            "preview_image_url": "nebula_art_x",
+            "clip_score_avg": 994.556778,
+            "is_deleted": false,
+            "created_at": "2026-01-15T18:45:00.777888",
+            "updated_at": "2026-01-16T12:30:00.000000"
+        },
+        {
+            "prompt_id": 9596071423140596877,
+            "user_id": 1989149034291259000,
+            "category_id": 8353212494287518720,
+            "model_id": 6160798831029384756,
+            "title": "Modernist Architecture",
+            "description": "Glass house in the Swiss Alps",
+            "price": 880000,
+            "tier": "high",
+            "master_prompt": "bauhaus style, mountain reflection, dusk, hyper-realistic architecture",
+            "status": "pending",
+            "preview_image_url": "glass_house_v2",
+            "clip_score_avg": 554.123456,
+            "is_deleted": false,
+            "created_at": "2025-05-20T11:00:00.000000",
+            "updated_at": "2025-05-20T11:00:00.000000"
+        },
+        {
+            "prompt_id": 1607182534251607988,
+            "user_id": 9037402623053407000,
+            "category_id": 4119367147356691456,
+            "model_id": 7171809941029384756,
+            "title": "Zen Garden View",
+            "description": "Peaceful meditation spot",
+            "price": 380000,
+            "tier": "standard",
+            "master_prompt": "japanese stone garden, bonsai, soft morning light, 4k",
+            "status": "approved",
+            "preview_image_url": "zen_spot_main",
+            "clip_score_avg": 812.334455,
+            "is_deleted": false,
+            "created_at": "2025-06-05T07:30:00.000000",
+            "updated_at": "2025-06-05T14:20:00.000000"
+        },
+        {
+            "prompt_id": 2718293645362718099,
+            "user_id": 3036367726903664600,
+            "category_id": 1509643156340635904,
+            "model_id": 8182910051029384756,
+            "title": "Phoenix Rebirth",
+            "description": "Legendary bird of fire",
+            "price": 950000,
+            "tier": "high",
+            "master_prompt": "fire phoenix, rising from ashes, embers, dramatic dark background",
+            "status": "approved",
+            "preview_image_url": "phoenix_v5",
+            "clip_score_avg": 999.111222,
+            "is_deleted": false,
+            "created_at": "2025-07-11T23:59:59.000000",
+            "updated_at": "2025-07-12T10:00:00.000000"
+        },
+        {
+            "prompt_id": 3829304756473829100,
+            "user_id": 8658369421900716000,
+            "category_id": 1865458939383456000,
+            "model_id": 9193021161029384756,
+            "title": "Pixel Art Sword",
+            "description": "Magic weapon sprite for RPG",
+            "price": 100000,
+            "tier": "low",
+            "master_prompt": "pixel art sword, glowing runes, game icon, isolated",
+            "status": "approved",
+            "preview_image_url": "pixel_sword_01",
+            "clip_score_avg": 456.778899,
+            "is_deleted": false,
+            "created_at": "2025-08-01T15:00:00.000000",
+            "updated_at": "2025-08-01T15:00:00.000000"
+        },
+        {
+            "prompt_id": 4930415867584930211,
+            "user_id": 6299044474681639000,
+            "category_id": 5143197419683917824,
+            "model_id": 1104132271029384756,
+            "title": "Ancient Library",
+            "description": "Tower of books in a mage guild",
+            "price": 620000,
+            "tier": "standard",
+            "master_prompt": "magical library, floating candles, old parchment, dust",
+            "status": "pending",
+            "preview_image_url": "lib_magic_v2",
+            "clip_score_avg": 662.334455,
+            "is_deleted": false,
+            "created_at": "2025-09-10T11:00:00.000000",
+            "updated_at": "2025-09-11T09:30:00.000000"
+        },
+        {
+            "prompt_id": 5041526978695041322,
+            "user_id": 136991035873743650,
+            "category_id": 5823191800262812672,
+            "model_id": 2115243381029384756,
+            "title": "Future Sportscar",
+            "description": "Aerodynamic vehicle concept",
+            "price": 750000,
+            "tier": "high",
+            "master_prompt": "concept car, futuristic design, carbon fiber, glossy red",
+            "status": "approved",
+            "preview_image_url": "car_future_x",
+            "clip_score_avg": 341.556677,
+            "is_deleted": false,
+            "created_at": "2025-10-20T13:20:00.000000",
+            "updated_at": "2025-10-21T10:00:00.000000"
+        },
+        {
+            "prompt_id": 6152637089706152433,
+            "user_id": 2821465050985180700,
+            "category_id": 5285002615014401024,
+            "model_id": 3126354491029384756,
+            "title": "Charcoal Figure Drawing",
+            "description": "Anatomical study sketch",
+            "price": 180000,
+            "tier": "low",
+            "master_prompt": "charcoal sketch, anatomy, realistic, paper texture",
+            "status": "approved",
+            "preview_image_url": "sketch_char_01",
+            "clip_score_avg": 772.331122,
+            "is_deleted": false,
+            "created_at": "2025-11-15T09:00:00.000000",
+            "updated_at": "2025-11-15T09:00:00.000000"
+        },
+        {
+            "prompt_id": 7263748190817263544,
+            "user_id": 5295731146633153000,
+            "category_id": 2146064847410240256,
+            "model_id": 4137465501029384756,
+            "title": "Glassmorphism UI Kit",
+            "description": "App components for iOS",
+            "price": 990000,
+            "tier": "high",
+            "master_prompt": "ui design, glassmorphism, transparent layers, pastel blue",
+            "status": "pending",
+            "preview_image_url": "ui_glass_kit",
+            "clip_score_avg": 12.998765,
+            "is_deleted": false,
+            "created_at": "2025-12-20T10:00:00.000000",
+            "updated_at": "2025-12-21T14:45:00.000000"
+        },
+        {
+            "prompt_id": 8374859201928374655,
+            "user_id": 2366485093489771000,
+            "category_id": 3215276154034270208,
+            "model_id": 5148576611029384756,
+            "title": "Steampunk Airship",
+            "description": "Flying vessel over London",
+            "price": 480000,
+            "tier": "standard",
+            "master_prompt": "steampunk, zeppelin, gears, Victorian era, industrial",
+            "status": "approved",
+            "preview_image_url": "steam_air_v1",
+            "clip_score_avg": 815.123456,
+            "is_deleted": false,
+            "created_at": "2026-01-02T08:00:00.000000",
+            "updated_at": "2026-01-02T16:20:00.000000"
+        },
+        {
+            "prompt_id": 9485960312039485766,
+            "user_id": 6715872043107393000,
+            "category_id": 7787213427560813568,
+            "model_id": 6159687721029384756,
+            "title": "Cyber City Sunset",
+            "description": "Urban landscape in 2077",
+            "price": 220000,
+            "tier": "low",
+            "master_prompt": "cyberpunk city, orange sky, skyscrapers, megastructure",
+            "status": "rejected",
+            "preview_image_url": "cyber_sun_v4",
+            "clip_score_avg": 42.112233,
+            "is_deleted": true,
+            "created_at": "2025-02-10T18:00:00.000000",
+            "updated_at": "2025-02-11T09:00:00.000000"
+        },
+        {
+            "prompt_id": 1596071423140596877,
+            "user_id": 1989149034291259000,
+            "category_id": 8353212494287518720,
+            "model_id": 7160798831029384756,
+            "title": "Mid-century Armchair",
+            "description": "3D furniture model render",
+            "price": 540000,
+            "tier": "standard",
+            "master_prompt": "modern furniture, blender render, wood and leather, soft light",
+            "status": "approved",
+            "preview_image_url": "chair_mod_v1",
+            "clip_score_avg": 662.334455,
+            "is_deleted": false,
+            "created_at": "2025-03-15T10:00:00.000000",
+            "updated_at": "2025-03-15T10:00:00.000000"
+        },
+        {
+            "prompt_id": 2607182534251607988,
+            "user_id": 9037402623053407000,
+            "category_id": 4119367147356691456,
+            "model_id": 8171809941029384756,
+            "title": "Tropical Jungle Path",
+            "description": "Dense forest with sun rays",
+            "price": 310000,
+            "tier": "low",
+            "master_prompt": "jungle, exotic plants, morning mist, ray tracing",
+            "status": "pending",
+            "preview_image_url": "jungle_path_01",
+            "clip_score_avg": 551.442233,
+            "is_deleted": false,
+            "created_at": "2025-04-20T08:30:00.000000",
+            "updated_at": "2025-04-21T11:00:00.000000"
+        },
+        {
+            "prompt_id": 3718293645362718099,
+            "user_id": 3036367726903664600,
+            "category_id": 1509643156340635904,
+            "model_id": 9182910051029384756,
+            "title": "Gryphon Flight",
+            "description": "Mythical creature in the clouds",
+            "price": 920000,
+            "tier": "high",
+            "master_prompt": "gryphon, eagle head, lion body, flying, sky background",
+            "status": "approved",
+            "preview_image_url": "gryphon_fly_v1",
+            "clip_score_avg": 884.556677,
+            "is_deleted": false,
+            "created_at": "2025-05-30T14:00:00.000000",
+            "updated_at": "2025-05-31T09:00:00.000000"
+        },
+        {
+            "prompt_id": 4829304756473829100,
+            "user_id": 8658369421900716000,
+            "category_id": 1865458939383456000,
+            "model_id": 1193021161029384756,
+            "title": "Pixel Art Tavern",
+            "description": "Interior map for fantasy game",
+            "price": 120000,
+            "tier": "low",
+            "master_prompt": "pixel art, tavern, fireplace, tables, cozy RPG scene",
+            "status": "approved",
+            "preview_image_url": "pixel_tavern_int",
+            "clip_score_avg": 215.331122,
+            "is_deleted": false,
+            "created_at": "2025-06-10T12:00:00.000000",
+            "updated_at": "2025-06-10T12:00:00.000000"
+        },
+        {
+            "prompt_id": 5930415867584930211,
+            "user_id": 6299044474681639000,
+            "category_id": 5143197419683917824,
+            "model_id": 2104132271029384756,
+            "title": "Wizard Tower",
+            "description": "Stone tower on a high cliff",
+            "price": 460000,
+            "tier": "standard",
+            "master_prompt": "magic tower, stormy sky, fantasy landscape, high contrast",
+            "status": "approved",
+            "preview_image_url": "wizard_tower_v1",
+            "clip_score_avg": 774.123123,
+            "is_deleted": false,
+            "created_at": "2025-07-05T09:00:00.000000",
+            "updated_at": "2025-07-06T15:20:00.000000"
+        },
+        {
+            "prompt_id": 6041526978695041322,
+            "user_id": 136991035873743650,
+            "category_id": 5823191800262812672,
+            "model_id": 3115243381029384756,
+            "title": "Martian Colony",
+            "description": "Domes on the red planet",
+            "price": 980000,
+            "tier": "high",
+            "master_prompt": "mars colony, sci-fi habitat, dust storm, rover, cinematic",
+            "status": "pending",
+            "preview_image_url": "mars_colony_v4",
+            "clip_score_avg": 124.998765,
+            "is_deleted": false,
+            "created_at": "2025-08-15T11:00:00.000000",
+            "updated_at": "2025-08-16T13:45:00.000000"
+        }
+    ],
+    "purchases": [
+        {
+            "purchase_id": 9152655041672460000,
+            "user_id": 418938299700171900,
+            "prompt_id": 1135255066863877400,
+            "price": 875938,
+            "purchased_at": "2022-02-06T09:01:25.161422",
+            "preview_count": 688162
+        },
+        {
+            "purchase_id": 7531267435056947000,
+            "user_id": 807899788805620700,
+            "prompt_id": 8608781816245732000,
+            "price": 740901,
+            "purchased_at": "2022-01-04T10:24:28.595572",
+            "preview_count": 511640
+        },
+        {
+            "purchase_id": 5127556897798605000,
+            "user_id": 1448660840155822300,
+            "prompt_id": 7698575832773044000,
+            "price": 383332,
+            "purchased_at": "2022-10-21T01:22:41.404442",
+            "preview_count": 115018
+        },
+        {
+            "purchase_id": 4214584081778211000,
+            "user_id": 2466568799385511400,
+            "prompt_id": 3718175933861056000,
+            "price": 490599,
+            "purchased_at": "2024-07-25T21:38:40.167183",
+            "preview_count": 632395
+        },
+        {
+            "purchase_id": 1246852946515914800,
+            "user_id": 3107582500210253300,
+            "prompt_id": 1572606509986038000,
+            "price": 12740,
+            "purchased_at": "2022-09-08T00:18:51.771635",
+            "preview_count": 204817
+        },
+        {
+            "purchase_id": 4945940694197143000,
+            "user_id": 3735283137470737000,
+            "prompt_id": 6797286461712590000,
+            "price": 275653,
+            "purchased_at": "2022-09-30T15:17:47.134430",
+            "preview_count": 94364
+        },
+        {
+            "purchase_id": 937901361138201300,
+            "user_id": 5974391207261255000,
+            "prompt_id": 1464150048821264000,
+            "price": 161803,
+            "purchased_at": "2025-09-12T12:44:44.507134",
+            "preview_count": 417628
+        },
+        {
+            "purchase_id": 2418365297784956400,
+            "user_id": 8240120241260468000,
+            "prompt_id": 2615523966390189000,
+            "price": 477992,
+            "purchased_at": "2024-06-13T17:59:53.744971",
+            "preview_count": 461593
+        }
+    ],
+    "categories": [
+        {
+            "category_id": 5823191800262812672,
+            "name": "Portraits",
+            "order_index": 1,
+            "is_active": true,
+            "created_at": "2026-01-16T23:27:45.2684750Z",
+            "updated_at": "2026-01-16T23:27:45.2724758Z"
+        },
+        {
+            "category_id": 5285002615014401024,
+            "name": "Landscapes",
+            "order_index": 2,
+            "is_active": true,
+            "created_at": "2026-01-16T23:27:45.2764834Z",
+            "updated_at": "2026-01-16T23:27:45.2764834Z"
+        },
+        {
+            "category_id": 2146064847410240256,
+            "name": "Architecture",
+            "order_index": 3,
+            "is_active": true,
+            "created_at": "2026-01-16T23:27:45.2764834Z",
+            "updated_at": "2026-01-16T23:27:45.2764834Z"
+        },
+        {
+            "category_id": 3215276154034270208,
+            "name": "Animals",
+            "order_index": 4,
+            "is_active": true,
+            "created_at": "2026-01-16T23:27:45.2764834Z",
+            "updated_at": "2026-01-16T23:27:45.2764834Z"
+        },
+        {
+            "category_id": 7787213427560813568,
+            "name": "Food",
+            "order_index": 5,
+            "is_active": true,
+            "created_at": "2026-01-16T23:27:45.2764834Z",
+            "updated_at": "2026-01-16T23:27:45.2764834Z"
+        },
+        {
+            "category_id": 8353212494287518720,
+            "name": "Interior",
+            "order_index": 6,
+            "is_active": true,
+            "created_at": "2026-01-16T23:27:45.2774903Z",
+            "updated_at": "2026-01-16T23:27:45.2774903Z"
+        },
+        {
+            "category_id": 4119367147356691456,
+            "name": "Fashion",
+            "order_index": 7,
+            "is_active": true,
+            "created_at": "2026-01-16T23:27:45.2774903Z",
+            "updated_at": "2026-01-16T23:27:45.2774903Z"
+        },
+        {
+            "category_id": 1509643156340635904,
+            "name": "Sci-Fi",
+            "order_index": 8,
+            "is_active": true,
+            "created_at": "2026-01-16T23:27:45.2774903Z",
+            "updated_at": "2026-01-16T23:27:45.2774903Z"
+        },
+        {
+            "category_id": 1865458939383456000,
+            "name": "Abstract",
+            "order_index": 9,
+            "is_active": true,
+            "created_at": "2026-01-16T23:27:45.2774903Z",
+            "updated_at": "2026-01-16T23:27:45.2774903Z"
+        },
+        {
+            "category_id": 5143197419683917824,
+            "name": "Logos/Icons",
+            "order_index": 10,
+            "is_active": true,
+            "created_at": "2026-01-16T23:27:45.2774903Z",
+            "updated_at": "2026-01-16T23:27:45.2774903Z"
+        }
+    ],
+    "lookbook_images": [
+        {
+            "lookbook_image_id": 10000000001,
+            "prompt_id": 4192837465091827364,
+            "image_url": "cyber_sam_main",
+            "is_representive": true,
+            "Field": 850.12,
+            "created_at": "2025-01-10T08:25:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000002,
+            "prompt_id": 4192837465091827364,
+            "image_url": "cyber_sam_side",
+            "is_representive": false,
+            "Field": 720.45,
+            "created_at": "2025-01-10T08:26:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000003,
+            "prompt_id": 4192837465091827364,
+            "image_url": "cyber_sam_close",
+            "is_representive": false,
+            "Field": 610.88,
+            "created_at": "2025-01-10T08:27:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000004,
+            "prompt_id": 5283746152439586710,
+            "image_url": "noble_v2_front",
+            "is_representive": true,
+            "Field": 912.33,
+            "created_at": "2025-02-14T10:20:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000005,
+            "prompt_id": 5283746152439586710,
+            "image_url": "noble_v2_detail",
+            "is_representive": false,
+            "Field": 880.11,
+            "created_at": "2025-02-14T10:21:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000006,
+            "prompt_id": 5283746152439586710,
+            "image_url": "noble_v2_alt",
+            "is_representive": false,
+            "Field": 750.99,
+            "created_at": "2025-02-14T10:22:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000007,
+            "prompt_id": 6374859201928374655,
+            "image_url": "logo_fin_black",
+            "is_representive": true,
+            "Field": 450.22,
+            "created_at": "2025-03-02T10:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000008,
+            "prompt_id": 6374859201928374655,
+            "image_url": "logo_fin_white",
+            "is_representive": false,
+            "Field": 440.11,
+            "created_at": "2025-03-02T10:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000009,
+            "prompt_id": 6374859201928374655,
+            "image_url": "logo_fin_mockup",
+            "is_representive": false,
+            "Field": 390.55,
+            "created_at": "2025-03-02T10:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000010,
+            "prompt_id": 7485960312039485766,
+            "image_url": "float_isl_wide",
+            "is_representive": true,
+            "Field": 988.77,
+            "created_at": "2025-04-13T12:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000011,
+            "prompt_id": 7485960312039485766,
+            "image_url": "float_isl_cave",
+            "is_representive": false,
+            "Field": 850.33,
+            "created_at": "2025-04-13T12:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000012,
+            "prompt_id": 7485960312039485766,
+            "image_url": "float_isl_night",
+            "is_representive": false,
+            "Field": 770.12,
+            "created_at": "2025-04-13T12:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000013,
+            "prompt_id": 8596071423140596877,
+            "image_url": "gold_liq_v1",
+            "is_representive": true,
+            "Field": 150.44,
+            "created_at": "2025-05-06T15:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000014,
+            "prompt_id": 8596071423140596877,
+            "image_url": "gold_liq_zoom",
+            "is_representive": false,
+            "Field": 120.11,
+            "created_at": "2025-05-06T15:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000015,
+            "prompt_id": 9607182534251607988,
+            "image_url": "retro_amalfi_main",
+            "is_representive": true,
+            "Field": 740.11,
+            "created_at": "2025-06-19T11:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000016,
+            "prompt_id": 9607182534251607988,
+            "image_url": "retro_amalfi_alt",
+            "is_representive": false,
+            "Field": 680.55,
+            "created_at": "2025-06-19T11:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000017,
+            "prompt_id": 9607182534251607988,
+            "image_url": "retro_amalfi_sepia",
+            "is_representive": false,
+            "Field": 540.22,
+            "created_at": "2025-06-19T11:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000018,
+            "prompt_id": 1718293645362718099,
+            "image_url": "yacht_lux_day",
+            "is_representive": true,
+            "Field": 350.11,
+            "created_at": "2025-07-23T09:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000019,
+            "prompt_id": 1718293645362718099,
+            "image_url": "yacht_lux_night",
+            "is_representive": false,
+            "Field": 310.88,
+            "created_at": "2025-07-23T09:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000020,
+            "prompt_id": 1718293645362718099,
+            "image_url": "yacht_lux_detail",
+            "is_representive": false,
+            "Field": 290.44,
+            "created_at": "2025-07-23T09:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000021,
+            "prompt_id": 2829304756473829100,
+            "image_url": "dragon_shrine_f1",
+            "is_representive": true,
+            "Field": 899.22,
+            "created_at": "2025-08-11T14:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000022,
+            "prompt_id": 2829304756473829100,
+            "image_url": "dragon_shrine_f2",
+            "is_representive": false,
+            "Field": 840.11,
+            "created_at": "2025-08-11T14:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000023,
+            "prompt_id": 3930415867584930211,
+            "image_url": "pixel_forest_day",
+            "is_representive": true,
+            "Field": 250.33,
+            "created_at": "2025-09-01T10:05:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000024,
+            "prompt_id": 3930415867584930211,
+            "image_url": "pixel_forest_rain",
+            "is_representive": false,
+            "Field": 210.11,
+            "created_at": "2025-09-01T10:06:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000025,
+            "prompt_id": 3930415867584930211,
+            "image_url": "pixel_forest_night",
+            "is_representive": false,
+            "Field": 190.55,
+            "created_at": "2025-09-01T10:07:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000026,
+            "prompt_id": 4041526978695041322,
+            "image_url": "gothic_cat_altar",
+            "is_representive": true,
+            "Field": 610.11,
+            "created_at": "2025-10-16T16:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000027,
+            "prompt_id": 4041526978695041322,
+            "image_url": "gothic_cat_window",
+            "is_representive": false,
+            "Field": 580.44,
+            "created_at": "2025-10-16T16:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000028,
+            "prompt_id": 4041526978695041322,
+            "image_url": "gothic_cat_arch",
+            "is_representive": false,
+            "Field": 520.33,
+            "created_at": "2025-10-16T16:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000029,
+            "prompt_id": 5152637089706152433,
+            "image_url": "cyber_ramen_ext",
+            "is_representive": true,
+            "Field": 480.99,
+            "created_at": "2025-11-01T20:10:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000030,
+            "prompt_id": 5152637089706152433,
+            "image_url": "cyber_ramen_bowl",
+            "is_representive": false,
+            "Field": 450.11,
+            "created_at": "2025-11-01T20:11:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000031,
+            "prompt_id": 5152637089706152433,
+            "image_url": "cyber_ramen_neon",
+            "is_representive": false,
+            "Field": 410.55,
+            "created_at": "2025-11-01T20:12:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000032,
+            "prompt_id": 6263748190817263544,
+            "image_url": "brand_man_p1",
+            "is_representive": true,
+            "Field": 99.11,
+            "created_at": "2025-12-06T12:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000033,
+            "prompt_id": 6263748190817263544,
+            "image_url": "brand_man_p2",
+            "is_representive": false,
+            "Field": 95.44,
+            "created_at": "2025-12-06T12:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000034,
+            "prompt_id": 6263748190817263544,
+            "image_url": "brand_man_p3",
+            "is_representive": false,
+            "Field": 88.22,
+            "created_at": "2025-12-06T12:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000035,
+            "prompt_id": 6263748190817263544,
+            "image_url": "brand_man_logo",
+            "is_representive": false,
+            "Field": 82.11,
+            "created_at": "2025-12-06T12:03:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000036,
+            "prompt_id": 7374859201928374655,
+            "image_url": "ice_bot_wide",
+            "is_representive": true,
+            "Field": 120.44,
+            "created_at": "2026-01-11T10:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000037,
+            "prompt_id": 7374859201928374655,
+            "image_url": "ice_bot_scan",
+            "is_representive": false,
+            "Field": 110.11,
+            "created_at": "2026-01-11T10:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000038,
+            "prompt_id": 7374859201928374655,
+            "image_url": "ice_bot_night",
+            "is_representive": false,
+            "Field": 95.88,
+            "created_at": "2026-01-11T10:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000039,
+            "prompt_id": 8485960312039485766,
+            "image_url": "nebula_x1_core",
+            "is_representive": true,
+            "Field": 998.44,
+            "created_at": "2026-01-16T13:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000040,
+            "prompt_id": 8485960312039485766,
+            "image_url": "nebula_x1_dust",
+            "is_representive": false,
+            "Field": 950.11,
+            "created_at": "2026-01-16T13:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000041,
+            "prompt_id": 8485960312039485766,
+            "image_url": "nebula_x1_star",
+            "is_representive": false,
+            "Field": 910.22,
+            "created_at": "2026-01-16T13:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000042,
+            "prompt_id": 9596071423140596877,
+            "image_url": "glass_v2_ext",
+            "is_representive": true,
+            "Field": 580.11,
+            "created_at": "2025-05-20T12:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000045,
+            "prompt_id": 1607182534251607988,
+            "image_url": "zen_main_gate",
+            "is_representive": true,
+            "Field": 840.11,
+            "created_at": "2025-06-05T15:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000046,
+            "prompt_id": 1607182534251607988,
+            "image_url": "zen_main_pond",
+            "is_representive": false,
+            "Field": 810.55,
+            "created_at": "2025-06-05T15:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000047,
+            "prompt_id": 1607182534251607988,
+            "image_url": "zen_main_tree",
+            "is_representive": false,
+            "Field": 780.22,
+            "created_at": "2025-06-05T15:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000048,
+            "prompt_id": 2718293645362718099,
+            "image_url": "phoenix_v5_rise",
+            "is_representive": true,
+            "Field": 999.88,
+            "created_at": "2025-07-12T11:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000049,
+            "prompt_id": 2718293645362718099,
+            "image_url": "phoenix_v5_wing",
+            "is_representive": false,
+            "Field": 980.11,
+            "created_at": "2025-07-12T11:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000050,
+            "prompt_id": 2718293645362718099,
+            "image_url": "phoenix_v5_ash",
+            "is_representive": false,
+            "Field": 910.44,
+            "created_at": "2025-07-12T11:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000051,
+            "prompt_id": 3829304756473829100,
+            "image_url": "px_sword_holy",
+            "is_representive": true,
+            "Field": 480.11,
+            "created_at": "2025-08-01T16:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000052,
+            "prompt_id": 3829304756473829100,
+            "image_url": "px_sword_dark",
+            "is_representive": false,
+            "Field": 450.44,
+            "created_at": "2025-08-01T16:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000053,
+            "prompt_id": 3829304756473829100,
+            "image_url": "px_sword_fire",
+            "is_representive": false,
+            "Field": 410.33,
+            "created_at": "2025-08-01T16:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000054,
+            "prompt_id": 3829304756473829100,
+            "image_url": "px_sword_ice",
+            "is_representive": false,
+            "Field": 390.22,
+            "created_at": "2025-08-01T16:03:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000055,
+            "prompt_id": 4930415867584930211,
+            "image_url": "lib_magic_books",
+            "is_representive": true,
+            "Field": 680.11,
+            "created_at": "2025-09-11T10:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000056,
+            "prompt_id": 4930415867584930211,
+            "image_url": "lib_magic_stairs",
+            "is_representive": false,
+            "Field": 640.44,
+            "created_at": "2025-09-11T10:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000057,
+            "prompt_id": 4930415867584930211,
+            "image_url": "lib_magic_aura",
+            "is_representive": false,
+            "Field": 590.33,
+            "created_at": "2025-09-11T10:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000058,
+            "prompt_id": 5041526978695041322,
+            "image_url": "car_future_front",
+            "is_representive": true,
+            "Field": 380.11,
+            "created_at": "2025-10-21T11:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000059,
+            "prompt_id": 5041526978695041322,
+            "image_url": "car_future_rear",
+            "is_representive": false,
+            "Field": 350.44,
+            "created_at": "2025-10-21T11:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000060,
+            "prompt_id": 5041526978695041322,
+            "image_url": "car_future_wheel",
+            "is_representive": false,
+            "Field": 310.22,
+            "created_at": "2025-10-21T11:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000061,
+            "prompt_id": 6152637089706152433,
+            "image_url": "sketch_01_pose",
+            "is_representive": true,
+            "Field": 810.11,
+            "created_at": "2025-11-15T10:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000062,
+            "prompt_id": 6152637089706152433,
+            "image_url": "sketch_01_hand",
+            "is_representive": false,
+            "Field": 780.44,
+            "created_at": "2025-11-15T10:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000063,
+            "prompt_id": 6152637089706152433,
+            "image_url": "sketch_01_face",
+            "is_representive": false,
+            "Field": 720.33,
+            "created_at": "2025-11-15T10:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000064,
+            "prompt_id": 7263748190817263544,
+            "image_url": "ui_glass_login",
+            "is_representive": true,
+            "Field": 45.11,
+            "created_at": "2025-12-21T15:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000065,
+            "prompt_id": 7263748190817263544,
+            "image_url": "ui_glass_card",
+            "is_representive": false,
+            "Field": 38.44,
+            "created_at": "2025-12-21T15:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000066,
+            "prompt_id": 7263748190817263544,
+            "image_url": "ui_glass_notif",
+            "is_representive": false,
+            "Field": 32.22,
+            "created_at": "2025-12-21T15:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000067,
+            "prompt_id": 8374859201928374655,
+            "image_url": "steam_air_full",
+            "is_representive": true,
+            "Field": 850.11,
+            "created_at": "2026-01-02T17:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000068,
+            "prompt_id": 8374859201928374655,
+            "image_url": "steam_air_gear",
+            "is_representive": false,
+            "Field": 810.44,
+            "created_at": "2026-01-02T17:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000069,
+            "prompt_id": 8374859201928374655,
+            "image_url": "steam_air_cabin",
+            "is_representive": false,
+            "Field": 760.33,
+            "created_at": "2026-01-02T17:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000070,
+            "prompt_id": 9485960312039485766,
+            "image_url": "cyber_sun_v4_wide",
+            "is_representive": true,
+            "Field": 85.11,
+            "created_at": "2025-02-11T10:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000071,
+            "prompt_id": 9485960312039485766,
+            "image_url": "cyber_sun_v4_glow",
+            "is_representive": false,
+            "Field": 72.44,
+            "created_at": "2025-02-11T10:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000072,
+            "prompt_id": 9485960312039485766,
+            "image_url": "cyber_sun_v4_dark",
+            "is_representive": false,
+            "Field": 68.33,
+            "created_at": "2025-02-11T10:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000073,
+            "prompt_id": 1596071423140596877,
+            "image_url": "chair_v1_front",
+            "is_representive": true,
+            "Field": 690.11,
+            "created_at": "2025-03-15T11:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000074,
+            "prompt_id": 1596071423140596877,
+            "image_url": "chair_v1_back",
+            "is_representive": false,
+            "Field": 660.44,
+            "created_at": "2025-03-15T11:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000077,
+            "prompt_id": 2607182534251607988,
+            "image_url": "jungle_path_ray",
+            "is_representive": true,
+            "Field": 580.11,
+            "created_at": "2025-04-21T12:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000078,
+            "prompt_id": 2607182534251607988,
+            "image_url": "jungle_path_mist",
+            "is_representive": false,
+            "Field": 550.44,
+            "created_at": "2025-04-21T12:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000079,
+            "prompt_id": 2607182534251607988,
+            "image_url": "jungle_path_bird",
+            "is_representive": false,
+            "Field": 510.33,
+            "created_at": "2025-04-21T12:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000080,
+            "prompt_id": 3718293645362718099,
+            "image_url": "gryphon_sky_v1",
+            "is_representive": true,
+            "Field": 912.11,
+            "created_at": "2025-05-31T10:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000081,
+            "prompt_id": 3718293645362718099,
+            "image_url": "gryphon_sky_head",
+            "is_representive": false,
+            "Field": 880.44,
+            "created_at": "2025-05-31T10:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000082,
+            "prompt_id": 3718293645362718099,
+            "image_url": "gryphon_sky_land",
+            "is_representive": false,
+            "Field": 820.33,
+            "created_at": "2025-05-31T10:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000083,
+            "prompt_id": 4829304756473829100,
+            "image_url": "px_tavern_room",
+            "is_representive": true,
+            "Field": 250.11,
+            "created_at": "2025-06-10T13:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000084,
+            "prompt_id": 4829304756473829100,
+            "image_url": "px_tavern_bar",
+            "is_representive": false,
+            "Field": 220.44,
+            "created_at": "2025-06-10T13:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000085,
+            "prompt_id": 4829304756473829100,
+            "image_url": "px_tavern_fire",
+            "is_representive": false,
+            "Field": 210.33,
+            "created_at": "2025-06-10T13:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000086,
+            "prompt_id": 5930415867584930211,
+            "image_url": "wiz_tower_top",
+            "is_representive": true,
+            "Field": 810.11,
+            "created_at": "2025-07-06T16:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000087,
+            "prompt_id": 5930415867584930211,
+            "image_url": "wiz_tower_base",
+            "is_representive": false,
+            "Field": 780.44,
+            "created_at": "2025-07-06T16:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000088,
+            "prompt_id": 5930415867584930211,
+            "image_url": "wiz_tower_sky",
+            "is_representive": false,
+            "Field": 720.33,
+            "created_at": "2025-07-06T16:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000089,
+            "prompt_id": 6041526978695041322,
+            "image_url": "mars_dome_v4",
+            "is_representive": true,
+            "Field": 150.11,
+            "created_at": "2025-08-16T14:00:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000090,
+            "prompt_id": 6041526978695041322,
+            "image_url": "mars_dome_rover",
+            "is_representive": false,
+            "Field": 140.44,
+            "created_at": "2025-08-16T14:01:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000091,
+            "prompt_id": 6041526978695041322,
+            "image_url": "mars_dome_int",
+            "is_representive": false,
+            "Field": 120.33,
+            "created_at": "2025-08-16T14:02:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000092,
+            "prompt_id": 4192837465091827364,
+            "image_url": "cyber_sam_v2",
+            "is_representive": false,
+            "Field": 880.55,
+            "created_at": "2025-01-10T08:30:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000093,
+            "prompt_id": 7485960312039485766,
+            "image_url": "float_isl_v5",
+            "is_representive": false,
+            "Field": 995.11,
+            "created_at": "2025-04-13T12:10:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000094,
+            "prompt_id": 2829304756473829100,
+            "image_url": "dragon_shrine_detail",
+            "is_representive": false,
+            "Field": 810.44,
+            "created_at": "2025-08-11T14:10:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000095,
+            "prompt_id": 5041526978695041322,
+            "image_url": "car_future_blueprint",
+            "is_representive": false,
+            "Field": 310.55,
+            "created_at": "2025-10-21T11:10:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000096,
+            "prompt_id": 8374859201928374655,
+            "image_url": "steam_air_cockpit",
+            "is_representive": false,
+            "Field": 840.11,
+            "created_at": "2026-01-02T17:10:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000097,
+            "prompt_id": 1596071423140596877,
+            "image_url": "chair_v1_room",
+            "is_representive": false,
+            "Field": 660.44,
+            "created_at": "2025-03-15T11:10:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000098,
+            "prompt_id": 3718293645362718099,
+            "image_url": "gryphon_feathers",
+            "is_representive": false,
+            "Field": 912.33,
+            "created_at": "2025-05-31T10:10:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000099,
+            "prompt_id": 5930415867584930211,
+            "image_url": "wiz_tower_magic",
+            "is_representive": false,
+            "Field": 820.55,
+            "created_at": "2025-07-06T16:10:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000100,
+            "prompt_id": 6041526978695041322,
+            "image_url": "mars_dome_map",
+            "is_representive": false,
+            "Field": 155.11,
+            "created_at": "2025-08-16T14:10:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000101,
+            "prompt_id": 4192837465091827364,
+            "image_url": "cyber_sam_sword",
+            "is_representive": false,
+            "Field": 770.44,
+            "created_at": "2025-01-10T08:35:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000102,
+            "prompt_id": 7485960312039485766,
+            "image_url": "float_isl_island",
+            "is_representive": false,
+            "Field": 920.11,
+            "created_at": "2025-04-13T12:15:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000103,
+            "prompt_id": 2829304756473829100,
+            "image_url": "dragon_shrine_entrance",
+            "is_representive": false,
+            "Field": 740.33,
+            "created_at": "2025-08-11T14:15:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000104,
+            "prompt_id": 5041526978695041322,
+            "image_url": "car_future_interior",
+            "is_representive": false,
+            "Field": 320.11,
+            "created_at": "2025-10-21T11:15:00.000000"
+        },
+        {
+            "lookbook_image_id": 10000000105,
+            "prompt_id": 8374859201928374655,
+            "image_url": "steam_air_propeller",
+            "is_representive": false,
+            "Field": 790.22,
+            "created_at": "2026-01-02T17:15:00.000000"
+        }
+    ],
+    "ai_models": [
+        {
+            "model_id": 1410545760294684400,
+            "name": "a",
+            "order_index": 106241,
+            "is_active": true,
+            "created_at": "2023-02-11T06:41:51.626215",
+            "updated_at": "2025-11-27T02:40:30.379084"
+        },
+        {
+            "model_id": 1345865396520646000,
+            "name": "mouth",
+            "order_index": 595814,
+            "is_active": false,
+            "created_at": "2023-02-22T01:49:40.844495",
+            "updated_at": "2025-02-08T08:19:29.889822"
+        },
+        {
+            "model_id": 6065648525381128000,
+            "name": "small",
+            "order_index": 979420,
+            "is_active": false,
+            "created_at": "2024-04-22T14:49:41.052931",
+            "updated_at": "2025-05-17T08:23:41.692375"
+        },
+        {
+            "model_id": 4245089065397389300,
+            "name": "moment",
+            "order_index": 518202,
+            "is_active": false,
+            "created_at": "2025-08-25T03:25:10.620703",
+            "updated_at": "2025-04-09T21:05:29.454842"
+        },
+        {
+            "model_id": 1185561252414594800,
+            "name": "social",
+            "order_index": 934237,
+            "is_active": false,
+            "created_at": "2025-03-06T08:10:16.100137",
+            "updated_at": "2024-06-02T14:43:08.949977"
+        },
+        {
+            "model_id": 130900629620252980,
+            "name": "within",
+            "order_index": 184772,
+            "is_active": false,
+            "created_at": "2024-10-22T06:08:31.344140",
+            "updated_at": "2025-02-06T05:46:01.651116"
+        },
+        {
+            "model_id": 6202542370651345000,
+            "name": "bed",
+            "order_index": 537956,
+            "is_active": true,
+            "created_at": "2023-05-05T18:43:32.460648",
+            "updated_at": "2024-03-04T21:06:15.840479"
+        },
+        {
+            "model_id": 5238653227042731000,
+            "name": "purpose",
+            "order_index": 996878,
+            "is_active": false,
+            "created_at": "2025-05-23T05:46:08.646297",
+            "updated_at": "2023-07-05T11:26:31.477662"
+        }
+    ],
+    "prompt_variables": [
+        {
+            "prompt_variable_id": 8220910721486680000,
+            "prompt_id": 3917966816178057000,
+            "variable_name": "fear",
+            "description": "second",
+            "key_name": "local",
+            "order_index": 707588
+        },
+        {
+            "prompt_variable_id": 2138693066889930000,
+            "prompt_id": 8615231499057580000,
+            "variable_name": "daughter",
+            "description": "so",
+            "key_name": "suffer",
+            "order_index": 910033
+        },
+        {
+            "prompt_variable_id": 521152446214266900,
+            "prompt_id": 6644337549279731000,
+            "variable_name": "east",
+            "description": "executive",
+            "key_name": "sport",
+            "order_index": 284714
+        },
+        {
+            "prompt_variable_id": 419116653732580030,
+            "prompt_id": 5579866212395994000,
+            "variable_name": "east",
+            "description": "lose",
+            "key_name": "force",
+            "order_index": 368587
+        },
+        {
+            "prompt_variable_id": 2850816294164783600,
+            "prompt_id": 399877465055936400,
+            "variable_name": "painting",
+            "description": "her",
+            "key_name": "rock",
+            "order_index": 440146
+        },
+        {
+            "prompt_variable_id": 3907898831708423700,
+            "prompt_id": 1997566917947271000,
+            "variable_name": "nice",
+            "description": "himself",
+            "key_name": "ground",
+            "order_index": 441764
+        },
+        {
+            "prompt_variable_id": 4832095515082940000,
+            "prompt_id": 5880392979118411000,
+            "variable_name": "part",
+            "description": "in",
+            "key_name": "power",
+            "order_index": 252471
+        },
+        {
+            "prompt_variable_id": 7115503836159017000,
+            "prompt_id": 3906564665169511400,
+            "variable_name": "machine",
+            "description": "station",
+            "key_name": "attention",
+            "order_index": 108278
+        }
+    ],
+    "reports": [
+        {
+            "report_id": 3756426113993608700,
+            "reporter_id": 5044282697307024000,
+            "target_id": 6018889591514683000,
+            "reason": "soon",
+            "status": "reviewed",
+            "created_at": "2024-01-29T20:28:17.398146"
+        },
+        {
+            "report_id": 1467811527104776700,
+            "reporter_id": 3728980713585517600,
+            "target_id": 8613061020923840000,
+            "reason": "interesting",
+            "status": "rejected",
+            "created_at": "2026-01-16T16:39:14.747264"
+        },
+        {
+            "report_id": 3696539599233142000,
+            "reporter_id": 3814432705015418000,
+            "target_id": 6117803969202526000,
+            "reason": "threat",
+            "status": "rejected",
+            "created_at": "2024-09-01T07:00:41.440943"
+        },
+        {
+            "report_id": 3100171951381403000,
+            "reporter_id": 3338621387748839000,
+            "target_id": 4358610586529520600,
+            "reason": "message",
+            "status": "reviewed",
+            "created_at": "2025-07-12T00:45:13.757294"
+        },
+        {
+            "report_id": 5670194017349759000,
+            "reporter_id": 5402977236006786000,
+            "target_id": 6488357020606099000,
+            "reason": "four",
+            "status": "rejected",
+            "created_at": "2025-12-30T14:22:09.900439"
+        },
+        {
+            "report_id": 5563160786727789000,
+            "reporter_id": 5432377204740774000,
+            "target_id": 5770023280822906000,
+            "reason": "peace",
+            "status": "reviewed",
+            "created_at": "2025-01-08T15:47:46.169790"
+        },
+        {
+            "report_id": 427716242695852500,
+            "reporter_id": 124496887111403460,
+            "target_id": 8346703316235813000,
+            "reason": "affect",
+            "status": "reviewed",
+            "created_at": "2024-04-09T00:35:56.751585"
+        },
+        {
+            "report_id": 5273863198895652000,
+            "reporter_id": 8287212382899511000,
+            "target_id": 463897191156475700,
+            "reason": "school",
+            "status": "reviewed",
+            "created_at": "2023-04-23T19:50:09.183088"
+        }
+    ],
+    "lookbook_image_variable_options": [
+        {
+            "combination_id": 5774496453621014000,
+            "lookbook_image_id": 4873067429371771000,
+            "variable_value_id": 2373554620700338700
+        },
+        {
+            "combination_id": 27249534067091612,
+            "lookbook_image_id": 380352770386954900,
+            "variable_value_id": 5580423989480267000
+        },
+        {
+            "combination_id": 4582800165149852700,
+            "lookbook_image_id": 3526807996171936000,
+            "variable_value_id": 6085878856366372000
+        },
+        {
+            "combination_id": 2872215523457992000,
+            "lookbook_image_id": 6506677985038461000,
+            "variable_value_id": 4196855748400494600
+        },
+        {
+            "combination_id": 2333380341431922000,
+            "lookbook_image_id": 7211009416313356000,
+            "variable_value_id": 1257569387552748300
+        },
+        {
+            "combination_id": 1853480345198760200,
+            "lookbook_image_id": 5067613527016740000,
+            "variable_value_id": 3919685566599139300
+        },
+        {
+            "combination_id": 3148709260155291000,
+            "lookbook_image_id": 7353155660046380000,
+            "variable_value_id": 3184325998832716000
+        },
+        {
+            "combination_id": 520338089645564160,
+            "lookbook_image_id": 9106898062384633000,
+            "variable_value_id": 445396562987294140
+        }
+    ],
+    "prompt_variable_values": [
+        {
+            "variable_value_id": 1771529621547876600,
+            "prompt_variable_id": 9019966285645242000,
+            "variable_value": "help"
+        },
+        {
+            "variable_value_id": 198636216394330080,
+            "prompt_variable_id": 9081523785670205000,
+            "variable_value": "some"
+        },
+        {
+            "variable_value_id": 1743266223469025300,
+            "prompt_variable_id": 8843961221039557000,
+            "variable_value": "development"
+        },
+        {
+            "variable_value_id": 7194319732594519000,
+            "prompt_variable_id": 6431145163434138000,
+            "variable_value": "ground"
+        },
+        {
+            "variable_value_id": 3453055783235235000,
+            "prompt_variable_id": 1960383132124446500,
+            "variable_value": "week"
+        },
+        {
+            "variable_value_id": 888476673743486700,
+            "prompt_variable_id": 7518136941180885000,
+            "variable_value": "anything"
+        },
+        {
+            "variable_value_id": 3281910468995609600,
+            "prompt_variable_id": 9085345154712025000,
+            "variable_value": "treat"
+        },
+        {
+            "variable_value_id": 1242784156422846700,
+            "prompt_variable_id": 8683331478157834000,
+            "variable_value": "health"
+        }
+    ],
+    "generated_images": [
+        {
+            "image_id": 6474472348101169000,
+            "purchase_id": 8780508383371160000,
+            "ai_model_id": 6429899076313063000,
+            "image_quality": "low",
+            "image_url": "maintain",
+            "created_at": "2024-04-02T20:19:36.303970"
+        },
+        {
+            "image_id": 6375485208664884000,
+            "purchase_id": 2068418992000784600,
+            "ai_model_id": 4554087675519088600,
+            "image_quality": "high",
+            "image_url": "contain",
+            "created_at": "2025-06-22T10:30:26.232766"
+        },
+        {
+            "image_id": 880008086234410900,
+            "purchase_id": 2996415526010814000,
+            "ai_model_id": 4682613871381290000,
+            "image_quality": "high",
+            "image_url": "within",
+            "created_at": "2024-01-21T01:18:11.956901"
+        },
+        {
+            "image_id": 2421919469409913300,
+            "purchase_id": 6330239841577455000,
+            "ai_model_id": 8556978955492411000,
+            "image_quality": "high",
+            "image_url": "design",
+            "created_at": "2024-06-28T21:04:09.238728"
+        },
+        {
+            "image_id": 3066589146219239000,
+            "purchase_id": 3650542736252574700,
+            "ai_model_id": 3457490405637599000,
+            "image_quality": "low",
+            "image_url": "success",
+            "created_at": "2023-08-02T05:12:40.753502"
+        },
+        {
+            "image_id": 3139543340763207000,
+            "purchase_id": 1382060968978802400,
+            "ai_model_id": 2856149727541278700,
+            "image_quality": "high",
+            "image_url": "play",
+            "created_at": "2024-09-15T10:48:11.851699"
+        },
+        {
+            "image_id": 1396865868059456000,
+            "purchase_id": 3791679820000333000,
+            "ai_model_id": 1646604508370745900,
+            "image_quality": "low",
+            "image_url": "respond",
+            "created_at": "2024-07-20T17:48:23.370806"
+        },
+        {
+            "image_id": 4542781366632388000,
+            "purchase_id": 5269305112214598000,
+            "ai_model_id": 8893934852278608000,
+            "image_quality": "low",
+            "image_url": "space",
+            "created_at": "2025-11-10T13:45:57.825198"
+        }
+    ],
+    "bookmarks": [
+        {
+            "bookmark_id": 4740224031846478000,
+            "user_id": 1155368444065165600,
+            "prompt_id": 7712405703192556000,
+            "created_at": "2023-02-13T17:18:30.160267"
+        },
+        {
+            "bookmark_id": 3993317787943255600,
+            "user_id": 4605421410514831400,
+            "prompt_id": 2245147001271274200,
+            "created_at": "2024-06-18T08:50:59.942569"
+        },
+        {
+            "bookmark_id": 4718265162521232000,
+            "user_id": 1301665470498257200,
+            "prompt_id": 6136377903871639000,
+            "created_at": "2025-12-19T23:46:25.852975"
+        },
+        {
+            "bookmark_id": 4880077825942095000,
+            "user_id": 4257374391520148500,
+            "prompt_id": 5832117839438709000,
+            "created_at": "2025-09-06T13:27:19.849962"
+        },
+        {
+            "bookmark_id": 2751357461044164000,
+            "user_id": 4293100479590784500,
+            "prompt_id": 4247793782205946000,
+            "created_at": "2025-06-23T09:03:38.244079"
+        },
+        {
+            "bookmark_id": 2243264341478754300,
+            "user_id": 8987835310606467000,
+            "prompt_id": 269747470066196670,
+            "created_at": "2025-01-10T11:23:10.500271"
+        },
+        {
+            "bookmark_id": 3797679047443656700,
+            "user_id": 1438129219942069000,
+            "prompt_id": 2829067028204953600,
+            "created_at": "2023-06-07T20:57:22.111100"
+        },
+        {
+            "bookmark_id": 7558524660755071000,
+            "user_id": 4093794767624963600,
+            "prompt_id": 5441192705217250000,
+            "created_at": "2024-03-16T06:07:52.228815"
+        }
+    ],
+    "generated_image_variable_values": [
+        {
+            "image_id": 5815124465529473000,
+            "variable_value_id": 7179733757382721000
+        },
+        {
+            "image_id": 8640419279959446000,
+            "variable_value_id": 8661767247346428000
+        },
+        {
+            "image_id": 485652489281638300,
+            "variable_value_id": 7545316783417966000
+        },
+        {
+            "image_id": 7980843836983319000,
+            "variable_value_id": 3136168917570620000
+        },
+        {
+            "image_id": 8350990795590508000,
+            "variable_value_id": 4837014288879581000
+        },
+        {
+            "image_id": 7265870053508645000,
+            "variable_value_id": 6663266992310863000
+        },
+        {
+            "image_id": 1011846580395366800,
+            "variable_value_id": 8445799395084256000
+        },
+        {
+            "image_id": 4962568646005900000,
+            "variable_value_id": 1901157617734301700
+        }
+    ]
+}

@@ -4,6 +4,7 @@ import { Theme } from "@radix-ui/themes";
 import "./globals.css";
 import Header from "@/components/Header";
 import { Suspense } from "react";
+import { AuthProvider } from "@/context/AuthContext";
 
 const suit = localFont({
   src: [
@@ -36,12 +37,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={suit.variable}>
       <body className="antialiased">
-        <Theme accentColor="tomato" className="max-w-7xl m-auto">
-          <Suspense fallback={<div className="h-20 w-full"></div>}>
-            <Header isLoggedIn={true} creditAmount={100} userName="John Doe" />
-          </Suspense>
-          {children}
-        </Theme>
+        <AuthProvider>
+          <Theme accentColor="tomato" className="max-w-7xl m-auto">
+            <Suspense fallback={<div className="h-20 w-full"></div>}>
+              <Header />
+            </Suspense>
+            {children}
+          </Theme>
+        </AuthProvider>
       </body>
     </html>
   );
