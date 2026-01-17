@@ -22,7 +22,7 @@ export default function Searching({
   onSearchTermChange,
 }: props) {
   return (
-    <div className="flex px-4 gap-2">
+    <div className="flex px-4 gap-2 mt-20 max-w-7xl w-full m-auto">
       <Select.Root value={sortOrder} onValueChange={onSortOrderChange}>
         <Select.Trigger className="min-h-10! min-w-48! px-8! cursor-pointer!" radius="full" />
         <Select.Content className="rounded-2xl! p-1! mt-2! bg-(--color-bg-content-2)!" position="popper">

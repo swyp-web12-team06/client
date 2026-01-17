@@ -6,7 +6,7 @@ import Lookbook from "@/components/Lookbook";
 import { LookbookImage } from "@/type/lookbook";
 import { Category } from "@/type/category";
 import { Prompt } from "@/type/prompt";
-import { useEffect, useState, Suspense, useMemo } from "react";
+import { useEffect, useState, Suspense, useMemo, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 
 function View({ data }: { data: LookbookImage[] }) {
@@ -23,6 +23,35 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState('new');
   const [searchTerm, setSearchTerm] = useState('');
+  const [isSearchingVisible, setIsSearchingVisible] = useState(true);
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+
+      if (window.scrollY > 50) {
+        setIsSearchingVisible(false);
+      } else {
+        setIsSearchingVisible(true);
+      }
+
+      scrollTimeout.current = setTimeout(() => {
+        setIsSearchingVisible(true);
+      }, 2000);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     fetch("/mock/MOCK_DATA.json")
@@ -94,19 +123,26 @@ export default function Home() {
   }, [sortOrder, filteredImages, prompts]);
 
   return (
-    <main>
-      <Searching
-        categories={categories}
-        selectedCategory={selectedCategory}
-        onSelectCategory={handleCategorySelect}
-        sortOrder={sortOrder}
-        onSortOrderChange={handleSortOrderChange}
-        searchTerm={searchTerm}
-        onSearchTermChange={handleSearchTermChange}
-      />
-      <Suspense fallback={<div>Loading...</div>}>
-        <View data={sortedAndFilteredImages} />
-      </Suspense>
+    <main className="min-h-screen pt-20">
+      <div
+        className={`fixed bg-(--color-bg-lightest) top-0 left-0 right-0 z-5 transition duration-300 ease-in-out ${isSearchingVisible ? "translate-y-0 opacity-100 pb-4" : "-translate-y-full opacity-0"
+          }`}
+      >
+        <Searching
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onSelectCategory={handleCategorySelect}
+          sortOrder={sortOrder}
+          onSortOrderChange={handleSortOrderChange}
+          searchTerm={searchTerm}
+          onSearchTermChange={handleSearchTermChange}
+        />
+      </div>
+      <div className="pt-10">
+        <Suspense fallback={<div>Loading...</div>}>
+          <View data={sortedAndFilteredImages} />
+        </Suspense>
+      </div>
     </main>
   );
 }
