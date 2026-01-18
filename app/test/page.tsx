@@ -1,9 +1,12 @@
 "use client";
 
+import { Button } from "@/components/commons/Button";
+import Link from "next/link";
+
 export default function Test() {
   return (
-    <main className="w-full h-screen flex flex-col items-center gap-10">
-      <div className="w-[80%] h-screen flex flex-col gap-10 mt-20">
+    <main className="w-full h-[80%] flex flex-col items-center gap-10">
+      <div className="w-[80%] flex flex-col gap-10 mt-20 mt-20">
         <h1 className="text-4xl font-bold">Color</h1>
         <div className="flex flex-col gap-5">
           <div className="flex gap-5">
@@ -36,7 +39,7 @@ export default function Test() {
           </div>
         </div>
       </div>
-      <div className="w-[80%] h-screen flex flex-col gap-10">
+      <div className="w-[80%] flex flex-col gap-10">
         <h1 className="text-4xl font-bold">Typography</h1>
 
         <div className="flex flex-col gap-8">
@@ -99,6 +102,22 @@ export default function Test() {
             <p className="text-caption-medium">
               Caption · Medium — Metadata / Helper text
             </p>
+          </section>
+        </div>
+
+
+        <div className=" flex flex-col gap-8">
+          <h1 className="text-4xl font-bold">Button</h1>
+          <section className="space-y-4">
+            <h2 className="text-lg font-semibold underline text-gray-700">1. Variants</h2>
+            <div className="flex gap-4 items-center">
+              <Button variant="primary">Primary 버튼</Button>
+              <Button variant="primary" size="sm">Primary 버튼</Button>
+              <Button variant="primary" size="md">Primary 버튼</Button>
+              <Button variant="tertiary">Tertiary 버튼</Button>
+              <Button variant="tertiary" size="sm">Primary 버튼</Button>
+              <Button variant="tertiary" size="md">Primary 버튼</Button>
+            </div>
           </section>
         </div>
       </div>
