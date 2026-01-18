@@ -2,11 +2,12 @@
 
 
 import { Button } from "@/components/commons/Button";
+import Input from "@/components/commons/Input";
 
 export default function Test() {
   return (
-    <main className="w-full h-[80%] flex flex-col items-center gap-10">
-      <div className="w-[80%] flex flex-col gap-10 mt-20 mt-20">
+    <main className="w-full h-[80%] mb-20 flex flex-col items-center gap-10">
+      <div className="w-[80%] flex flex-col gap-10 mt-20">
 
         <h1 className="text-4xl font-bold">Color</h1>
         <div className="flex flex-col gap-5">
@@ -132,6 +133,8 @@ export default function Test() {
         <h1 className="text-4xl font-bold">Input</h1>
         <section className="flex flex-col gap-2">
           <Input/>
+          <Input className="bg-red-500" radius="sm" border="secondary"/>
+          <Input className="bg-blue-500 text-green-500" radius="md" border="primary"/>
           <Input isSearching/>
           <Input isSearching placeholder="Search..." />
         </section>
