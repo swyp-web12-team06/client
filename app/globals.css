@@ -2,6 +2,9 @@
 @import "@radix-ui/themes/styles.css";
 
 :root {
+  --background: #ffffff;
+  --foreground: #171717;
+
   --light-color: #ffebe6;
   --light-hover: #ffc0b0;
   --color-main: #ff3400;
@@ -26,8 +29,8 @@
 }
 
 @theme {
-  --color-background: var(--color-bg-lightest);
-  --color-foreground: var(--color-darkest);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
 
   /* brand color */
   --color-brand-50: var(--light-color);
@@ -42,7 +45,6 @@
   --color-brand-900: var(--main-hover);
 
   /* gray color */
-  --color-white: var(--color-bg-lightest);
   --color-gray-10: var(--color-font-on-dark);
   --color-gray-25: var(--color-bg-content-1);
   --color-gray-50: var(--color-bg-content-2);
@@ -58,9 +60,10 @@
   --color-system-red-bg: var(--color-alert-bg);
   --color-system-red: var(--color-alert);
   --color-system-red-font: var(--color-alert-font);
+
 }
 
-@utility text-display1 {
+@utility typo-display1 {
   font-size: 5rem;
   font-style: normal;
   font-weight: 700;
@@ -68,7 +71,7 @@
   letter-spacing: -2px;
 }
 
-@utility text-display4 {
+@utility typo-display4 {
   font-size: 3rem;
   font-style: normal;
   font-weight: 700;
@@ -76,7 +79,7 @@
   letter-spacing: -1px;
 }
 
-@utility text-heading1-bold {
+@utility typo-heading1-bold {
   font-size: 2rem;
   font-style: normal;
   font-weight: 700;
@@ -84,7 +87,7 @@
   letter-spacing: -0.5px;
 }
 
-@utility text-heading1-regular {
+@utility typo-heading1-regular {
   font-size: 2rem;
   font-style: normal;
   font-weight: 400;
@@ -92,7 +95,7 @@
   letter-spacing: -0.5px;
 }
 
-@utility text-heading2-bold {
+@utility typo-heading2-bold {
   font-size: 1.5rem;
   font-style: normal;
   font-weight: 700;
@@ -100,7 +103,7 @@
   letter-spacing: -0.25px;
 }
 
-@utility text-heading2-medium {
+@utility typo-heading2-medium {
   font-size: 1.5rem;
   font-style: normal;
   font-weight: 500;
@@ -108,7 +111,7 @@
   letter-spacing: -0.25px;
 }
 
-@utility text-heading2-regular {
+@utility typo-heading2-regular {
   font-size: 1.5rem;
   font-style: normal;
   font-weight: 400;
@@ -116,7 +119,7 @@
   letter-spacing: -0.25px;
 }
 
-@utility text-heading3-bold {
+@utility typo-heading3-bold {
   font-size: 1.125rem;
   font-style: normal;
   font-weight: 700;
@@ -124,7 +127,7 @@
   letter-spacing: -0.25px;
 }
 
-@utility text-heading3-medium {
+@utility typo-heading3-medium {
   font-size: 1.125rem;
   font-style: normal;
   font-weight: 500;
@@ -132,7 +135,7 @@
   letter-spacing: -0.25px;
 }
 
-@utility text-heading3-regular {
+@utility typo-heading3-regular {
   font-size: 1.125rem;
   font-style: normal;
   font-weight: 400;
@@ -141,35 +144,35 @@
 }
 
 /* Body */
-@utility text-body1-bold {
+@utility typo-body1-bold {
   font-size: 1rem;
   font-style: normal;
   font-weight: 700;
   line-height: 24px; /* 150% */
 }
 
-@utility text-body1-medium {
+@utility typo-body1-medium {
   font-size: 1rem;
   font-style: normal;
   font-weight: 500;
   line-height: 24px; /* 150% */
 }
 
-@utility text-body2-bold {
+@utility typo-body2-bold {
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 700;
   line-height: 20px; /* 142.857% */
 }
 
-@utility text-body2-medium {
+@utility typo-body2-medium {
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 500;
   line-height: 20px; /* 142.857% */
 }
 
-@utility text-caption-bold {
+@utility typo-caption-bold {
   font-size: 0.75rem;
   font-style: normal;
   font-weight: 700;
@@ -177,7 +180,7 @@
   letter-spacing: 0.25px;
 }
 
-@utility text-caption-medium {
+@utility typo-caption-medium {
   font-size: 0.75rem;
   font-style: normal;
   font-weight: 500;
