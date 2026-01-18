@@ -5,18 +5,18 @@ import { cn } from "@/utils/styles";
 export type ButtonVariants = VariantProps<typeof buttonVariants>;
 
 const buttonVariants = cva(
-    "inline-flex items-center justify-center rounded-full text-white cursor-pointer",
+    "inline-flex items-center justify-center rounded-full cursor-pointer",
     {
         variants: {
             variant: {
                 primary:
-                    "bg-brand-300 text-white hover:bg-brand-600",
+                    "bg-brand-300 text-background hover:bg-brand-600",
                 tertiary:
-                    "bg-gray-200 border-gray-400 text-white hover:bg-gray-300 hover:bg-gray-500",
+                    "bg-gray-200 border border-gray-400 text-background hover:bg-gray-300 hover:bg-gray-500",
             },
             size: {
-                sm: "h-8 px-3 text-body2-bold",
-                md: "h-10 px-4 text-body1-bold",
+                sm: "h-8 px-3 typo-body2-bold",
+                md: "h-10 px-4 typo-body1-bold",
             },
         },
         defaultVariants: {
@@ -36,7 +36,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         return (
             <button
                 ref={ref}
-                className={cn(buttonVariants({ variant, size, className }), className)}
+                className={cn(buttonVariants({ variant, size }), className)}
                 {...props}
             />
         );
