@@ -1,9 +1,11 @@
 "use client";
 
+import Input from "@/components/Input";
+
 export default function Test() {
   return (
-    <main className="w-full h-screen flex flex-col items-center gap-10">
-      <div className="w-[80%] h-screen flex flex-col gap-10 mt-20">
+    <main className="w-full flex flex-col items-center gap-10 pb-20">
+      <div className="w-[80%] flex flex-col gap-10 mt-20">
         <h1 className="text-4xl font-bold">Color</h1>
         <div className="flex flex-col gap-5">
           <div className="flex gap-5">
@@ -36,7 +38,7 @@ export default function Test() {
           </div>
         </div>
       </div>
-      <div className="w-[80%] h-screen flex flex-col gap-10">
+      <div className="w-[80%] flex flex-col gap-10">
         <h1 className="text-4xl font-bold">Typography</h1>
 
         <div className="flex flex-col gap-8">
@@ -101,6 +103,14 @@ export default function Test() {
             </p>
           </section>
         </div>
+      </div>
+      <div className="w-[80%] flex flex-col gap-10">
+        <h1 className="text-4xl font-bold">Input</h1>
+        <section className="flex flex-col gap-2">
+          <Input/>
+          <Input isSearching/>
+          <Input isSearching placeholder="Search..." />
+        </section>
       </div>
     </main>
   );
