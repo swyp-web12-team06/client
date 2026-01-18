@@ -125,7 +125,8 @@ export default function Home() {
   return (
     <main className="min-h-screen pt-20">
       <div
-        className={`fixed bg-(--color-bg-lightest) top-0 left-0 right-0 z-5 transition duration-300 ease-in-out ${isSearchingVisible ? "translate-y-0 opacity-100 pb-4" : "-translate-y-full opacity-0"
+        className={`fixed w-full max-w-7xl bg-(--color-bg-lightest) z-5 transition duration-300 ease-in-out 
+          ${isSearchingVisible ? "translate-y-0 opacity-100 pb-4" : "-translate-y-full opacity-0"
           }`}
       >
         <Searching
