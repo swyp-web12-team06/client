@@ -1,7 +1,7 @@
 import { Select, TextField } from "@radix-ui/themes";
 import Image from "next/image";
 import { Category } from "@/type/category";
-import Input from "./Input";
+import Input from "./commons/Input";
 
 interface props {
   categories: Category[];
