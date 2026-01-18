@@ -23,7 +23,7 @@ export default function Searching({
   onSearchTermChange,
 }: props) {
   return (
-    <div className="flex px-4 justify-between mt-20 max-w-7xl w-full m-auto">
+    <div className="flex px-4 justify-between">
       <div className="flex gap-[10.98px]!">
         <Select.Root value={sortOrder} onValueChange={onSortOrderChange}>
           <Select.Trigger className="text-gray-500! min-h-10.5! min-w-43.25! px-[16.5px]! cursor-pointer!" radius="full" />
