@@ -20,7 +20,7 @@ export default function Lookbook({ data }: { data: LookbookImage[] }) {
         <Link href={`/lookbook/${promptId}`} key={promptId} className="break-inside-avoid">
           <div className="flex rounded-2xl overflow-hidden border border-gray-300 divide-x divide-gray-300">
             {images.map((image) => (
-              <div key={image.lookbook_image_id} className="relative w-full h-52">
+              <div key={image.lookbook_image_id} className="relative w-full h-54">
                 <Image
                   src={""}
                   alt={`Lookbook Image ${image.lookbook_image_id}`}
