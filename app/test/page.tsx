@@ -10,17 +10,14 @@ export default function Test() {
         <h1 className="text-4xl font-bold">Color</h1>
         <div className="flex flex-col gap-5">
           <div className="flex gap-5">
-            <div className="bg-brand-100 h-10 w-10"></div>
-            <div className="bg-brand-200 h-10 w-10"></div>
-            <div className="bg-brand-300 h-10 w-10"></div>
-            <div className="bg-brand-400 h-10 w-10"></div>
-            <div className="bg-brand-500 h-10 w-10"></div>
-            <div className="bg-brand-600 h-10 w-10"></div>
-            <div className="bg-brand-700 h-10 w-10"></div>
-            <div className="bg-brand-800 h-10 w-10"></div>
-            <div className="bg-brand-900 h-10 w-10"></div>
+            <div className="bg-primary-50 h-10 w-10"></div>
+            <div className="bg-primary-100 h-10 w-10"></div>
+            <div className="bg-primary-200 h-10 w-10"></div>
+            <div className="bg-primary-300 h-10 w-10"></div>
+            <div className="bg-primary-400 h-10 w-10"></div>
           </div>
           <div className="flex gap-5">
+            <div className="h-10 w-10 bg-gray-50"></div>
             <div className="h-10 w-10 bg-gray-100"></div>
             <div className="h-10 w-10 bg-gray-200"></div>
             <div className="h-10 w-10 bg-gray-300"></div>
@@ -33,9 +30,12 @@ export default function Test() {
           </div>
 
           <div className="flex gap-5">
-            <div className="bg-system-red-bg h-10 w-10"></div>
-            <div className="bg-system-red h-10 w-10"></div>
-            <div className="bg-system-red-font h-10 w-10"></div>
+            <div className="h-10 w-10 bg-red-50"></div>
+            <div className="h-10 w-10 bg-red-100"></div>
+          </div>
+          <div className="flex gap-5">
+            <div className="h-10 w-10 bg-blue-50"></div>
+            <div className="h-10 w-10 bg-blue-100"></div>
           </div>
         </div>
       </div>
@@ -47,7 +47,7 @@ export default function Test() {
             <span className="typo-caption-medium text-gray-500">Display</span>
             <p className="typo-display1">Display 1</p>
             <p className="typo-display2">Display 2</p>
-            <p className="typo-display2 text-brand-400">Display 2· brand</p>
+            <p className="typo-display2 text-primary-200">Display 2· primary-200</p>
           </section>
 
           {/* Heading 1 */}
