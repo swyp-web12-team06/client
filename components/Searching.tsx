@@ -1,7 +1,7 @@
-import { Select, TextField } from "@radix-ui/themes";
-import Image from "next/image";
-import { Category } from "@/type/category";
-import Input from "./Input";
+import { Select, TextField } from '@radix-ui/themes';
+import Image from 'next/image';
+import { Category } from '@/type/category';
+import Input from './Input';
 
 interface props {
   categories: Category[];
@@ -11,7 +11,7 @@ interface props {
   onSortOrderChange: (sortOrder: string) => void;
   searchTerm: string;
   onSearchTermChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-};
+}
 
 export default function Searching({
   categories,
@@ -23,18 +23,30 @@ export default function Searching({
   onSearchTermChange,
 }: props) {
   return (
-    <div className="flex px-4 justify-between">
+    <div className="flex justify-between px-4">
       <div className="flex gap-[10.98px]!">
         <Select.Root value={sortOrder} onValueChange={onSortOrderChange}>
-          <Select.Trigger className="text-gray-500! min-h-10.5! min-w-43.25! px-[16.5px]! cursor-pointer!" radius="full" />
-          <Select.Content className="rounded-2xl! p-1! mt-2! bg-(--color-bg-content-2)!" position="popper">
+          <Select.Trigger
+            className="min-h-10.5! min-w-43.25! cursor-pointer! px-[16.5px]! text-gray-500!"
+            radius="full"
+          />
+          <Select.Content
+            className="mt-2! rounded-2xl! bg-(--color-bg-content-2)! p-1!"
+            position="popper"
+          >
             <Select.Group>
               <Select.Item value="new">Newest first</Select.Item>
               <Select.Item value="old">Oldest first</Select.Item>
               <Select.Separator />
-              <Select.Item value="popular" disabled>Most popular</Select.Item>
-              <Select.Item value="liked" disabled>Most liked</Select.Item>
-              <Select.Item value="bookmarked" disabled>Most bookmarked</Select.Item>
+              <Select.Item value="popular" disabled>
+                Most popular
+              </Select.Item>
+              <Select.Item value="liked" disabled>
+                Most liked
+              </Select.Item>
+              <Select.Item value="bookmarked" disabled>
+                Most bookmarked
+              </Select.Item>
             </Select.Group>
             <Select.Separator />
             <Select.Group>
@@ -44,11 +56,17 @@ export default function Searching({
           </Select.Content>
         </Select.Root>
         <Select.Root
-          value={selectedCategory || "All"}
-          onValueChange={(value) => onSelectCategory(value === "All" ? null : value)}
+          value={selectedCategory || 'All'}
+          onValueChange={(value) => onSelectCategory(value === 'All' ? null : value)}
         >
-          <Select.Trigger className="text-gray-500! min-h-10.5! min-w-43.25! px-[16.5px]! cursor-pointer!" radius="full" />
-          <Select.Content className="rounded-2xl! p-1! mt-2! bg-(--color-bg-content-2)!" position="popper">
+          <Select.Trigger
+            className="min-h-10.5! min-w-43.25! cursor-pointer! px-[16.5px]! text-gray-500!"
+            radius="full"
+          />
+          <Select.Content
+            className="mt-2! rounded-2xl! bg-(--color-bg-content-2)! p-1!"
+            position="popper"
+          >
             <Select.Group>
               <Select.Item value="All">All</Select.Item>
               {categories.map((category) => (
@@ -65,7 +83,7 @@ export default function Searching({
         value={searchTerm}
         placeholder="search by model, category and more.."
         onChange={onSearchTermChange}
-        className="max-w-202.75 ml-[10.98px]"
+        className="ml-[10.98px] max-w-202.75"
       />
     </div>
   );
