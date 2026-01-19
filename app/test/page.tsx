@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/commons/Button';
+import Input from '@/components/Input';
 
 export default function Test() {
   return (
@@ -44,9 +45,9 @@ export default function Test() {
           {/* Display */}
           <section className="flex flex-col gap-2">
             <span className="typo-caption-medium text-gray-500">Display</span>
-            <p className="typo-display1">Display 1 · Bold</p>
-            <p className="typo-display4">Display 4 · Bold</p>
-            <p className="typo-display4 text-brand-400">Display 4 · Bold · brand</p>
+            <p className="typo-display1">Display 1</p>
+            <p className="typo-display2">Display 2</p>
+            <p className="typo-display2 text-brand-400">Display 2· brand</p>
           </section>
 
           {/* Heading 1 */}
@@ -74,18 +75,27 @@ export default function Test() {
 
           {/* Body */}
           <section className="flex flex-col gap-2">
-            <span className="typo-caption-medium text-gray-500">Body</span>
+            <span className="typo-caption-medium text-gray-500">Body1</span>
             <p className="typo-body1-bold">
               Body 1 · Bold — The quick brown fox jumps over the lazy dog.
             </p>
             <p className="typo-body1-medium">
               Body 1 · Medium — The quick brown fox jumps over the lazy dog.
             </p>
+            <p className="typo-body1-regular">
+              Body 1 · Regular — The quick brown fox jumps over the lazy dog.
+            </p>{' '}
+          </section>
+          <section className="flex flex-col gap-2">
+            <span className="typo-caption-medium text-gray-500">Body2</span>
             <p className="typo-body2-bold">
               Body 2 · Bold — The quick brown fox jumps over the lazy dog.
             </p>
             <p className="typo-body2-medium">
               Body 2 · Medium — The quick brown fox jumps over the lazy dog.
+            </p>
+            <p className="typo-body2-regular">
+              Body 2 · Regular — The quick brown fox jumps over the lazy dog.
             </p>
           </section>
 
@@ -93,7 +103,7 @@ export default function Test() {
           <section className="flex flex-col gap-2">
             <span className="typo-caption-medium text-gray-500">Caption</span>
             <p className="typo-caption-bold">Caption · Bold — Metadata / Helper text</p>
-            <p className="typo-caption-medium">Caption · Medium — Metadata / Helper text</p>
+            <p className="typo-caption-regular">Caption · Regular — Metadata / Helper text</p>
           </section>
         </div>
         <div className="flex flex-col gap-8">
