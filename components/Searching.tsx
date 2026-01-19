@@ -9,6 +9,7 @@ interface props {
   onSortOrderChange: (sortOrder: string) => void;
   searchTerm: string;
   onSearchTermChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onClearSearchTerm: () => void;
 }
 
 export default function Searching({
@@ -19,6 +20,7 @@ export default function Searching({
   onSortOrderChange,
   searchTerm,
   onSearchTermChange,
+  onClearSearchTerm,
 }: props) {
   return (
     <div className="flex justify-between px-4">
@@ -81,6 +83,7 @@ export default function Searching({
         value={searchTerm}
         placeholder="search by model, category and more.."
         onChange={onSearchTermChange}
+        onClear={onClearSearchTerm}
         className="ml-[10.98px] max-w-202.75"
       />
     </div>

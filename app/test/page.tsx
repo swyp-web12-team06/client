@@ -137,8 +137,7 @@ export default function Test() {
         <h1 className="text-4xl font-bold">Input</h1>
         <section className="flex flex-col gap-2">
           <Input/>
-          <Input className="bg-red-500" radius="sm" border="secondary"/>
-          <Input className="bg-blue-500 text-green-500" radius="md" border="primary"/>
+          <Input border="secondary"/>
           <Input isSearching/>
           <Input isSearching placeholder="Search..." />
         </section>

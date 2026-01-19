@@ -34,7 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="antialiased m-auto max-w-7xl">
         <AuthProvider>
           <Suspense fallback={<div className="h-20 w-full"></div>}>
-            {/* <Header /> */}
+            <Header />
           </Suspense>
           {children}
         </AuthProvider>
