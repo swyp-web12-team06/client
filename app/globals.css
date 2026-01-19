@@ -3,6 +3,8 @@
 
 @layer base {
   :root {
+    --color-background: #ffffff;
+    --color-foreground: #1e1e1e;
     /* ---------- Gray Scale ---------- */
     --st-gray-50: #ffffff;
     --st-gray-100: #fdfdfd;
@@ -33,6 +35,8 @@
 }
 
 @theme {
+  --color-background: var(--color-background);
+  --color-foreground: var(--color-foreground);
   /* Gray */
   --color-gray-50: var(--st-gray-50);
   --color-gray-100: var(--st-gray-100);
