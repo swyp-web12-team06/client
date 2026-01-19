@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 
 import { Button } from "@/components/commons/Button";
@@ -12,36 +12,36 @@ export default function Test() {
         <h1 className="text-4xl font-bold">Color</h1>
         <div className="flex flex-col gap-5">
           <div className="flex gap-5">
-            <div className="w-10 h-10 bg-brand-100"></div>
-            <div className="w-10 h-10 bg-brand-200"></div>
-            <div className="w-10 h-10 bg-brand-300"></div>
-            <div className="w-10 h-10 bg-brand-400"></div>
-            <div className="w-10 h-10 bg-brand-500"></div>
-            <div className="w-10 h-10 bg-brand-600"></div>
-            <div className="w-10 h-10 bg-brand-700"></div>
-            <div className="w-10 h-10 bg-brand-800"></div>
-            <div className="w-10 h-10 bg-brand-900"></div>
+            <div className="bg-brand-100 h-10 w-10"></div>
+            <div className="bg-brand-200 h-10 w-10"></div>
+            <div className="bg-brand-300 h-10 w-10"></div>
+            <div className="bg-brand-400 h-10 w-10"></div>
+            <div className="bg-brand-500 h-10 w-10"></div>
+            <div className="bg-brand-600 h-10 w-10"></div>
+            <div className="bg-brand-700 h-10 w-10"></div>
+            <div className="bg-brand-800 h-10 w-10"></div>
+            <div className="bg-brand-900 h-10 w-10"></div>
           </div>
           <div className="flex gap-5">
-            <div className="w-10 h-10 bg-gray-100"></div>
-            <div className="w-10 h-10 bg-gray-200"></div>
-            <div className="w-10 h-10 bg-gray-300"></div>
-            <div className="w-10 h-10 bg-gray-400"></div>
-            <div className="w-10 h-10 bg-gray-500"></div>
-            <div className="w-10 h-10 bg-gray-600"></div>
-            <div className="w-10 h-10 bg-gray-700"></div>
-            <div className="w-10 h-10 bg-gray-800"></div>
-            <div className="w-10 h-10 bg-gray-900"></div>
+            <div className="h-10 w-10 bg-gray-100"></div>
+            <div className="h-10 w-10 bg-gray-200"></div>
+            <div className="h-10 w-10 bg-gray-300"></div>
+            <div className="h-10 w-10 bg-gray-400"></div>
+            <div className="h-10 w-10 bg-gray-500"></div>
+            <div className="h-10 w-10 bg-gray-600"></div>
+            <div className="h-10 w-10 bg-gray-700"></div>
+            <div className="h-10 w-10 bg-gray-800"></div>
+            <div className="h-10 w-10 bg-gray-900"></div>
           </div>
 
           <div className="flex gap-5">
-            <div className="w-10 h-10 bg-system-red-bg"></div>
-            <div className="w-10 h-10 bg-system-red"></div>
-            <div className="w-10 h-10 bg-system-red-font"></div>
+            <div className="bg-system-red-bg h-10 w-10"></div>
+            <div className="bg-system-red h-10 w-10"></div>
+            <div className="bg-system-red-font h-10 w-10"></div>
           </div>
         </div>
       </div>
-      <div className="w-[80%] flex flex-col gap-10">
+      <div className="flex w-[80%] flex-col gap-10">
         <h1 className="text-4xl font-bold">Typography</h1>
         <div className="flex flex-col gap-8">
           {/* Display */}
@@ -95,32 +95,36 @@ export default function Test() {
           {/* Caption */}
           <section className="flex flex-col gap-2">
             <span className="typo-caption-medium text-gray-500">Caption</span>
-            <p className="typo-caption-bold">
-              Caption · Bold — Metadata / Helper text
-            </p>
-            <p className="typo-caption-medium">
-              Caption · Medium — Metadata / Helper text
-            </p>
+            <p className="typo-caption-bold">Caption · Bold — Metadata / Helper text</p>
+            <p className="typo-caption-medium">Caption · Medium — Metadata / Helper text</p>
           </section>
         </div>
-        <div className=" flex flex-col gap-8">
+        <div className="flex flex-col gap-8">
           <h1 className="text-4xl font-bold">Button</h1>
           <section className="space-y-4">
-            <div className="flex gap-4 items-center">
+            <div className="flex items-center gap-4">
               {/* default */}
               <Button>default 버튼</Button>
               {/* variant, size */}
-              <Button variant="primary" size="sm">Primary sm 버튼</Button>
-              <Button variant="primary" size="md">Primary 버튼</Button>
-              <Button variant="tertiary" size="sm">Tertiary sm 버튼</Button>
-              <Button variant="tertiary" size="md">Tertiary 버튼</Button>
+              <Button variant="primary" size="sm">
+                Primary sm 버튼
+              </Button>
+              <Button variant="primary" size="md">
+                Primary 버튼
+              </Button>
+              <Button variant="tertiary" size="sm">
+                Tertiary sm 버튼
+              </Button>
+              <Button variant="tertiary" size="md">
+                Tertiary 버튼
+              </Button>
               {/* className custom */}
-              <Button className="text-blue-400 border border-blue-400">커스텀 버튼</Button>
+              <Button className="border border-blue-400 text-blue-400">커스텀 버튼</Button>
               {/* onclick test */}
               <Button
                 onClick={() => {
-                  console.log("Button clicked!");
-                  alert("버튼 클릭됨!");
+                  console.log('Button clicked!');
+                  alert('버튼 클릭됨!');
                 }}
               >
                 onClick 테스트
@@ -129,7 +133,7 @@ export default function Test() {
           </section>
         </div>
       </div>
-      <div className="w-[80%] flex flex-col gap-10">
+      <div className="flex w-[80%] flex-col gap-10">
         <h1 className="text-4xl font-bold">Input</h1>
         <section className="flex flex-col gap-2">
           <Input/>

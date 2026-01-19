@@ -5,4 +5,4 @@ export type LookbookImage = {
   is_representive: boolean;
   Field: number;
   created_at: string;
-}
+};

@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "@radix-ui/themes/styles.css";
+@import 'tailwindcss';
+@import '@radix-ui/themes/styles.css';
 
 :root {
   --background: #ffffff;
@@ -60,7 +60,6 @@
   --color-system-red-bg: var(--color-alert-bg);
   --color-system-red: var(--color-alert);
   --color-system-red-font: var(--color-alert-font);
-
 }
 
 @utility typo-display1 {
