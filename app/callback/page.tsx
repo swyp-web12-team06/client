@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -24,7 +24,7 @@ export default function CallbackPage() {
   }, [login, router]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex min-h-screen items-center justify-center">
       <p className="text-lg">Processing login...</p>
     </div>
   );
