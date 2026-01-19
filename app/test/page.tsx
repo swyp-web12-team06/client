@@ -1,6 +1,5 @@
 'use client';
 
-
 import { Button } from "@/components/commons/Button";
 import Input from "@/components/commons/Input";
 
@@ -12,17 +11,14 @@ export default function Test() {
         <h1 className="text-4xl font-bold">Color</h1>
         <div className="flex flex-col gap-5">
           <div className="flex gap-5">
-            <div className="bg-brand-100 h-10 w-10"></div>
-            <div className="bg-brand-200 h-10 w-10"></div>
-            <div className="bg-brand-300 h-10 w-10"></div>
-            <div className="bg-brand-400 h-10 w-10"></div>
-            <div className="bg-brand-500 h-10 w-10"></div>
-            <div className="bg-brand-600 h-10 w-10"></div>
-            <div className="bg-brand-700 h-10 w-10"></div>
-            <div className="bg-brand-800 h-10 w-10"></div>
-            <div className="bg-brand-900 h-10 w-10"></div>
+            <div className="bg-primary-50 h-10 w-10"></div>
+            <div className="bg-primary-100 h-10 w-10"></div>
+            <div className="bg-primary-200 h-10 w-10"></div>
+            <div className="bg-primary-300 h-10 w-10"></div>
+            <div className="bg-primary-400 h-10 w-10"></div>
           </div>
           <div className="flex gap-5">
+            <div className="h-10 w-10 bg-gray-50"></div>
             <div className="h-10 w-10 bg-gray-100"></div>
             <div className="h-10 w-10 bg-gray-200"></div>
             <div className="h-10 w-10 bg-gray-300"></div>
@@ -35,9 +31,12 @@ export default function Test() {
           </div>
 
           <div className="flex gap-5">
-            <div className="bg-system-red-bg h-10 w-10"></div>
-            <div className="bg-system-red h-10 w-10"></div>
-            <div className="bg-system-red-font h-10 w-10"></div>
+            <div className="h-10 w-10 bg-red-50"></div>
+            <div className="h-10 w-10 bg-red-100"></div>
+          </div>
+          <div className="flex gap-5">
+            <div className="h-10 w-10 bg-blue-50"></div>
+            <div className="h-10 w-10 bg-blue-100"></div>
           </div>
         </div>
       </div>
@@ -47,9 +46,9 @@ export default function Test() {
           {/* Display */}
           <section className="flex flex-col gap-2">
             <span className="typo-caption-medium text-gray-500">Display</span>
-            <p className="typo-display1">Display 1 · Bold</p>
-            <p className="typo-display4">Display 4 · Bold</p>
-            <p className="typo-display4 text-brand-400">Display 4 · Bold · brand</p>
+            <p className="typo-display1">Display 1</p>
+            <p className="typo-display2">Display 2</p>
+            <p className="typo-display2 text-primary-200">Display 2· primary-200</p>
           </section>
 
           {/* Heading 1 */}
@@ -77,18 +76,27 @@ export default function Test() {
 
           {/* Body */}
           <section className="flex flex-col gap-2">
-            <span className="typo-caption-medium text-gray-500">Body</span>
+            <span className="typo-caption-medium text-gray-500">Body1</span>
             <p className="typo-body1-bold">
               Body 1 · Bold — The quick brown fox jumps over the lazy dog.
             </p>
             <p className="typo-body1-medium">
               Body 1 · Medium — The quick brown fox jumps over the lazy dog.
             </p>
+            <p className="typo-body1-regular">
+              Body 1 · Regular — The quick brown fox jumps over the lazy dog.
+            </p>{' '}
+          </section>
+          <section className="flex flex-col gap-2">
+            <span className="typo-caption-medium text-gray-500">Body2</span>
             <p className="typo-body2-bold">
               Body 2 · Bold — The quick brown fox jumps over the lazy dog.
             </p>
             <p className="typo-body2-medium">
               Body 2 · Medium — The quick brown fox jumps over the lazy dog.
+            </p>
+            <p className="typo-body2-regular">
+              Body 2 · Regular — The quick brown fox jumps over the lazy dog.
             </p>
           </section>
 
@@ -96,39 +104,78 @@ export default function Test() {
           <section className="flex flex-col gap-2">
             <span className="typo-caption-medium text-gray-500">Caption</span>
             <p className="typo-caption-bold">Caption · Bold — Metadata / Helper text</p>
-            <p className="typo-caption-medium">Caption · Medium — Metadata / Helper text</p>
+            <p className="typo-caption-regular">Caption · Regular — Metadata / Helper text</p>
           </section>
         </div>
         <div className="flex flex-col gap-8">
           <h1 className="text-4xl font-bold">Button</h1>
           <section className="space-y-4">
-            <div className="flex items-center gap-4">
-              {/* default */}
-              <Button>default 버튼</Button>
-              {/* variant, size */}
-              <Button variant="primary" size="sm">
-                Primary sm 버튼
-              </Button>
-              <Button variant="primary" size="md">
-                Primary 버튼
-              </Button>
-              <Button variant="tertiary" size="sm">
-                Tertiary sm 버튼
-              </Button>
-              <Button variant="tertiary" size="md">
-                Tertiary 버튼
-              </Button>
-              {/* className custom */}
-              <Button className="border border-blue-400 text-blue-400">커스텀 버튼</Button>
-              {/* onclick test */}
-              <Button
-                onClick={() => {
-                  console.log('Button clicked!');
-                  alert('버튼 클릭됨!');
-                }}
-              >
-                onClick 테스트
-              </Button>
+            <div className="flex flex-col items-center gap-4">
+              <section className="flex flex-col gap-2">
+                {/* default */}
+                <Button>default 버튼</Button>
+                {/* variant, size */}
+                <Button variant="solid" size="sm">
+                  solid sm 버튼
+                </Button>
+              </section>
+              <section className="flex flex-col gap-2">
+                <Button variant="gradientSolid" size="xl">
+                  gradientSolid xl 버튼
+                </Button>
+                <Button variant="gradientSolid" size="lg">
+                  gradientSolid lg 버튼
+                </Button>
+                <Button variant="gradientSolid" size="md">
+                  gradientSolid 버튼
+                </Button>
+                <Button variant="gradientSolid" size="sm">
+                  gradientSolid sm 버튼
+                </Button>
+              </section>
+              <section className="flex flex-col gap-2">
+                <Button variant="graySolid" size="md">
+                  graySolid 버튼
+                </Button>
+                <Button variant="graySolid" size="sm">
+                  graySolid sm 버튼
+                </Button>
+              </section>
+              <section className="flex flex-col gap-2">
+                <Button variant="outline" size="md">
+                  outline 버튼
+                </Button>
+                <Button variant="outline" size="sm">
+                  outline sm 버튼
+                </Button>
+              </section>
+              <section className="flex flex-col gap-2">
+                <Button variant="lightOutline" size="md">
+                  lightOutline 버튼
+                </Button>
+                <Button variant="lightOutline" size="sm">
+                  lightOutline sm 버튼
+                </Button>
+              </section>
+              <section className="flex flex-col gap-2">
+                {/* className custom */}
+                <Button className="border border-blue-400 bg-blue-50 text-blue-400">
+                  커스텀 버튼
+                </Button>
+                <Button disabled>solid disabled 버튼</Button>
+                <Button variant="outline" size="md" disabled>
+                  outline disabled 버튼
+                </Button>
+                {/* onclick test */}
+                <Button
+                  onClick={() => {
+                    console.log('Button clicked!');
+                    alert('버튼 클릭됨!');
+                  }}
+                >
+                  onClick 테스트
+                </Button>
+              </section>
             </div>
           </section>
         </div>
