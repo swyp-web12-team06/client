@@ -38,7 +38,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         return (
             <div className={cn(inputVariants({ border, radius }), className, { "text-gray-600": isSearching })}>
                 {isSearching && <div className="ml-2 h-7.75 min-w-7.75 relative">
-                    <Image src="/icon/magnifying-glass-icon.svg" alt="Search Icon" fill className="h-7.75 left-0!" />
+                    <Image src="/icon/magnifying-glass-icon.svg" alt="Search Icon" fill className="h-7.75" />
                 </div>}
                 <input
                     ref={ref}
