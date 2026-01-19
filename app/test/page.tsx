@@ -109,33 +109,72 @@ export default function Test() {
         <div className="flex flex-col gap-8">
           <h1 className="text-4xl font-bold">Button</h1>
           <section className="space-y-4">
-            <div className="flex items-center gap-4">
-              {/* default */}
-              <Button>default 버튼</Button>
-              {/* variant, size */}
-              <Button variant="primary" size="sm">
-                Primary sm 버튼
-              </Button>
-              <Button variant="primary" size="md">
-                Primary 버튼
-              </Button>
-              <Button variant="tertiary" size="sm">
-                Tertiary sm 버튼
-              </Button>
-              <Button variant="tertiary" size="md">
-                Tertiary 버튼
-              </Button>
-              {/* className custom */}
-              <Button className="border border-blue-400 text-blue-400">커스텀 버튼</Button>
-              {/* onclick test */}
-              <Button
-                onClick={() => {
-                  console.log('Button clicked!');
-                  alert('버튼 클릭됨!');
-                }}
-              >
-                onClick 테스트
-              </Button>
+            <div className="flex flex-col items-center gap-4">
+              <section className="flex flex-col gap-2">
+                {/* default */}
+                <Button>default 버튼</Button>
+                {/* variant, size */}
+                <Button variant="solid" size="sm">
+                  solid sm 버튼
+                </Button>
+              </section>
+              <section className="flex flex-col gap-2">
+                <Button variant="gradientSolid" size="xl">
+                  gradientSolid xl 버튼
+                </Button>
+                <Button variant="gradientSolid" size="lg">
+                  gradientSolid lg 버튼
+                </Button>
+                <Button variant="gradientSolid" size="md">
+                  gradientSolid 버튼
+                </Button>
+                <Button variant="gradientSolid" size="sm">
+                  gradientSolid sm 버튼
+                </Button>
+              </section>
+              <section className="flex flex-col gap-2">
+                <Button variant="graySolid" size="md">
+                  graySolid 버튼
+                </Button>
+                <Button variant="graySolid" size="sm">
+                  graySolid sm 버튼
+                </Button>
+              </section>
+              <section className="flex flex-col gap-2">
+                <Button variant="outline" size="md">
+                  outline 버튼
+                </Button>
+                <Button variant="outline" size="sm">
+                  outline sm 버튼
+                </Button>
+              </section>
+              <section className="flex flex-col gap-2">
+                <Button variant="lightOutline" size="md">
+                  lightOutline 버튼
+                </Button>
+                <Button variant="lightOutline" size="sm">
+                  lightOutline sm 버튼
+                </Button>
+              </section>
+              <section className="flex flex-col gap-2">
+                {/* className custom */}
+                <Button className="border border-blue-400 bg-blue-50 text-blue-400">
+                  커스텀 버튼
+                </Button>
+                <Button disabled>solid disabled 버튼</Button>
+                <Button variant="outline" size="md" disabled>
+                  outline disabled 버튼
+                </Button>
+                {/* onclick test */}
+                <Button
+                  onClick={() => {
+                    console.log('Button clicked!');
+                    alert('버튼 클릭됨!');
+                  }}
+                >
+                  onClick 테스트
+                </Button>
+              </section>
             </div>
           </section>
         </div>
