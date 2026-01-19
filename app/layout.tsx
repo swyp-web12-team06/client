@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
-import { Theme } from '@radix-ui/themes';
-import './globals.css';
 import Header from '@/components/Header';
 import { Suspense } from 'react';
 import { AuthProvider } from '@/context/AuthContext';
+import './globals.css';
 
 const suit = localFont({
   src: [
@@ -32,14 +31,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={suit.variable}>
-      <body className="antialiased">
+      <body className="antialiased m-auto max-w-7xl">
         <AuthProvider>
-          <Theme accentColor="tomato" className="m-auto max-w-7xl">
-            <Suspense fallback={<div className="h-20 w-full"></div>}>
-              <Header />
-            </Suspense>
-            {children}
-          </Theme>
+          <Suspense fallback={<div className="h-20 w-full"></div>}>
+            {/* <Header /> */}
+          </Suspense>
+          {children}
         </AuthProvider>
       </body>
     </html>
