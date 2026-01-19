@@ -1,4 +1,3 @@
-import { Select, TextField } from "@radix-ui/themes";
 import { Category } from "@/type/category";
 import Input from "./commons/Input";
 
@@ -24,7 +23,7 @@ export default function Searching({
   return (
     <div className="flex justify-between px-4">
       <div className="flex gap-[10.98px]!">
-        <Select.Root value={sortOrder} onValueChange={onSortOrderChange}>
+        {/* <Select.Root value={sortOrder} onValueChange={onSortOrderChange}>
           <Select.Trigger
             className="min-h-10.5! min-w-43.25! cursor-pointer! px-[16.5px]! text-gray-500!"
             radius="full"
@@ -75,7 +74,7 @@ export default function Searching({
               ))}
             </Select.Group>
           </Select.Content>
-        </Select.Root>
+        </Select.Root> */}
       </div>
       <Input
         isSearching
