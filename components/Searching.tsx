@@ -63,7 +63,7 @@ export default function Searching({
   ];
 
   return (
-    <div className="flex justify-between px-4">
+    <div className="flex justify-between">
       <div className="flex gap-[10.98px]">
         <Select
           value={sortOrder}

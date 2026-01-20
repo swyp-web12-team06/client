@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={roboto.variable}>
-      <body className="m-auto max-w-7xl antialiased">
+      <body className="p-4 antialiased">
         <AuthProvider>
           <Suspense fallback={<div className="h-20 w-full"></div>}>
             <GlobalHeader />

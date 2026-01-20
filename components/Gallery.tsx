@@ -9,27 +9,25 @@ export default function Gallery({ data }: { data: LookbookImage[] }) {
   }, [data]);
 
   return (
-    <div className="p-4">
-      <div className="columns-2 gap-4 space-y-4 md:columns-3 lg:columns-4">
-        {data.map((image, index) => (
-          <div
-            key={image.lookbook_image_id}
-            className="group relative break-inside-avoid overflow-hidden rounded-xl"
-            style={{ height: randomHeights[index] }}
-          >
-            <Image
-              src={''}
-              alt={String(image.lookbook_image_id)}
-              fill
-              className="bg-gray-200 object-cover transition-transform duration-300 group-hover:scale-105"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <p>{image.prompt_id}</p>
-            </div>
+    <div className="columns-2 gap-4 space-y-4 md:columns-3 lg:columns-4">
+      {data.map((image, index) => (
+        <div
+          key={image.lookbook_image_id}
+          className="group relative break-inside-avoid overflow-hidden rounded-xl"
+          style={{ height: randomHeights[index] }}
+        >
+          <Image
+            src={''}
+            alt={String(image.lookbook_image_id)}
+            fill
+            className="bg-gray-400 object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <p>{image.prompt_id}</p>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 }

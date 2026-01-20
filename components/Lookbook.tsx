@@ -18,7 +18,7 @@ export default function Lookbook({ data }: { data: LookbookImage[] }) {
   );
 
   return (
-    <div className="grid grid-cols-3 gap-4 p-4">
+    <div className="grid grid-cols-3 gap-4">
       {Object.entries(groupedImages).map(([promptId, images]) => (
         <Link href={`/lookbook/${promptId}`} key={promptId} className="break-inside-avoid">
           <div className="flex divide-x divide-gray-300 overflow-hidden rounded-2xl border border-gray-300">
@@ -28,7 +28,7 @@ export default function Lookbook({ data }: { data: LookbookImage[] }) {
                   src={''}
                   alt={`Lookbook Image ${image.lookbook_image_id}`}
                   fill
-                  className="bg-gray-200 object-cover"
+                  className="bg-gray-400 object-cover"
                 />
                 <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                   {image.image_url}

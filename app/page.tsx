@@ -140,7 +140,7 @@ export default function Home() {
   return (
     <main className="min-h-screen pt-20">
       <div
-        className={`fixed z-5 w-full max-w-7xl bg-(--color-bg-lightest) transition duration-300 ease-in-out ${
+        className={`fixed z-5 w-[calc(100%-32px)] bg-(--color-bg-lightest) transition duration-300 ease-in-out ${
           isSearchingVisible ? 'translate-y-0 pb-4 opacity-100' : '-translate-y-full opacity-0'
         }`}
       >
@@ -155,7 +155,7 @@ export default function Home() {
           onClearSearchTerm={handleClearSearchTerm}
         />
       </div>
-      <div className="pt-10">
+      <div className="pt-15">
         <Suspense fallback={<div>Loading...</div>}>
           <View data={sortedAndFilteredImages} />
         </Suspense>
