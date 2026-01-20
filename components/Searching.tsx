@@ -1,6 +1,6 @@
-import { Select, TextField } from "@radix-ui/themes";
-import Image from "next/image";
+import Select, { SelectItemType } from "./commons/Select";
 import { Category } from "@/type/category";
+import Input from "./commons/Input";
 
 interface props {
   categories: Category[];
@@ -10,7 +10,8 @@ interface props {
   onSortOrderChange: (sortOrder: string) => void;
   searchTerm: string;
   onSearchTermChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-};
+  onClearSearchTerm: () => void;
+}
 
 export default function Searching({
   categories,
@@ -20,54 +21,69 @@ export default function Searching({
   onSortOrderChange,
   searchTerm,
   onSearchTermChange,
+  onClearSearchTerm,
 }: props) {
+
+  const sortItems: SelectItemType[] = [
+    {
+      type: 'group',
+      label: 'Sort by',
+      items: [
+        { value: 'new', label: 'Newest first' },
+        { value: 'old', label: 'Oldest first' },
+        { type: 'separator' },
+        { value: 'popular', label: 'Most popular', disabled: true },
+        { value: 'liked', label: 'Most liked', disabled: true },
+        { value: 'bookmarked', label: 'Most bookmarked', disabled: true },
+      ],
+    },
+    { type: 'separator' },
+    {
+      type: 'group',
+      label: 'Price',
+      items: [
+        { value: 'low', label: 'Lowest price first' },
+        { value: 'high', label: 'Highest price first' },
+      ],
+    },
+  ];
+
+  const categoryItems: SelectItemType[] = [
+    {
+      type: 'group',
+      label: 'Category',
+      items: [
+        { value: 'All', label: 'All' },
+        ...categories.map((category) => ({
+          value: category.name,
+          label: category.name,
+        })),
+      ],
+    },
+  ];
+
   return (
-    <div className="flex px-4 gap-2 mt-20 max-w-7xl w-full m-auto">
-      <Select.Root value={sortOrder} onValueChange={onSortOrderChange}>
-        <Select.Trigger className="min-h-10! min-w-48! px-8! cursor-pointer!" radius="full" />
-        <Select.Content className="rounded-2xl! p-1! mt-2! bg-(--color-bg-content-2)!" position="popper">
-          <Select.Group>
-            <Select.Item value="new">Newest first</Select.Item>
-            <Select.Item value="old">Oldest first</Select.Item>
-            <Select.Separator />
-            <Select.Item value="popular" disabled>Most popular</Select.Item>
-            <Select.Item value="liked" disabled>Most liked</Select.Item>
-            <Select.Item value="bookmarked" disabled>Most bookmarked</Select.Item>
-          </Select.Group>
-          <Select.Separator />
-          <Select.Group>
-            <Select.Item value="low">Lowest price first</Select.Item>
-            <Select.Item value="high">Highest price first</Select.Item>
-          </Select.Group>
-        </Select.Content>
-      </Select.Root>
-      <Select.Root
-        value={selectedCategory || "All"}
-        onValueChange={(value) => onSelectCategory(value === "All" ? null : value)}
-      >
-        <Select.Trigger className="min-h-10! min-w-48! px-8! cursor-pointer!" radius="full" />
-        <Select.Content className="rounded-2xl! p-1! mt-2! bg-(--color-bg-content-2)!" position="popper">
-          <Select.Group>
-            <Select.Item value="All">All</Select.Item>
-            {categories.map((category) => (
-              <Select.Item key={category.category_id} value={category.name}>
-                {category.name}
-              </Select.Item>
-            ))}
-          </Select.Group>
-        </Select.Content>
-      </Select.Root>
-      <TextField.Root 
-        radius="full" 
-        className="min-h-10 w-full lg:ml-44 bg-(--color-bg-content-2)!" 
-        placeholder="search by model, category and more.."
+    <div className="flex justify-between">
+      <div className="flex gap-[10.98px]">
+        <Select
+          value={sortOrder}
+          onValueChange={onSortOrderChange}
+          items={sortItems}
+        />
+        <Select
+          value={selectedCategory || 'All'}
+          onValueChange={(value) => onSelectCategory(value === 'All' ? null : value)}
+          items={categoryItems}
+        />
+      </div>
+      <Input
+        isSearching
         value={searchTerm}
+        placeholder="search by model, category and more.."
         onChange={onSearchTermChange}
-      >
-        <TextField.Slot>
-          <Image src="/icon/magnifying-glass-icon.svg" alt="Search Icon" width={30} height={30} />
-        </TextField.Slot>
-      </TextField.Root>
+        onClear={onClearSearchTerm}
+        className="ml-[10.98px] max-w-202.75"
+      />
     </div>
   );
 }

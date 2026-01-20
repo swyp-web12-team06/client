@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 "use client";
+=======
+'use client';
+>>>>>>> 34dd7b48b790a175ce2f15d47e9a0be47138f22f
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -24,7 +28,11 @@ export default function CallbackPage() {
   }, [login, router]);
 
   return (
+<<<<<<< HEAD
     <div className="flex items-center justify-center min-h-screen">
+=======
+    <div className="flex min-h-screen items-center justify-center">
+>>>>>>> 34dd7b48b790a175ce2f15d47e9a0be47138f22f
       <p className="text-lg">Processing login...</p>
     </div>
   );
