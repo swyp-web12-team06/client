@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import './globals.css';
-import Header from '@/components/Header';
+import GlobalHeader from '@/components/GlobalHeader';
 import { Suspense } from 'react';
 import { AuthProvider } from '@/context/AuthContext';
 import './globals.css';
@@ -21,10 +21,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={roboto.variable}>
-      <body className="antialiased m-auto max-w-7xl">
+      <body className="m-auto max-w-7xl antialiased">
         <AuthProvider>
           <Suspense fallback={<div className="h-20 w-full"></div>}>
-            <Header />
+            <GlobalHeader />
           </Suspense>
           {children}
         </AuthProvider>
