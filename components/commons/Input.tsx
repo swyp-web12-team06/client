@@ -1,20 +1,20 @@
 import { cn } from "@/utils/styles";
 import { cva, VariantProps } from "class-variance-authority";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 type InputVariants = VariantProps<typeof inputVariants>;
 
 const inputVariants = cva(
-    "h-11 w-full flex items-center rounded-4xl border-1 text-body1-medium bg-gray-50 hover:bg-gray-100 focus:bg-gray-50 focus:border-[1.5px] focus:border-(--color-main) active:text-gray-900 text-gray-900",
+    "h-11 w-full flex items-center rounded-4xl border text-body1-medium bg-(--st-gray-300) hover:bg-(--st-gray-400) focus:bg-gray-50 focus:border-[1.5px] focus:border-(--color-main) active:text-gray-900 text-(--st-gray-600)",
     {
         variants: {
             border: {
-                primary: "border-gray-200 rounded-4xl",
-                secondary: "border-gray-500 rounded-2xl",
+                primary: "border-(--st-gray-450) hover:border-(--st-gray-500) focus:border-(--st-gray-600) rounded-4xl",
+                secondary: "border-(--st-gray-600) rounded-2xl",
             },
             isSearching: {
-                true: "text-gray-600",
+                true: "text-(--st-gray-600)",
             },
         },
         defaultVariants: {
@@ -37,7 +37,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
         return (
             <div className={cn("relative w-full", className)}>
-                <div className={cn(inputVariants({ border, isSearching }))}>
+                <div className={cn(hasValue && "text-(--st-gray-800)! border-(--st-gray-600)! bg-(--st-gray-200)!", inputVariants({ border, isSearching }))}>
                     {isSearching && <div className="ml-1.5 h-7.75 min-w-7.75 relative">
                         <Image src="/icon/magnifying-glass-icon.svg" alt="Search Icon" fill />
                     </div>}
