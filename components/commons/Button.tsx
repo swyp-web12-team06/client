@@ -5,7 +5,7 @@ import { cn } from '@/utils/styles';
 export type ButtonVariants = VariantProps<typeof buttonVariants>;
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center rounded-full transition-colors',
+  'inline-flex items-center justify-center gap-2 rounded-full transition-colors',
   {
     variants: {
       variant: {
@@ -65,16 +65,25 @@ const buttonVariants = cva(
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, ButtonVariants {
   disabled?: boolean;
+  prefixIcon?: React.ReactNode;
+  suffixIcon?: React.ReactNode;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, type, disabled, ...props }, ref) => {
+  (
+    { className, variant, size, type, disabled, children, prefixIcon, suffixIcon, ...props },
+    ref,
+  ) => {
     return (
       <button
         ref={ref}
         className={cn(buttonVariants({ variant, size, disabled }), className)}
         {...props}
-      />
+      >
+        {prefixIcon && <span>{prefixIcon}</span>}
+        {children}
+        {suffixIcon && <span>{suffixIcon}</span>}
+      </button>
     );
   },
 );

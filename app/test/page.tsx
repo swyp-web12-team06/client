@@ -1,7 +1,10 @@
 'use client';
 
-import { Button } from "@/components/commons/Button";
+
+import { Button } from '@/components/commons/Button';
+import PlusIcon from '@/public/icon/plus.svg';
 import Input from "@/components/commons/Input";
+
 
 export default function Test() {
   return (
@@ -123,7 +126,7 @@ export default function Test() {
                 <Button variant="gradientSolid" size="xl">
                   gradientSolid xl 버튼
                 </Button>
-                <Button variant="gradientSolid" size="lg">
+                <Button variant="gradientSolid" size="lg" suffixIcon={<PlusIcon />}>
                   gradientSolid lg 버튼
                 </Button>
                 <Button variant="gradientSolid" size="md">
@@ -153,7 +156,7 @@ export default function Test() {
                 <Button variant="lightOutline" size="md">
                   lightOutline 버튼
                 </Button>
-                <Button variant="lightOutline" size="sm">
+                <Button variant="lightOutline" size="sm" suffixIcon={<PlusIcon />}>
                   lightOutline sm 버튼
                 </Button>
               </section>
@@ -165,6 +168,19 @@ export default function Test() {
                 <Button disabled>solid disabled 버튼</Button>
                 <Button variant="outline" size="md" disabled>
                   outline disabled 버튼
+                </Button>
+                {/* Icon Button */}
+                <Button variant="outline" size="sm" prefixIcon={<PlusIcon />}>
+                  outline sm prefix icon 버튼
+                </Button>
+                <Button variant="outline" size="md" suffixIcon={<PlusIcon />}>
+                  outline md suffix icon 버튼
+                </Button>
+                <Button variant="outline" size="lg" suffixIcon={<PlusIcon />}>
+                  outline lg suffix icon 버튼
+                </Button>
+                <Button variant="outline" size="xl" suffixIcon={<PlusIcon />}>
+                  outline xl suffix icon 버튼
                 </Button>
                 {/* onclick test */}
                 <Button
