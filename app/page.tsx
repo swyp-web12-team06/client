@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import Searching from "@/components/Searching";
-import Gallery from "@/components/Gallery";
-import Lookbook from "@/components/Lookbook";
-import { LookbookImage } from "@/type/lookbook";
-import { Category } from "@/type/category";
-import { Prompt } from "@/type/prompt";
-import { useEffect, useState, Suspense, useMemo, useRef } from "react";
-import { useSearchParams } from "next/navigation";
+import Searching from '@/components/Searching';
+import Gallery from '@/components/Gallery';
+import Lookbook from '@/components/Lookbook';
+import { LookbookImage } from '@/type/lookbook';
+import { Category } from '@/type/category';
+import { Prompt } from '@/type/prompt';
+import { useEffect, useState, Suspense, useMemo, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 function View({ data }: { data: LookbookImage[] }) {
   const searchParams = useSearchParams();
-  const view = searchParams.get("view") || "lookbook";
+  const view = searchParams.get('view') || 'lookbook';
 
-  return view === "gallery" ? <Gallery data={data} /> : <Lookbook data={data} />;
+  return view === 'gallery' ? <Gallery data={data} /> : <Lookbook data={data} />;
 }
 
 export default function Home() {
@@ -43,10 +43,10 @@ export default function Home() {
       }, 2000);
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
       if (scrollTimeout.current) {
         clearTimeout(scrollTimeout.current);
       }
@@ -54,7 +54,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    fetch("/mock/MOCK_DATA.json")
+    fetch('/mock/MOCK_DATA.json')
       .then((res) => res.json())
       .then((json) => {
         setLookbookImages(json.lookbook_images);
@@ -75,48 +75,63 @@ export default function Home() {
     setSearchTerm(event.target.value);
   };
 
+  const handleClearSearchTerm = () => {
+    setSearchTerm('');
+  };
+
   const filteredImages = useMemo(() => {
     let tempImages = [...lookbookImages];
 
     if (selectedCategory) {
-      const category = categories.find(c => c.name === selectedCategory);
+      const category = categories.find((c) => c.name === selectedCategory);
       if (category) {
         const categoryId = category.category_id;
         const promptIdsInCategory = prompts
-          .filter(p => p.category_id === categoryId)
-          .map(p => p.prompt_id);
-        tempImages = lookbookImages.filter(image => promptIdsInCategory.includes(image.prompt_id));
+          .filter((p) => p.category_id === categoryId)
+          .map((p) => p.prompt_id);
+        tempImages = lookbookImages.filter((image) =>
+          promptIdsInCategory.includes(image.prompt_id),
+        );
       }
     }
 
     if (searchTerm.trim() !== '') {
       const lowercasedSearchTerm = searchTerm.toLowerCase();
       const searchPromptIds = prompts
-        .filter(p =>
-          (p.title?.toLowerCase() || '').includes(lowercasedSearchTerm) ||
-          (p.description?.toLowerCase() || '').includes(lowercasedSearchTerm) ||
-          (p.master_prompt?.toLowerCase() || '').includes(lowercasedSearchTerm)
+        .filter(
+          (p) =>
+            (p.title?.toLowerCase() || '').includes(lowercasedSearchTerm) ||
+            (p.description?.toLowerCase() || '').includes(lowercasedSearchTerm) ||
+            (p.master_prompt?.toLowerCase() || '').includes(lowercasedSearchTerm),
         )
-        .map(p => p.prompt_id);
+        .map((p) => p.prompt_id);
 
-      tempImages = tempImages.filter(image => searchPromptIds.includes(image.prompt_id));
+      tempImages = tempImages.filter((image) => searchPromptIds.includes(image.prompt_id));
     }
 
     return tempImages;
   }, [selectedCategory, searchTerm, categories, prompts, lookbookImages]);
 
   const sortedAndFilteredImages = useMemo(() => {
-    const priceMap = new Map(prompts.map(p => [p.prompt_id, p.price]));
+    const priceMap = new Map(prompts.map((p) => [p.prompt_id, p.price]));
 
     switch (sortOrder) {
       case 'new':
-        return filteredImages.toSorted((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        return filteredImages.toSorted(
+          (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+        );
       case 'old':
-        return filteredImages.toSorted((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+        return filteredImages.toSorted(
+          (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime(),
+        );
       case 'low':
-        return filteredImages.toSorted((a, b) => (priceMap.get(a.prompt_id) || 0) - (priceMap.get(b.prompt_id) || 0));
+        return filteredImages.toSorted(
+          (a, b) => (priceMap.get(a.prompt_id) || 0) - (priceMap.get(b.prompt_id) || 0),
+        );
       case 'high':
-        return filteredImages.toSorted((a, b) => (priceMap.get(b.prompt_id) || 0) - (priceMap.get(a.prompt_id) || 0));
+        return filteredImages.toSorted(
+          (a, b) => (priceMap.get(b.prompt_id) || 0) - (priceMap.get(a.prompt_id) || 0),
+        );
       default:
         return filteredImages;
     }
@@ -125,9 +140,9 @@ export default function Home() {
   return (
     <main className="min-h-screen pt-20">
       <div
-        className={`fixed w-full max-w-7xl bg-(--color-bg-lightest) z-5 transition duration-300 ease-in-out 
-          ${isSearchingVisible ? "translate-y-0 opacity-100 pb-4" : "-translate-y-full opacity-0"
-          }`}
+        className={`fixed z-5 w-full max-w-7xl bg-(--color-bg-lightest) transition duration-300 ease-in-out ${
+          isSearchingVisible ? 'translate-y-0 pb-4 opacity-100' : '-translate-y-full opacity-0'
+        }`}
       >
         <Searching
           categories={categories}
@@ -137,6 +152,7 @@ export default function Home() {
           onSortOrderChange={handleSortOrderChange}
           searchTerm={searchTerm}
           onSearchTermChange={handleSearchTermChange}
+          onClearSearchTerm={handleClearSearchTerm}
         />
       </div>
       <div className="pt-10">

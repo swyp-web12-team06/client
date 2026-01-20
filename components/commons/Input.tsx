@@ -6,23 +6,20 @@ import React from "react";
 type InputVariants = VariantProps<typeof inputVariants>;
 
 const inputVariants = cva(
-    "min-h-10 w-full flex items-center rounded-4xl border-1 text-body1-medium bg-gray-50 hover:bg-gray-100 focus:bg-gray-50 focus:border-[1.5px] focus:border-(--color-main) active:text-gray-900 text-gray-900",
+    "h-11 w-full flex items-center rounded-4xl border-1 text-body1-medium bg-gray-50 hover:bg-gray-100 focus:bg-gray-50 focus:border-[1.5px] focus:border-(--color-main) active:text-gray-900 text-gray-900",
     {
         variants: {
             border: {
-                default: "border-gray-200",
-                primary: "border-blue-500",
-                secondary: "border-gray-500",
+                primary: "border-gray-200 rounded-4xl",
+                secondary: "border-gray-500 rounded-2xl",
             },
-            radius: {
-                sm: "rounded-lg",
-                md: "rounded-2xl",
-                lg: "rounded-4xl",
+            isSearching: {
+                true: "text-gray-600",
             },
         },
         defaultVariants: {
-            radius: "lg",
-            border: "default",
+            border: "primary",
+            isSearching: false,
         },
     }
 );
@@ -31,20 +28,30 @@ interface InputProps
     extends React.InputHTMLAttributes<HTMLInputElement>,
     InputVariants {
     isSearching?: boolean;
+    onClear?: () => void;
 };
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-    ({ className, isSearching = false, border, radius, ...props }, ref) => {
+    ({ className, isSearching = false, border = "primary", onClear, ...props }, ref) => {
+        const hasValue = props.value && String(props.value).length > 0;
+
         return (
-            <div className={cn(inputVariants({ border, radius }), className, { "text-gray-600": isSearching })}>
-                {isSearching && <div className="px-1.25 mr-3.5">
-                    <Image src="/icon/magnifying-glass-icon.svg" alt="Search Icon" width={30} height={30} />
-                </div>}
-                <input
-                    ref={ref}
-                    className={`${isSearching ? "mr-4.5" : "mx-4.5"} w-full outline-none placeholder:text-gray-600`}
-                    {...props}
-                />
+            <div className={cn("relative w-full", className)}>
+                <div className={cn(inputVariants({ border, isSearching }))}>
+                    {isSearching && <div className="ml-1.5 h-7.75 min-w-7.75 relative">
+                        <Image src="/icon/magnifying-glass-icon.svg" alt="Search Icon" fill />
+                    </div>}
+                    <input
+                        ref={ref}
+                        className="mx-4.75 w-full outline-none placeholder:text-gray-600 bg-transparent"
+                        {...props}
+                    />
+                    {hasValue && onClear && isSearching && (
+                        <button type="button" onClick={onClear} className="absolute cursor-pointer w-3 h-3 right-4.25 top-1/2 -translate-y-1/2 p-1">
+                            <Image src="/icon/input-clear.svg" alt="Clear Input" fill />
+                        </button>
+                    )}
+                </div>
             </div>
         );
     }

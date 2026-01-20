@@ -1,49 +1,32 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import { Theme } from "@radix-ui/themes";
-import "./globals.css";
-import Header from "@/components/Header";
-import { Suspense } from "react";
-import { AuthProvider } from "@/context/AuthContext";
+import type { Metadata } from 'next';
+import { Roboto } from 'next/font/google';
+import './globals.css';
+import Header from '@/components/Header';
+import { Suspense } from 'react';
+import { AuthProvider } from '@/context/AuthContext';
+import './globals.css';
 
-const suit = localFont({
-  src: [
-    {
-      path: "../public/fonts/SUIT-Regular.woff2",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../public/fonts/SUIT-Medium.woff2",
-      weight: "500",
-      style: "normal",
-    },
-    { path: "../public/fonts/SUIT-Bold.woff2", weight: "700", style: "normal" },
-  ],
-  variable: "--font-suit",
-  display: "swap",
+const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  variable: '--font-roboto',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: "PromptLook",
-  description: "A prompt creation and trading platform...",
+  title: 'PromptLook',
+  description: 'A prompt creation and trading platform...',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={suit.variable}>
-      <body className="antialiased">
+    <html lang="en" className={roboto.variable}>
+      <body className="antialiased m-auto max-w-7xl">
         <AuthProvider>
-          <Theme accentColor="tomato" className="max-w-7xl m-auto">
-            <Suspense fallback={<div className="h-20 w-full"></div>}>
-              <Header />
-            </Suspense>
-            {children}
-          </Theme>
+          <Suspense fallback={<div className="h-20 w-full"></div>}>
+            <Header />
+          </Suspense>
+          {children}
         </AuthProvider>
       </body>
     </html>

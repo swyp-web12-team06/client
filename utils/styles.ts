@@ -1,6 +1,5 @@
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 // 테일윈드 사용시 필요한 유틸함수 className
 // className={cn(buttonVariants({ variant, size, className }), className)}
@@ -11,7 +10,7 @@ import { twMerge } from "tailwind-merge";
 //clsx = 쓸수 없는 값들을 정리 해줌 -> 조건부 쓰다보면 꼬이는 경우가 생기는데 문자열로 합치면서 정리를 도와줌
 
 function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs));
+  return twMerge(clsx(inputs));
 }
 
-export {cn}
+export { cn };

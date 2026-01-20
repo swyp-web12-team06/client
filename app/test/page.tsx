@@ -1,8 +1,10 @@
-"use client";
+'use client';
 
 
-import { Button } from "@/components/commons/Button";
+import { Button } from '@/components/commons/Button';
+import PlusIcon from '@/public/icon/plus.svg';
 import Input from "@/components/commons/Input";
+
 
 export default function Test() {
   return (
@@ -12,44 +14,44 @@ export default function Test() {
         <h1 className="text-4xl font-bold">Color</h1>
         <div className="flex flex-col gap-5">
           <div className="flex gap-5">
-            <div className="w-10 h-10 bg-brand-100"></div>
-            <div className="w-10 h-10 bg-brand-200"></div>
-            <div className="w-10 h-10 bg-brand-300"></div>
-            <div className="w-10 h-10 bg-brand-400"></div>
-            <div className="w-10 h-10 bg-brand-500"></div>
-            <div className="w-10 h-10 bg-brand-600"></div>
-            <div className="w-10 h-10 bg-brand-700"></div>
-            <div className="w-10 h-10 bg-brand-800"></div>
-            <div className="w-10 h-10 bg-brand-900"></div>
+            <div className="bg-primary-50 h-10 w-10"></div>
+            <div className="bg-primary-100 h-10 w-10"></div>
+            <div className="bg-primary-200 h-10 w-10"></div>
+            <div className="bg-primary-300 h-10 w-10"></div>
+            <div className="bg-primary-400 h-10 w-10"></div>
           </div>
           <div className="flex gap-5">
-            <div className="w-10 h-10 bg-gray-100"></div>
-            <div className="w-10 h-10 bg-gray-200"></div>
-            <div className="w-10 h-10 bg-gray-300"></div>
-            <div className="w-10 h-10 bg-gray-400"></div>
-            <div className="w-10 h-10 bg-gray-500"></div>
-            <div className="w-10 h-10 bg-gray-600"></div>
-            <div className="w-10 h-10 bg-gray-700"></div>
-            <div className="w-10 h-10 bg-gray-800"></div>
-            <div className="w-10 h-10 bg-gray-900"></div>
+            <div className="h-10 w-10 bg-gray-50"></div>
+            <div className="h-10 w-10 bg-gray-100"></div>
+            <div className="h-10 w-10 bg-gray-200"></div>
+            <div className="h-10 w-10 bg-gray-300"></div>
+            <div className="h-10 w-10 bg-gray-400"></div>
+            <div className="h-10 w-10 bg-gray-500"></div>
+            <div className="h-10 w-10 bg-gray-600"></div>
+            <div className="h-10 w-10 bg-gray-700"></div>
+            <div className="h-10 w-10 bg-gray-800"></div>
+            <div className="h-10 w-10 bg-gray-900"></div>
           </div>
 
           <div className="flex gap-5">
-            <div className="w-10 h-10 bg-system-red-bg"></div>
-            <div className="w-10 h-10 bg-system-red"></div>
-            <div className="w-10 h-10 bg-system-red-font"></div>
+            <div className="h-10 w-10 bg-red-50"></div>
+            <div className="h-10 w-10 bg-red-100"></div>
+          </div>
+          <div className="flex gap-5">
+            <div className="h-10 w-10 bg-blue-50"></div>
+            <div className="h-10 w-10 bg-blue-100"></div>
           </div>
         </div>
       </div>
-      <div className="w-[80%] flex flex-col gap-10">
+      <div className="flex w-[80%] flex-col gap-10">
         <h1 className="text-4xl font-bold">Typography</h1>
         <div className="flex flex-col gap-8">
           {/* Display */}
           <section className="flex flex-col gap-2">
             <span className="typo-caption-medium text-gray-500">Display</span>
-            <p className="typo-display1">Display 1 · Bold</p>
-            <p className="typo-display4">Display 4 · Bold</p>
-            <p className="typo-display4 text-brand-400">Display 4 · Bold · brand</p>
+            <p className="typo-display1">Display 1</p>
+            <p className="typo-display2">Display 2</p>
+            <p className="typo-display2 text-primary-200">Display 2· primary-200</p>
           </section>
 
           {/* Heading 1 */}
@@ -77,64 +79,128 @@ export default function Test() {
 
           {/* Body */}
           <section className="flex flex-col gap-2">
-            <span className="typo-caption-medium text-gray-500">Body</span>
+            <span className="typo-caption-medium text-gray-500">Body1</span>
             <p className="typo-body1-bold">
               Body 1 · Bold — The quick brown fox jumps over the lazy dog.
             </p>
             <p className="typo-body1-medium">
               Body 1 · Medium — The quick brown fox jumps over the lazy dog.
             </p>
+            <p className="typo-body1-regular">
+              Body 1 · Regular — The quick brown fox jumps over the lazy dog.
+            </p>{' '}
+          </section>
+          <section className="flex flex-col gap-2">
+            <span className="typo-caption-medium text-gray-500">Body2</span>
             <p className="typo-body2-bold">
               Body 2 · Bold — The quick brown fox jumps over the lazy dog.
             </p>
             <p className="typo-body2-medium">
               Body 2 · Medium — The quick brown fox jumps over the lazy dog.
             </p>
+            <p className="typo-body2-regular">
+              Body 2 · Regular — The quick brown fox jumps over the lazy dog.
+            </p>
           </section>
 
           {/* Caption */}
           <section className="flex flex-col gap-2">
             <span className="typo-caption-medium text-gray-500">Caption</span>
-            <p className="typo-caption-bold">
-              Caption · Bold — Metadata / Helper text
-            </p>
-            <p className="typo-caption-medium">
-              Caption · Medium — Metadata / Helper text
-            </p>
+            <p className="typo-caption-bold">Caption · Bold — Metadata / Helper text</p>
+            <p className="typo-caption-regular">Caption · Regular — Metadata / Helper text</p>
           </section>
         </div>
-        <div className=" flex flex-col gap-8">
+        <div className="flex flex-col gap-8">
           <h1 className="text-4xl font-bold">Button</h1>
           <section className="space-y-4">
-            <div className="flex gap-4 items-center">
-              {/* default */}
-              <Button>default 버튼</Button>
-              {/* variant, size */}
-              <Button variant="primary" size="sm">Primary sm 버튼</Button>
-              <Button variant="primary" size="md">Primary 버튼</Button>
-              <Button variant="tertiary" size="sm">Tertiary sm 버튼</Button>
-              <Button variant="tertiary" size="md">Tertiary 버튼</Button>
-              {/* className custom */}
-              <Button className="text-blue-400 border border-blue-400">커스텀 버튼</Button>
-              {/* onclick test */}
-              <Button
-                onClick={() => {
-                  console.log("Button clicked!");
-                  alert("버튼 클릭됨!");
-                }}
-              >
-                onClick 테스트
-              </Button>
+            <div className="flex flex-col items-center gap-4">
+              <section className="flex flex-col gap-2">
+                {/* default */}
+                <Button>default 버튼</Button>
+                {/* variant, size */}
+                <Button variant="solid" size="sm">
+                  solid sm 버튼
+                </Button>
+              </section>
+              <section className="flex flex-col gap-2">
+                <Button variant="gradientSolid" size="xl">
+                  gradientSolid xl 버튼
+                </Button>
+                <Button variant="gradientSolid" size="lg" suffixIcon={<PlusIcon />}>
+                  gradientSolid lg 버튼
+                </Button>
+                <Button variant="gradientSolid" size="md">
+                  gradientSolid 버튼
+                </Button>
+                <Button variant="gradientSolid" size="sm">
+                  gradientSolid sm 버튼
+                </Button>
+              </section>
+              <section className="flex flex-col gap-2">
+                <Button variant="graySolid" size="md">
+                  graySolid 버튼
+                </Button>
+                <Button variant="graySolid" size="sm">
+                  graySolid sm 버튼
+                </Button>
+              </section>
+              <section className="flex flex-col gap-2">
+                <Button variant="outline" size="md">
+                  outline 버튼
+                </Button>
+                <Button variant="outline" size="sm">
+                  outline sm 버튼
+                </Button>
+              </section>
+              <section className="flex flex-col gap-2">
+                <Button variant="lightOutline" size="md">
+                  lightOutline 버튼
+                </Button>
+                <Button variant="lightOutline" size="sm" suffixIcon={<PlusIcon />}>
+                  lightOutline sm 버튼
+                </Button>
+              </section>
+              <section className="flex flex-col gap-2">
+                {/* className custom */}
+                <Button className="border border-blue-400 bg-blue-50 text-blue-400">
+                  커스텀 버튼
+                </Button>
+                <Button disabled>solid disabled 버튼</Button>
+                <Button variant="outline" size="md" disabled>
+                  outline disabled 버튼
+                </Button>
+                {/* Icon Button */}
+                <Button variant="outline" size="sm" prefixIcon={<PlusIcon />}>
+                  outline sm prefix icon 버튼
+                </Button>
+                <Button variant="outline" size="md" suffixIcon={<PlusIcon />}>
+                  outline md suffix icon 버튼
+                </Button>
+                <Button variant="outline" size="lg" suffixIcon={<PlusIcon />}>
+                  outline lg suffix icon 버튼
+                </Button>
+                <Button variant="outline" size="xl" suffixIcon={<PlusIcon />}>
+                  outline xl suffix icon 버튼
+                </Button>
+                {/* onclick test */}
+                <Button
+                  onClick={() => {
+                    console.log('Button clicked!');
+                    alert('버튼 클릭됨!');
+                  }}
+                >
+                  onClick 테스트
+                </Button>
+              </section>
             </div>
           </section>
         </div>
       </div>
-      <div className="w-[80%] flex flex-col gap-10">
+      <div className="flex w-[80%] flex-col gap-10">
         <h1 className="text-4xl font-bold">Input</h1>
         <section className="flex flex-col gap-2">
           <Input/>
-          <Input className="bg-red-500" radius="sm" border="secondary"/>
-          <Input className="bg-blue-500 text-green-500" radius="md" border="primary"/>
+          <Input border="secondary"/>
           <Input isSearching/>
           <Input isSearching placeholder="Search..." />
         </section>
