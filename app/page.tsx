@@ -75,6 +75,10 @@ export default function Home() {
     setSearchTerm(event.target.value);
   };
 
+  const handleClearSearchTerm = () => {
+    setSearchTerm('');
+  };
+
   const filteredImages = useMemo(() => {
     let tempImages = [...lookbookImages];
 
@@ -148,6 +152,7 @@ export default function Home() {
           onSortOrderChange={handleSortOrderChange}
           searchTerm={searchTerm}
           onSearchTermChange={handleSearchTermChange}
+          onClearSearchTerm={handleClearSearchTerm}
         />
       </div>
       <div className="pt-10">

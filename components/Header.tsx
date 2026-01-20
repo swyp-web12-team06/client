@@ -1,10 +1,10 @@
 'use client';
 
-import { Button, IconButton, SegmentedControl, Dialog } from '@radix-ui/themes';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+import { Button } from './commons/Button';
 
 export default function Header() {
   const { isLoggedIn, user, logout, isLoading } = useAuth();
@@ -24,8 +24,8 @@ export default function Header() {
         <Link href="/">
           <Image src="/icon/logo.svg" alt="Logo" width={133} height={22} />
         </Link>
-        <SegmentedControl.Root radius="full" value={currentView} onValueChange={handleViewChange}>
-          <SegmentedControl.Item value="lookbook" className="cursor-pointer!">
+        <div >
+          <Button onClick={() => handleViewChange('lookbook')}>
             {currentView !== 'lookbook' ? (
               <Image
                 className="mr-1 inline-block"
@@ -44,8 +44,8 @@ export default function Header() {
               />
             )}{' '}
             LOOK BOOK
-          </SegmentedControl.Item>
-          <SegmentedControl.Item value="gallery" className="cursor-pointer!">
+          </Button>
+          <Button onClick={() => handleViewChange('gallery')}>
             {currentView !== 'gallery' ? (
               <Image
                 className="mr-1 inline-block"
@@ -64,73 +64,49 @@ export default function Header() {
               />
             )}{' '}
             GALLERY
-          </SegmentedControl.Item>
-        </SegmentedControl.Root>
+          </Button>
+        </div>
       </div>
       {isLoading ? (
-        <Button variant="solid" className="cursor-not-allowed bg-gray-400">
+        <Button >
           Loading...
         </Button>
       ) : !isLoggedIn ? (
-        <Dialog.Root>
-          <Dialog.Trigger>
-            <Button variant="solid" className="cursor-pointer! bg-(--color-main)!">
-              LOGIN
+        <div className='fixed bottom-10 right-10'>
+          <div className="flex flex-col gap-3">
+            <Button
+              className="w-full cursor-pointer justify-center"
+            >
+              <Link href="http://localhost:8080/oauth2/authorization/google">
+                Login with Google
+              </Link>
             </Button>
-          </Dialog.Trigger>
-          <Dialog.Content style={{ maxWidth: 450 }}>
-            <Dialog.Title>Login</Dialog.Title>
-            <Dialog.Description size="2" mb="4">
-              Login with your social account.
-            </Dialog.Description>
+            <Button
+              className="w-full cursor-pointer justify-center"
+            >
+              <Link href="http://localhost:8080/oauth2/authorization/kakao">
+                Login with Kakao
+              </Link>
+            </Button>
+            <Button
+              color="green"
+              className="w-full cursor-pointer justify-center"
+            >
+              <Link href="http://localhost:8080/oauth2/authorization/naver">
+                Login with Naver
+              </Link>
+            </Button>
+          </div>
 
-            <div className="flex flex-col gap-3">
-              <Button
-                asChild
-                size="3"
-                variant="soft"
-                className="w-full cursor-pointer justify-center"
-              >
-                <Link href="http://localhost:8080/oauth2/authorization/google">
-                  Login with Google
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="3"
-                variant="soft"
-                color="yellow"
-                className="w-full cursor-pointer justify-center"
-              >
-                <Link href="http://localhost:8080/oauth2/authorization/kakao">
-                  Login with Kakao
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="3"
-                variant="soft"
-                color="green"
-                className="w-full cursor-pointer justify-center"
-              >
-                <Link href="http://localhost:8080/oauth2/authorization/naver">
-                  Login with Naver
-                </Link>
-              </Button>
-            </div>
-
-            <div className="mt-4 flex justify-end gap-3">
-              <Dialog.Close>
-                <Button variant="soft" color="gray">
-                  Cancel
-                </Button>
-              </Dialog.Close>
-            </div>
-          </Dialog.Content>
-        </Dialog.Root>
+          <div className="mt-4 flex justify-end gap-3">
+            <Button>
+              Cancel
+            </Button>
+          </div>
+        </div>
       ) : (
         <div className="flex items-center gap-6">
-          <Button variant="solid" className="cursor-pointer! rounded-4xl! bg-(--color-main)!">
+          <Button>
             Submit Prompt{' '}
             <Image src="/icon/submit-star.svg" alt="Submit Prompt" width={15} height={15} />
           </Button>
@@ -140,7 +116,7 @@ export default function Header() {
               <div className="mr-2 ml-4 flex justify-center gap-1">
                 {100} <Image src="/icon/credit.svg" alt="Credit" width={18} height={18} />
               </div>
-              <IconButton className="cursor-pointer! rounded-4xl! bg-(--color-main)!">
+              <Button>
                 <Image
                   className="inline-block"
                   src="/icon/plus.svg"
@@ -148,7 +124,7 @@ export default function Header() {
                   width={18}
                   height={18}
                 />
-              </IconButton>
+              </Button>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -166,7 +142,7 @@ export default function Header() {
               )}
               {user?.nickname}
             </Link>
-            <Button onClick={logout} variant="soft" color="gray" className="cursor-pointer">
+            <Button onClick={logout}>
               Logout
             </Button>
           </div>
