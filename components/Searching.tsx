@@ -1,3 +1,4 @@
+import Select, { SelectItemType } from "./commons/Select";
 import { Category } from "@/type/category";
 import Input from "./commons/Input";
 
@@ -22,61 +23,58 @@ export default function Searching({
   onSearchTermChange,
   onClearSearchTerm,
 }: props) {
+
+  const sortItems: SelectItemType[] = [
+    {
+      type: 'group',
+      label: 'Sort by',
+      items: [
+        { value: 'new', label: 'Newest first' },
+        { value: 'old', label: 'Oldest first' },
+        { type: 'separator' },
+        { value: 'popular', label: 'Most popular', disabled: true },
+        { value: 'liked', label: 'Most liked', disabled: true },
+        { value: 'bookmarked', label: 'Most bookmarked', disabled: true },
+      ],
+    },
+    { type: 'separator' },
+    {
+      type: 'group',
+      label: 'Price',
+      items: [
+        { value: 'low', label: 'Lowest price first' },
+        { value: 'high', label: 'Highest price first' },
+      ],
+    },
+  ];
+
+  const categoryItems: SelectItemType[] = [
+    {
+      type: 'group',
+      label: 'Category',
+      items: [
+        { value: 'All', label: 'All' },
+        ...categories.map((category) => ({
+          value: category.name,
+          label: category.name,
+        })),
+      ],
+    },
+  ];
+
   return (
     <div className="flex justify-between px-4">
-      <div className="flex gap-[10.98px]!">
-        {/* <Select.Root value={sortOrder} onValueChange={onSortOrderChange}>
-          <Select.Trigger
-            className="min-h-10.5! min-w-43.25! cursor-pointer! px-[16.5px]! text-gray-500!"
-            radius="full"
-          />
-          <Select.Content
-            className="mt-2! rounded-2xl! bg-(--color-bg-content-2)! p-1!"
-            position="popper"
-          >
-            <Select.Group>
-              <Select.Item value="new">Newest first</Select.Item>
-              <Select.Item value="old">Oldest first</Select.Item>
-              <Select.Separator />
-              <Select.Item value="popular" disabled>
-                Most popular
-              </Select.Item>
-              <Select.Item value="liked" disabled>
-                Most liked
-              </Select.Item>
-              <Select.Item value="bookmarked" disabled>
-                Most bookmarked
-              </Select.Item>
-            </Select.Group>
-            <Select.Separator />
-            <Select.Group>
-              <Select.Item value="low">Lowest price first</Select.Item>
-              <Select.Item value="high">Highest price first</Select.Item>
-            </Select.Group>
-          </Select.Content>
-        </Select.Root>
-        <Select.Root
+      <div className="flex gap-[10.98px]">
+        <Select
+          value={sortOrder}
+          onValueChange={onSortOrderChange}
+          items={sortItems}
+        />
+        <Select
           value={selectedCategory || 'All'}
           onValueChange={(value) => onSelectCategory(value === 'All' ? null : value)}
-        >
-          <Select.Trigger
-            className="min-h-10.5! min-w-43.25! cursor-pointer! px-[16.5px]! text-gray-500!"
-            radius="full"
-          />
-          <Select.Content
-            className="mt-2! rounded-2xl! bg-(--color-bg-content-2)! p-1!"
-            position="popper"
-          >
-            <Select.Group>
-              <Select.Item value="All">All</Select.Item>
-              {categories.map((category) => (
-                <Select.Item key={category.category_id} value={category.name}>
-                  {category.name}
-                </Select.Item>
-              ))}
-            </Select.Group>
-          </Select.Content>
-        </Select.Root> */}
+          items={categoryItems}
+        />
       </div>
       <Input
         isSearching
