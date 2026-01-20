@@ -67,8 +67,8 @@ export default function Select({
           key={item.value}
           onClick={() => !item.disabled && handleSelect(item.value)}
           className={cn(
-            "h-9 px-3 py-2 leading-5 text-left text-gray-800 cursor-pointer hover:bg-(--st-primary-50)",
-            { "text-(--st-primary-200) hover:text-(--st-primary-400)": value === item.value },
+            "h-9 px-3 py-2 leading-5 text-left text-gray-800 cursor-pointer hover:bg-primary-50",
+            { "text-primary-200 hover:text-primary-400": value === item.value },
             { "opacity-50 cursor-not-allowed": item.disabled }
           )}
         >
@@ -83,7 +83,7 @@ export default function Select({
     <div ref={selectRef} className="relative w-full">
       {/* 트리거 버튼 */}
       <Button
-        className='w-44 h-11 px-3 justify-between text-gray-800 font-medium hover:bg-(--st-gray-50)'
+        className='w-44 h-11 px-3 justify-between text-gray-800 font-medium hover:bg-gray-50'
         variant="outline" onClick={() => setIsOpen(!isOpen)}
         suffixIcon={<DropDown className={`w-6 h-6 text-gray-500 transition-transform duration-200 ${isOpen ? 'transform rotate-180' : ''}`} />}>
         <span className={cn("truncate", { "text-gray-800": !selectedItem })}>{selectedItem?.label}</span>
@@ -91,7 +91,7 @@ export default function Select({
 
       {/* 드롭다운 메뉴 */}
       {isOpen && (
-        <div className="absolute z-10 w-full mt-1.75 bg-(--st-gray-50) border border-gray-300 focus:border-(--st-primary-200) rounded-lg shadow-[0_0_24px_0_#00000033]">
+        <div className="absolute z-10 w-full mt-1.75 bg-gray-50 border border-gray-300 focus:border-primary-200 rounded-lg shadow-[0_0_24px_0_#00000033]">
           {items.map((item, index) => {
             if ('type' in item && item.type === 'group') {
               return (
