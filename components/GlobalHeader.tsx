@@ -26,7 +26,7 @@ export default function GlobalHeader() {
   };
 
   return (
-    <header className="fixed top-3 z-15 flex w-full items-center justify-between rounded-3xl bg-white px-7 py-3 shadow-[0px_0px_10px_0px_rgba(20,20,20,0.10)]">
+    <header className="fixed w-[calc(100%-32px)] top-3 z-15 flex items-center justify-between rounded-3xl bg-white px-7 py-3 shadow-[0px_0px_10px_0px_rgba(20,20,20,0.10)]">
       <div className="inline-flex items-center gap-8">
         <Link href="/">
           <Image src="/icon/logo.svg" alt="Logo" width={133} height={22} />
