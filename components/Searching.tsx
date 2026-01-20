@@ -1,7 +1,5 @@
-import { Select, TextField } from '@radix-ui/themes';
-import Image from 'next/image';
-import { Category } from '@/type/category';
-import Input from './Input';
+import { Category } from "@/type/category";
+import Input from "./commons/Input";
 
 interface props {
   categories: Category[];
@@ -11,6 +9,7 @@ interface props {
   onSortOrderChange: (sortOrder: string) => void;
   searchTerm: string;
   onSearchTermChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onClearSearchTerm: () => void;
 }
 
 export default function Searching({
@@ -21,11 +20,12 @@ export default function Searching({
   onSortOrderChange,
   searchTerm,
   onSearchTermChange,
+  onClearSearchTerm,
 }: props) {
   return (
     <div className="flex justify-between px-4">
       <div className="flex gap-[10.98px]!">
-        <Select.Root value={sortOrder} onValueChange={onSortOrderChange}>
+        {/* <Select.Root value={sortOrder} onValueChange={onSortOrderChange}>
           <Select.Trigger
             className="min-h-10.5! min-w-43.25! cursor-pointer! px-[16.5px]! text-gray-500!"
             radius="full"
@@ -76,13 +76,14 @@ export default function Searching({
               ))}
             </Select.Group>
           </Select.Content>
-        </Select.Root>
+        </Select.Root> */}
       </div>
       <Input
         isSearching
         value={searchTerm}
         placeholder="search by model, category and more.."
         onChange={onSearchTermChange}
+        onClear={onClearSearchTerm}
         className="ml-[10.98px] max-w-202.75"
       />
     </div>

@@ -1,12 +1,13 @@
 'use client';
 
-import { Button } from '@/components/commons/Button';
-import Input from '@/components/Input';
+import { Button } from "@/components/commons/Button";
+import Input from "@/components/commons/Input";
 
 export default function Test() {
   return (
-    <main className="flex h-[80%] w-full flex-col items-center gap-10">
-      <div className="mt-20 flex w-[80%] flex-col gap-10">
+    <main className="w-full h-[80%] mb-20 flex flex-col items-center gap-10">
+      <div className="w-[80%] flex flex-col gap-10 mt-20">
+
         <h1 className="text-4xl font-bold">Color</h1>
         <div className="flex flex-col gap-5">
           <div className="flex gap-5">
@@ -182,8 +183,9 @@ export default function Test() {
       <div className="flex w-[80%] flex-col gap-10">
         <h1 className="text-4xl font-bold">Input</h1>
         <section className="flex flex-col gap-2">
-          <Input />
-          <Input isSearching />
+          <Input/>
+          <Input border="secondary"/>
+          <Input isSearching/>
           <Input isSearching placeholder="Search..." />
         </section>
       </div>
