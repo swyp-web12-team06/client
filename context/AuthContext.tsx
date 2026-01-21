@@ -15,16 +15,14 @@ interface AuthContextType {
     isLoggedIn: boolean;
     accessToken: string | null;
     user: User | null;
-    login: () => Promise<{ isNewUser: boolean; role: string; userId: number }>; // Changed return type
+    login: () => Promise<{ isNewUser: boolean; role: string; userId: number }>;
     logout: () => void;
     isLoading: boolean;
     setUserInfo: (userInfo: User) => void;
 }
 
-// --- 컨텍스트 생성 ---
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// --- JWT 디코딩 헬퍼 함수 ---
 function decodeJwt(token: string): any {
     try {
         const base64Url = token.split('.')[1];
@@ -39,8 +37,22 @@ function decodeJwt(token: string): any {
     }
 }
 
-// --- API 함수 ---
 const apiClient = {
+    get: async function <T>(path: string, token: string): Promise<T> {
+        const headers: HeadersInit = {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+        };
+        const response = await fetch(`/api${path}`, {
+            method: "GET",
+            headers: headers,
+        });
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message);
+        }
+        return response.json();
+    },
     post: async function <T>(path: string, token?: string): Promise<T> {
         const headers: HeadersInit = { "Content-Type": "application/json" };
         if (token) {
@@ -52,27 +64,27 @@ const apiClient = {
         });
         if (!response.ok) {
             const error = await response.json();
-            throw new Error(error.message || "API 요청 실패");
+            throw new Error(error.message);
         }
         return response.json();
     },
 };
 
-// --- AuthProvider 컴포넌트 ---
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [accessToken, setAccessToken] = useState<string | null>(null);
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
 
-    const fetchUser = useCallback(async function (userId: number, role: string) {
-        setUser({
-            id: userId,
-            role: role,
-            nickname: undefined,
-            email: undefined,
-            profileImageUrl: "/icon/user.svg"
-        });
+    const fetchUser = useCallback(async function (token: string) {
+        try {
+            const response = await apiClient.get<{ data: User }>("/user/me", token);
+            setUser(response.data);
+        } catch (error) {
+            console.error(error);
+            setAccessToken(null);
+            setUser(null);
+        }
     }, []);
 
     const reissueTokenAndFetchUser = useCallback(async function (): Promise<{ isNewUser: boolean; role: string; userId: number }> {
@@ -85,7 +97,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             const decodedToken = decodeJwt(newAccessToken);
             const userId = parseInt(decodedToken.sub);
 
-            await fetchUser(userId, role);
+            if (role !== 'GUEST') {
+                await fetchUser(newAccessToken);
+            } else {
+                setUser({ id: userId, role: 'GUEST' });
+            }
 
             return { isNewUser, role, userId };
         } catch (error) {
@@ -98,7 +114,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }, [fetchUser]);
 
     useEffect(() => {
-        reissueTokenAndFetchUser().catch(error => console.error("Initial reissue failed:", error));
+        reissueTokenAndFetchUser().catch(() => {
+            // 초기 재발행은 새로 고침 토큰이 없으면 실패할 수 있으며, 이는 정상입니다.
+            // 오류는 reissueTokenAndFetchUser에서 처리됩니다.
+        });
     }, [reissueTokenAndFetchUser]);
 
     const login = useCallback(async function (): Promise<{ isNewUser: boolean; role: string; userId: number }> {
@@ -106,21 +125,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }, [reissueTokenAndFetchUser]);
 
     const logout = useCallback(async function () {
-        if (!accessToken) return; // accessToken이 없으면 로그아웃 API 호출 방지
-        try {
-            await apiClient.post("/auth/logout", accessToken);
-        } catch (error) {
-            console.error("로그아웃 API 호출에 실패했습니다.", error);
-        } finally {
-            // API 호출 성공 여부와 관계없이 프론트엔드 상태를 초기화하고 홈으로 리디렉션
-            setAccessToken(null);
-            setUser(null);
-            router.push("/");
+        if (accessToken) {
+            try {
+                await apiClient.post("/auth/logout", accessToken);
+            } catch (error) {
+                console.error(error);
+            }
         }
+        setAccessToken(null);
+        setUser(null);
+        router.push("/");
     }, [accessToken, router]);
 
-    const setUserInfo = (newUserInfo: User) => {
-        setUser(newUserInfo);
+    const setUserInfo = (newUserInfo: Partial<User>) => {
+        if (user) {
+            setUser({ ...user, ...newUserInfo });
+        }
     };
 
     const value = {
@@ -136,11 +156,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-// --- useAuth 커스텀 훅 ---
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (context === undefined) {
-        throw new Error("useAuth must be used within an AuthProvider");
+        throw new Error("useAuth는 반드시 AuthProvider에서 사용되어야 합니다.");
     }
     return context;
 };
+
