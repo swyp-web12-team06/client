@@ -31,8 +31,4 @@ export default function CallbackPage() {
       <CallbackComponent />
     </Suspense>
   );
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 81856cf (feat: 소셜 로그인 모드 구현 (회원가입 페이지 추가) 및 인증 컨텍스트 업데이트)
