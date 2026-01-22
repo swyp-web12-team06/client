@@ -65,17 +65,21 @@
 }
 
 @layer components {
+
   /* Display */
   .typo-display1 {
     font-size: 5rem;
     font-weight: 700;
-    line-height: 88px; /* 110% */
+    line-height: 88px;
+    /* 110% */
     letter-spacing: -2px;
   }
+
   .typo-display2 {
     font-size: 3rem;
     font-weight: 700;
-    line-height: 56px; /* 116.667% */
+    line-height: 56px;
+    /* 116.667% */
     letter-spacing: -1px;
   }
 
@@ -83,56 +87,64 @@
   .typo-heading1-bold {
     font-size: 2rem;
     font-weight: 700;
-    line-height: 40px; /* 125% */
+    line-height: 40px;
+    /* 125% */
     letter-spacing: -0.5px;
   }
 
   .typo-heading1-regular {
     font-size: 2rem;
     font-weight: 400;
-    line-height: 40px; /* 125% */
+    line-height: 40px;
+    /* 125% */
     letter-spacing: -0.5px;
   }
 
   .typo-heading2-bold {
     font-size: 1.5rem;
     font-weight: 700;
-    line-height: 32px; /* 133.333% */
+    line-height: 32px;
+    /* 133.333% */
     letter-spacing: -0.25px;
   }
 
   .typo-heading2-medium {
     font-size: 1.5rem;
     font-weight: 500;
-    line-height: 32px; /* 133.333% */
+    line-height: 32px;
+    /* 133.333% */
     letter-spacing: -0.25px;
   }
 
   .typo-heading2-regular {
     font-size: 1.5rem;
     font-weight: 400;
-    line-height: 32px; /* 133.333% */
+    line-height: 32px;
+    /* 133.333% */
     letter-spacing: -0.25px;
   }
 
   .typo-heading3-bold {
     font-size: 1.125rem;
     font-weight: 700;
-    line-height: 26px; /* 144.444% */
+    line-height: 26px;
+    /* 144.444% */
     letter-spacing: -0.25px;
   }
 
   .typo-heading3-medium {
     font-size: 1.125rem;
     font-weight: 500;
-    line-height: 26px; /* 144.444% */
+    line-height: 26px;
+    /* 144.444% */
     letter-spacing: -0.25px;
   }
 
   .typo-heading3-regular {
     font-size: 1.125rem;
     font-weight: 400;
-    line-height: 26px; /* 144.444% */
+    line-height: 26px;
+    /* 144.444% */
     letter-spacing: -0.25px;
   }
 
@@ -140,57 +152,61 @@
   .typo-body1-bold {
     font-size: 1rem;
     font-weight: 700;
-    line-height: 24px; /* 150% */
+    line-height: 24px;
+    /* 150% */
   }
 
   .typo-body1-medium {
     font-size: 1rem;
     font-weight: 500;
-    line-height: 24px; /* 150% */
+    line-height: 24px;
+    /* 150% */
   }
 
   .typo-body1-regular {
     font-size: 1rem;
     font-weight: 400;
-    line-height: 24px; /* 150% */
+    line-height: 24px;
+    /* 150% */
   }
 
   .typo-body2-bold {
     font-size: 0.875rem;
     font-weight: 700;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
+    /* 142.857% */
   }
 
   .typo-body2-medium {
     font-size: 0.875rem;
     font-weight: 500;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
+    /* 142.857% */
   }
 
   .typo-body2-regular {
     font-size: 0.875rem;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
+    /* 142.857% */
   }
 
   /* Caption */
   .typo-caption-bold {
     font-size: 0.75rem;
     font-weight: 700;
-    line-height: 20px; /* 166.667% */
+    line-height: 20px;
+    /* 166.667% */
     letter-spacing: 0.25px;
   }
 
   .typo-caption-regular {
     font-size: 0.75rem;
     font-weight: 400;
-    line-height: 20px; /* 166.667% */
+    line-height: 20px;
+    /* 166.667% */
     letter-spacing: 0.25px;
   }
-}
-
-.radix-themes {
-  font-family: var(--font-roboto);
 }
 
 html {
