@@ -17,10 +17,10 @@ const buttonVariants = cva(
         lightOutline: 'border border-gray-400 bg-gray-50 text-gray-800',
       },
       size: {
-        sm: 'typo-body2-bold px-4 py-2',
-        md: 'typo-body1-bold px-5 py-2.5',
-        lg: 'typo-heading3-bold px-6 py-3',
-        xl: 'typo-heading2-bold px-8 py-4',
+        sm: 'typo-body2-semibold px-4 py-2',
+        md: 'typo-body1-semibold px-5 py-2.5',
+        lg: 'typo-heading3-semibold px-6 py-3',
+        xl: 'typo-heading2-semibold px-8 py-4',
       },
       disabled: {
         true: 'cursor-not-allowed bg-gray-400 text-gray-500',
