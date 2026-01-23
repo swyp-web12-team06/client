@@ -1,19 +1,12 @@
 'use client';
 
 import { Button } from '@/components/commons/Button';
+import Image from 'next/image';
 
 export default function GeneratedImage() {
   return (
     <div>
-      <div>
-        <p>Welcome to the Studio page!</p>
-        <div></div>
-      </div>
-      <div>
-        <Button variant="gradientSolid">Click Me</Button>
-        <p>Welcome to the Studio page!</p>
-      </div>
-      <Button variant="gradientSolid">Click Me</Button>
+      <Image src="/icon/logo.svg" alt="Logo" width={562} height={562} className="bg-gray-400" />
     </div>
   );
 }
