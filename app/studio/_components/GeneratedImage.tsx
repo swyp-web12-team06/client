@@ -6,7 +6,7 @@ import Image from 'next/image';
 export default function GeneratedImage() {
   return (
     <div>
-      <Image src="/icon/logo.svg" alt="Logo" width={562} height={562} className="bg-gray-400" />
+      <div className="h-[532px] w-[532px] bg-gray-400" />
     </div>
   );
 }
