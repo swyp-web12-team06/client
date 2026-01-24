@@ -195,11 +195,37 @@ export default function Test() {
       </div>
       <div className="flex w-[80%] flex-col gap-10">
         <h1 className="text-4xl font-semibold">Input</h1>
-        <section className="flex flex-col gap-2">
-          <Input />
-          <Input border="secondary" />
-          <Input isSearching />
-          <Input isSearching placeholder="Search..." />
+        <section className="grid grid-cols-2 gap-4">
+          <div className='space-y-4'>
+            <h3 className="text-2xl font-semibold text-gray-500">primary</h3>
+            <Input size='small' placeholder='small size' />
+            <Input size='medium' placeholder='medium size' />
+            <Input size='large' placeholder='large size' />
+            <Input placeholder='textAlign right' textAlign='right' />
+            <Input disabled />
+            <Input label='label' />
+            <Input label='label' bottomLabel='bottom label' />
+            <Input label='label' bottomLabel='bottom label' sideLabel='side label' />
+            <Input isSearching />
+          </div>
+          <div className='space-y-4'>
+            <h3 className="text-2xl font-semibold text-gray-500">secondary</h3>
+            <Input variant="secondary" size='small' placeholder='small size' />
+            <Input variant="secondary" size='medium' placeholder='medium size' />
+            <Input variant="secondary" size='large' placeholder='large size' />
+            <Input variant="secondary" placeholder='textAlign right' textAlign='right' />
+            <Input variant="secondary" disabled />
+            <Input variant="secondary" label='label' />
+            <Input variant="secondary" label='label' bottomLabel='bottom label' />
+            <Input variant="secondary" label='label' bottomLabel='bottom label' sideLabel='side label' />
+            <Input
+              variant="secondary"
+              placeholder='원하는 충전 금액을 입력해 주세요.'
+              label='직접 입력'
+              bottomLabel='3,000원 이상 50,000원 이하로 입력해 주세요.'
+              sideLabel='원'
+              textAlign='right' />
+          </div>
         </section>
       </div>
     </main>
