@@ -3,8 +3,13 @@
 import { Button } from '@/components/commons/Button';
 import PlusIcon from '@/public/icon/plus.svg';
 import Input from '@/components/commons/Input';
+import CreditCard from '../credit/_components/CreditCard';
+import { Radio } from '@/components/commons/Radio';
+import { useState } from 'react';
 
 export default function Test() {
+  const [value, setValue] = useState('a');
+
   return (
     <main className="mb-20 flex h-[80%] w-full flex-col items-center gap-10">
       <div className="mt-20 flex w-[80%] flex-col gap-10">
@@ -196,37 +201,72 @@ export default function Test() {
       <div className="flex w-[80%] flex-col gap-10">
         <h1 className="text-4xl font-semibold">Input</h1>
         <section className="grid grid-cols-2 gap-4">
-          <div className='space-y-4'>
+          <div className="space-y-4">
             <h3 className="text-2xl font-semibold text-gray-500">primary</h3>
-            <Input size='small' placeholder='small size' />
-            <Input size='medium' placeholder='medium size' />
-            <Input size='large' placeholder='large size' />
-            <Input placeholder='textAlign right' textAlign='right' />
+            <Input size="small" placeholder="small size" />
+            <Input size="medium" placeholder="medium size" />
+            <Input size="large" placeholder="large size" />
+            <Input placeholder="textAlign right" textAlign="right" />
             <Input disabled />
-            <Input label='label' />
-            <Input label='label' bottomLabel='bottom label' />
-            <Input label='label' bottomLabel='bottom label' sideLabel='side label' />
+            <Input label="label" />
+            <Input label="label" bottomLabel="bottom label" />
+            <Input label="label" bottomLabel="bottom label" sideLabel="side label" />
             <Input isSearching />
           </div>
-          <div className='space-y-4'>
+          <div className="space-y-4">
             <h3 className="text-2xl font-semibold text-gray-500">secondary</h3>
-            <Input variant="secondary" size='small' placeholder='small size' />
-            <Input variant="secondary" size='medium' placeholder='medium size' />
-            <Input variant="secondary" size='large' placeholder='large size' />
-            <Input variant="secondary" placeholder='textAlign right' textAlign='right' />
+            <Input variant="secondary" size="small" placeholder="small size" />
+            <Input variant="secondary" size="medium" placeholder="medium size" />
+            <Input variant="secondary" size="large" placeholder="large size" />
+            <Input variant="secondary" placeholder="textAlign right" textAlign="right" />
             <Input variant="secondary" disabled />
-            <Input variant="secondary" label='label' />
-            <Input variant="secondary" label='label' bottomLabel='bottom label' />
-            <Input variant="secondary" label='label' bottomLabel='bottom label' sideLabel='side label' />
+            <Input variant="secondary" label="label" />
+            <Input variant="secondary" label="label" bottomLabel="bottom label" />
             <Input
               variant="secondary"
-              placeholder='원하는 충전 금액을 입력해 주세요.'
-              label='직접 입력'
-              bottomLabel='3,000원 이상 50,000원 이하로 입력해 주세요.'
-              sideLabel='원'
-              textAlign='right' />
+              label="label"
+              bottomLabel="bottom label"
+              sideLabel="side label"
+            />
+            <Input
+              variant="secondary"
+              placeholder="원하는 충전 금액을 입력해 주세요."
+              label="직접 입력"
+              bottomLabel="3,000원 이상 50,000원 이하로 입력해 주세요."
+              sideLabel="원"
+              textAlign="right"
+            />
           </div>
         </section>
+      </div>
+      <div className="flex w-[80%] flex-col gap-10">
+        <h1 className="text-4xl font-semibold">CreditCard</h1>
+        {/* <CreditCard /> */}
+      </div>
+      <div className="flex w-[80%] flex-col gap-10">
+        <h1 className="text-4xl font-semibold">Radio</h1>
+        <Radio
+          name="option"
+          value="a"
+          checked={value === 'a'}
+          onChange={() => setValue('a')}
+          label="옵션 A"
+        />
+        <Radio
+          name="option"
+          value="b"
+          checked={value === 'b'}
+          onChange={() => setValue('b')}
+          label="옵션 B"
+        />
+        <Radio
+          name="option"
+          value="c"
+          checked={value === 'c'}
+          onChange={() => setValue('c')}
+          label="옵션 C"
+          disabled
+        />
       </div>
     </main>
   );
