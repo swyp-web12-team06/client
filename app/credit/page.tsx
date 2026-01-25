@@ -4,6 +4,7 @@ import { Button } from '@/components/commons/Button';
 import Input from '@/components/commons/Input';
 import PortOne from '@portone/browser-sdk/v2';
 import { useEffect, useState } from 'react';
+import CreditCard from './_components/CreditCard';
 
 // type PaymentStatusState =
 //   | { status: 'IDLE' }
@@ -158,51 +159,62 @@ export default function Credit() {
   };
 
   return (
-    <main className="mb-20 flex h-[80%] w-full flex-col items-center gap-10">
-      <div></div>
-      <div></div>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <h2 className="text-xl font-bold">충전 금액 선택 </h2>
-          <div className="space-y-3">
-            {/* 옵션 3000원 크레딧 */}
-            <label className="flex cursor-pointer items-center rounded-lg border p-4 hover:bg-slate-50">
-              <input
-                type="radio"
-                name="credit-choice"
-                value="3000"
-                checked={credit === '3000'}
-                onChange={(e) => setCredit(e.target.value)}
-                className="h-4 w-4 text-blue-600"
-              />
-              <span className="ml-3 font-medium">3000원</span>
-              <span className="ml-3 font-medium">30C</span>
-            </label>
-
-            {/* 옵션 5000원 크레딧 */}
-            <label className="flex cursor-pointer items-center rounded-lg border p-4 hover:bg-slate-50">
-              <input
-                type="radio"
-                name="credit-choice"
-                value="5000"
-                checked={credit === '5000'}
-                onChange={(e) => setCredit(e.target.value)}
-                className="h-4 w-4 text-blue-600"
-              />
-              <span className="ml-3 font-medium">5000원</span>
-              <span className="ml-3 font-medium">53C</span>
-            </label>
+    <main className="mt-20 mb-20 flex w-[1232px] items-center items-end gap-30">
+      <section className="flex w-[57%] flex-col items-end gap-9">
+        <div className="w-full rounded-[10px] bg-gray-900 px-7 py-6">
+          <h3 className="typo-body1-semibold text-background">잔여 크레딧</h3>
+          <div className="flex items-center gap-3">
+            <p className="typo-heading1-semibold text-background">50 C</p>
+            <p className="typo-heading3-medium text-background">= 5,000원</p>
           </div>
-          <div>
-            <Input placeholder="0" value={credit} onChange={(e) => setCredit(e.target.value)} />
-            <p>원</p>
+        </div>
+        <div onSubmit={handleSubmit} className="flex flex-col gap-3">
+          <h2 className="typo-body1-medium text-gray-700">원하는 충전 금액 선택</h2>
+          <div className="flex flex-wrap gap-4">
+            {[1, 2, 3, 4, 5].map((item) => (
+              <CreditCard key={item} value={credit} setValue={setCredit} />
+            ))}
           </div>
-          <div>
-            <Button variant="gradientSolid">취소</Button>
-            <Button variant="gradientSolid">결제하기</Button>
+        </div>
+        <div className="flex w-[60%] items-center gap-3">
+          <Input
+            size="small"
+            variant="secondary"
+            placeholder="0"
+            label="직접입력"
+            bottomLabel="3,000원 이상 50,000원 이하로 입력해 주세요."
+            value={credit}
+            onChange={(e) => setCredit(e.target.value)}
+          />
+          <p className="typo-heading3-semibold text-gray-600">원</p>
+        </div>
+      </section>
+      <section className="inline-flex w-[32%] flex-col items-start justify-start gap-5 rounded-[10px] bg-white p-8 shadow-[0px_0px_7px_0px_rgba(112,112,112,0.25)]">
+        <div className="flex w-full flex-col items-start justify-start gap-5">
+          <div className="border-gray-450 inline-flex w-full justify-between border-b pb-3">
+            <p className="typo-body1-medium text-gray-800">결제 금액</p>
+            <p className="typo-body1-medium text-gray-800">10,000 원</p>
           </div>
-        </form>
-      </div>
+          <div className="border-gray-450 inline-flex w-full justify-between border-b pb-3">
+            <p className="typo-body1-medium text-gray-800">결제 금액</p>
+            <p className="typo-body1-medium text-gray-800">10,000 원</p>
+          </div>
+          <div className="border-gray-450 inline-flex w-full justify-between border-b pb-3">
+            <p className="typo-body1-medium text-gray-800">결제 금액</p>
+            <p className="typo-body1-medium text-gray-800">10,000 원</p>
+          </div>
+          <div className="inline-flex w-full justify-between border-b border-gray-800 pb-4">
+            <p className="typo-heading3-medium text-gray-800">결제 금액</p>
+            <p className="typo-heading3-medium text-gray-800">10,000 원</p>
+          </div>
+        </div>
+        <div className="inline-flex w-full gap-3">
+          <Button variant="lightOutline" className="w-full">
+            취소
+          </Button>
+          <Button className="w-full">결제</Button>
+        </div>
+      </section>
     </main>
   );
 }
