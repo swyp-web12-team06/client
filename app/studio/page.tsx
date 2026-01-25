@@ -7,10 +7,10 @@ import GeneratedImage from './_components/GeneratedImage';
 
 export default function Studio() {
   return (
-    <main className="flex w-[1152px] gap-6 pt-46">
-      <div className="align-endz flex w-full flex-col gap-6">
+    <main className="mt-46 flex w-[1232px] gap-6 bg-blue-300">
+      <div className="align-end flex w-full flex-col gap-6">
         <div className="flex w-full justify-center gap-5">
-          <div className="flex flex-col">
+          <div className="flex w-full flex-col">
             <h4 className="typo-body1-semibold">은하수 동물 프롬프트</h4>
             <p className="typo-body2-regular">
               해당 프롬프트는 별로 만들어진 동물이 밤하늘과 바다 위를 뛰어다니는 이미지를 생성하는

@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/commons/Button';
+import Input from '@/components/commons/Input';
 import Select, { SelectItemType } from '@/components/commons/Select';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -45,21 +46,21 @@ export default function Settings() {
           <h4 className="typo-body1-semibold">변수입력</h4>
           <div className="flex w-full flex-col gap-6 rounded-[10px] p-5 shadow-[0px_0px_7px_0px_rgba(112,112,112,0.25)]">
             <div className="flex gap-2">
-              <Button variant="solid" size="sm">
+              <Button variant="outline" size="sm">
                 생성하기
               </Button>
-              <Button variant="solid" size="sm">
+              <Button variant="outline" size="sm">
                 생성하기
               </Button>
-              <Button variant="solid" size="sm">
+              <Button variant="outline" size="sm">
                 생성하기
               </Button>
-              <Button variant="solid" size="sm">
+              <Button variant="outline" size="sm">
                 생성하기
               </Button>
             </div>
             <div className="flex flex-col gap-3">
-              <div>
+              <div className="flex flex-col gap-1">
                 <h5>주제</h5>
                 <p className="typo-body2-regular">
                   해당 변수는 이미지의 메인 주제를 정하는 중요한 변수입니다. 자세한 사용은 예시
@@ -67,11 +68,11 @@ export default function Settings() {
                 </p>
               </div>
               <div>
-                <h5>변수를 설정해 주세요</h5>
-                <input
-                  type="text"
-                  placeholder="변수를 입력해 주세요"
-                  className="focus:border-primary-200 w-full rounded-md border border-gray-300 px-4 py-2 focus:outline-none"
+                <Input
+                  variant="secondary"
+                  size="small"
+                  label="변수를 설정해 주세요"
+                  placeholder="성인 남성"
                 />
               </div>
             </div>
@@ -92,7 +93,7 @@ export default function Settings() {
           </Button>
         </div>
       </div>
-      <div>
+      <div className="flex w-full justify-end">
         <Button variant="solid" size="md">
           생성하기
         </Button>
