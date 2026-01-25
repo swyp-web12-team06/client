@@ -1,17 +1,14 @@
 'use client';
 
-
 import { Button } from '@/components/commons/Button';
 import PlusIcon from '@/public/icon/plus.svg';
-import Input from "@/components/commons/Input";
-
+import Input from '@/components/commons/Input';
 
 export default function Test() {
   return (
-    <main className="w-full h-[80%] mb-20 flex flex-col items-center gap-10">
-      <div className="w-[80%] flex flex-col gap-10 mt-20">
-
-        <h1 className="text-4xl font-bold">Color</h1>
+    <main className="mb-20 flex h-[80%] w-full flex-col items-center gap-10">
+      <div className="mt-20 flex w-[80%] flex-col gap-10">
+        <h1 className="text-4xl font-semibold">Color</h1>
         <div className="flex flex-col gap-5">
           <div className="flex gap-5">
             <div className="bg-primary-50 h-10 w-10"></div>
@@ -44,7 +41,7 @@ export default function Test() {
         </div>
       </div>
       <div className="flex w-[80%] flex-col gap-10">
-        <h1 className="text-4xl font-bold">Typography</h1>
+        <h1 className="text-4xl font-semibold">Typography</h1>
         <div className="flex flex-col gap-8">
           {/* Display */}
           <section className="flex flex-col gap-2">
@@ -57,14 +54,14 @@ export default function Test() {
           {/* Heading 1 */}
           <section className="flex flex-col gap-2">
             <span className="typo-caption-medium text-gray-500">Heading 1</span>
-            <p className="typo-heading1-bold">Heading 1 · Bold</p>
+            <p className="typo-heading1-semibold">Heading 1 · semibold</p>
             <p className="typo-heading1-regular">Heading 1 · Regular</p>
           </section>
 
           {/* Heading 2 */}
           <section className="flex flex-col gap-2">
             <span className="typo-caption-medium text-gray-500">Heading 2</span>
-            <p className="typo-heading2-bold">Heading 2 · Bold</p>
+            <p className="typo-heading2-semibold">Heading 2 · semibold</p>
             <p className="typo-heading2-medium">Heading 2 · Medium</p>
             <p className="typo-heading2-regular">Heading 2 · Regular</p>
           </section>
@@ -72,7 +69,7 @@ export default function Test() {
           {/* Heading 3 */}
           <section className="flex flex-col gap-2">
             <span className="typo-caption-medium text-gray-500">Heading 3</span>
-            <p className="typo-heading3-bold">Heading 3 · Bold</p>
+            <p className="typo-heading3-semibold">Heading 3 · semibold</p>
             <p className="typo-heading3-medium">Heading 3 · Medium</p>
             <p className="typo-heading3-regular">Heading 3 · Regular</p>
           </section>
@@ -80,8 +77,8 @@ export default function Test() {
           {/* Body */}
           <section className="flex flex-col gap-2">
             <span className="typo-caption-medium text-gray-500">Body1</span>
-            <p className="typo-body1-bold">
-              Body 1 · Bold — The quick brown fox jumps over the lazy dog.
+            <p className="typo-body1-semibold">
+              Body 1 · semibold — The quick brown fox jumps over the lazy dog.
             </p>
             <p className="typo-body1-medium">
               Body 1 · Medium — The quick brown fox jumps over the lazy dog.
@@ -92,8 +89,8 @@ export default function Test() {
           </section>
           <section className="flex flex-col gap-2">
             <span className="typo-caption-medium text-gray-500">Body2</span>
-            <p className="typo-body2-bold">
-              Body 2 · Bold — The quick brown fox jumps over the lazy dog.
+            <p className="typo-body2-semibold">
+              Body 2 · semibold — The quick brown fox jumps over the lazy dog.
             </p>
             <p className="typo-body2-medium">
               Body 2 · Medium — The quick brown fox jumps over the lazy dog.
@@ -106,12 +103,12 @@ export default function Test() {
           {/* Caption */}
           <section className="flex flex-col gap-2">
             <span className="typo-caption-medium text-gray-500">Caption</span>
-            <p className="typo-caption-bold">Caption · Bold — Metadata / Helper text</p>
+            <p className="typo-caption-medium">Caption · medium — Metadata / Helper text</p>
             <p className="typo-caption-regular">Caption · Regular — Metadata / Helper text</p>
           </section>
         </div>
         <div className="flex flex-col gap-8">
-          <h1 className="text-4xl font-bold">Button</h1>
+          <h1 className="text-4xl font-semibold">Button</h1>
           <section className="space-y-4">
             <div className="flex flex-col items-center gap-4">
               <section className="flex flex-col gap-2">
@@ -197,12 +194,38 @@ export default function Test() {
         </div>
       </div>
       <div className="flex w-[80%] flex-col gap-10">
-        <h1 className="text-4xl font-bold">Input</h1>
-        <section className="flex flex-col gap-2">
-          <Input/>
-          <Input border="secondary"/>
-          <Input isSearching/>
-          <Input isSearching placeholder="Search..." />
+        <h1 className="text-4xl font-semibold">Input</h1>
+        <section className="grid grid-cols-2 gap-4">
+          <div className='space-y-4'>
+            <h3 className="text-2xl font-semibold text-gray-500">primary</h3>
+            <Input size='small' placeholder='small size' />
+            <Input size='medium' placeholder='medium size' />
+            <Input size='large' placeholder='large size' />
+            <Input placeholder='textAlign right' textAlign='right' />
+            <Input disabled />
+            <Input label='label' />
+            <Input label='label' bottomLabel='bottom label' />
+            <Input label='label' bottomLabel='bottom label' sideLabel='side label' />
+            <Input isSearching />
+          </div>
+          <div className='space-y-4'>
+            <h3 className="text-2xl font-semibold text-gray-500">secondary</h3>
+            <Input variant="secondary" size='small' placeholder='small size' />
+            <Input variant="secondary" size='medium' placeholder='medium size' />
+            <Input variant="secondary" size='large' placeholder='large size' />
+            <Input variant="secondary" placeholder='textAlign right' textAlign='right' />
+            <Input variant="secondary" disabled />
+            <Input variant="secondary" label='label' />
+            <Input variant="secondary" label='label' bottomLabel='bottom label' />
+            <Input variant="secondary" label='label' bottomLabel='bottom label' sideLabel='side label' />
+            <Input
+              variant="secondary"
+              placeholder='원하는 충전 금액을 입력해 주세요.'
+              label='직접 입력'
+              bottomLabel='3,000원 이상 50,000원 이하로 입력해 주세요.'
+              sideLabel='원'
+              textAlign='right' />
+          </div>
         </section>
       </div>
     </main>
