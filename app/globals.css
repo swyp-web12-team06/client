@@ -200,6 +200,9 @@ html {
 body {
   background: var(--color-bg-lightest);
   color: var(--color-darkest);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* 현재 다크모드 지원 안함 - 다크모드 지원 시 사용 */
