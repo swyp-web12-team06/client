@@ -138,7 +138,7 @@ export default function Home() {
   }, [sortOrder, filteredImages, prompts]);
 
   return (
-    <main className="min-h-screen pt-20">
+    <main className="min-h-screen w-full pt-20">
       <div
         className={`fixed z-5 w-[calc(100%-32px)] bg-(--color-bg-lightest) transition duration-300 ease-in-out ${
           isSearchingVisible ? 'translate-y-0 pb-4 opacity-100' : '-translate-y-full opacity-0'
