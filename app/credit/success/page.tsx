@@ -3,7 +3,7 @@ import { Button } from '@/components/commons/Button';
 export default function Success() {
   return (
     <main className="mt-20 mb-20 flex w-[816px] items-center items-end gap-30">
-      <section className="inline-flex w-full flex-col items-end justify-start gap-6 rounded-[10px] bg-blue-200">
+      <section className="inline-flex w-full flex-col items-end justify-start gap-6 rounded-[10px]">
         <div className="flex w-full gap-4">
           <div className="bg-primary-100 h-15 w-15 rounded-full"></div>
           <div className="flex flex-col">

@@ -3,159 +3,71 @@
 import { Button } from '@/components/commons/Button';
 import Input from '@/components/commons/Input';
 import PortOne from '@portone/browser-sdk/v2';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import CreditCard from './_components/CreditCard';
 
-// type PaymentStatusState =
-//   | { status: 'IDLE' }
-//   | { status: 'PAID' | 'READY' | 'FAILED' }
-//   | { status: 'ERROR'; message: string };
-
 export default function Credit() {
-  const [paymentStatus, setPaymentStatus] = useState({
+  const [paymentStatus, setPaymentStatus] = useState<{
+    status: string;
+    message?: string;
+  }>({
     status: 'IDLE',
   });
-
-  //   useEffect(() => {
-  //     async function loadItem() {
-  //       const response = await fetch('/api/item');
-  //       setItem(await response.json());
-  //     }
-
-  //     loadItem().catch((error) => console.error(error));
-  //   }, []);
-
-  //   if (item == null) {
-  //     return (
-  //       <dialog open>
-  //         <article aria-busy>결제 정보를 불러오는 중입니다.</article>
-  //       </dialog>
-  //     );
-  //   }
-
-  //   function randomId() {
-  //     return [...crypto.getRandomValues(new Uint32Array(2))]
-  //       .map((word) => word.toString(16).padStart(8, '0'))
-  //       .join('');
-  //   }
-
-  //   const handleSubmit = async (e) => {
-  //     e.preventDefault();
-  //     setPaymentStatus({ status: 'PENDING' });
-  //     const paymentId = randomId();
-  //     const payment = await PortOne.requestPayment({
-  //       storeId: 'store-e4038486-8d83-41a5-acf1-844a009e0d94',
-  //       channelKey: 'channel-key-ebe7daa6-4fe4-41bd-b17d-3495264399b5',
-  //       paymentId,
-  //       orderName: item.name,
-  //       totalAmount: item.price,
-  //       currency: item.currency,
-  //       payMethod: 'CARD',
-  //       customData: {
-  //         item: item.id,
-  //       },
-  //     });
-  //     if (payment.code !== undefined) {
-  //       setPaymentStatus({
-  //         status: 'FAILED',
-  //         message: payment.message,
-  //       });
-  //       return;
-  //     }
-  //     const completeResponse = await fetch('/api/payment/complete', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         paymentId: payment.paymentId,
-  //       }),
-  //     });
-  //     if (completeResponse.ok) {
-  //       const paymentComplete = await completeResponse.json();
-  //       setPaymentStatus({
-  //         status: paymentComplete.status,
-  //       });
-  //     } else {
-  //       setPaymentStatus({
-  //         status: 'FAILED',
-  //         message: await completeResponse.text(),
-  //       });
-  //     }
-  //   };
-
-  //   const isWaitingPayment = paymentStatus.status !== 'IDLE';
-
-  //   const handleClose = () =>
-  //     setPaymentStatus({
-  //       status: 'IDLE',
-  //     });
-
   const [credit, setCredit] = useState('0');
 
-  function generateRandomId() {
-    const randomValues = new Uint32Array(2);
-    crypto.getRandomValues(randomValues);
-
-    return Array.from(randomValues)
+  function randomId() {
+    return [...crypto.getRandomValues(new Uint32Array(2))]
       .map((word) => word.toString(16).padStart(8, '0'))
       .join('');
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handlePayment = async () => {
+    if (Number(credit) <= 0) {
+      setPaymentStatus({ status: 'FAILED', message: '충전 금액은 0원 이상이어야 합니다.' });
+      console.log(paymentStatus.message);
+      return;
+    }
 
-    // 전송할 데이터 구성
-    const formData = {
-      storeId: 'store-e4038486-8d83-41a5-acf1-844a009e0d94',
-      channelKey: 'channel-key-ebe7daa6-4fe4-41bd-b17d-3495264399b5',
-      paymentId: generateRandomId(),
-      orderName: `${credit}원 충전`,
+    setPaymentStatus({ status: 'PENDING' });
+    const paymentId = randomId();
+    const payment = await PortOne.requestPayment({
+      storeId: 'store-38dddffa-1b53-4ade-ae69-6af853b3934c',
+      channelKey: 'channel-key-eadc0e01-f43a-416e-9120-bc0d2d207ad8',
+      paymentId,
+      orderName: `${credit}원`,
       totalAmount: Number(credit),
       currency: 'KRW',
       payMethod: 'CARD',
-    };
+    });
 
-    console.log('전송 데이터:', formData);
+    if (payment?.code !== undefined) {
+      setPaymentStatus({
+        status: 'FAILED',
+        message: payment.message,
+      });
+      return;
+    }
+    const completeResponse = await fetch('/credit/charge', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        paymentId: payment?.paymentId,
+      }),
+    });
 
-    // setPaymentStatus({ status: 'PENDING' });
-    // const paymentId = generateRandomId();
-    // const payment = await PortOne.requestPayment({
-    //   storeId: 'store-e4038486-8d83-41a5-acf1-844a009e0d94',
-    //   channelKey: 'channel-key-ebe7daa6-4fe4-41bd-b17d-3495264399b5',
-    //   paymentId,
-    //   orderName: `${credit}원 충전`,
-    //   totalAmount: Number(credit),
-    //   currency: 'KRW',
-    //   payMethod: 'CARD',
-    // });
-    // if (payment.code !== undefined) {
-    //   setPaymentStatus({
-    //     status: 'FAILED',
-    //     message: payment.message,
-    //   });
-    //   return;
-    // }
-    // const completeResponse = await fetch('/api/payment/complete', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     paymentId: payment.paymentId,
-    //   }),
-    // });
-    // if (completeResponse.ok) {
-    //   const paymentComplete = await completeResponse.json();
-    //   setPaymentStatus({
-    //     status: paymentComplete.status,
-    //   });
-    // } else {
-    //   setPaymentStatus({
-    //     status: 'FAILED',
-    //     message: await completeResponse.text(),
-    //   });
-    // }
+    if (completeResponse.ok) {
+      const paymentComplete = await completeResponse.json();
+      setPaymentStatus({
+        status: paymentComplete.status,
+      });
+    } else {
+      setPaymentStatus({
+        status: 'FAILED',
+        message: await completeResponse.text(),
+      });
+    }
   };
 
   return (
@@ -168,7 +80,7 @@ export default function Credit() {
             <p className="typo-heading3-medium text-background">= 5,000원</p>
           </div>
         </div>
-        <div onSubmit={handleSubmit} className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3">
           <h2 className="typo-body1-medium text-gray-700">원하는 충전 금액 선택</h2>
           <div className="flex flex-wrap gap-4">
             {[1, 2, 3, 4, 5].map((item) => (
@@ -212,7 +124,9 @@ export default function Credit() {
           <Button variant="lightOutline" className="w-full">
             취소
           </Button>
-          <Button className="w-full">결제</Button>
+          <Button className="w-full" onClick={handlePayment}>
+            결제
+          </Button>
         </div>
       </section>
     </main>
