@@ -45,11 +45,19 @@ export default function HomePageClient({ initialProducts, totalPages, categories
   // 검색 및 필터링 상태
   const selectedCategory = searchParams.get('categoryId');
   const sortOrder = searchParams.get('sort') || 'new';
-  const searchTerm = searchParams.get('keyword') || '';
+  const committedSearchTerm = searchParams.get('keyword') || '';
+  
+  // 실시간 사용자 입력을 위한 상태
+  const [inputValue, setInputValue] = useState(committedSearchTerm);
 
   const [isSearchingVisible, setIsSearchingVisible] = useState(true);
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  // URL의 searchTerm이 바뀔 때(예: 뒤로가기) input 값 동기화
+  useEffect(() => {
+    setInputValue(committedSearchTerm);
+  }, [committedSearchTerm]);
 
   // 스크롤에 따른 Searching 컴포넌트 표시/숨김 처리
   useEffect(() => {
@@ -114,6 +122,27 @@ export default function HomePageClient({ initialProducts, totalPages, categories
     params.delete('page');
     router.push(`?${params.toString()}`, { scroll: false });
   }, [router]);
+
+  const triggerSearch = useCallback((term: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (term) {
+      params.set('keyword', term);
+    } else {
+      params.delete('keyword');
+    }
+    updateSearchParams(params);
+  }, [searchParams, updateSearchParams]);
+
+  // 디바운스 검색을 위한 useEffect
+  useEffect(() => {
+    // 사용자가 입력을 멈추면 500ms 후에 검색 실행
+    if (inputValue !== committedSearchTerm) {
+      const timeoutId = setTimeout(() => {
+        triggerSearch(inputValue);
+      }, 500);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [inputValue, committedSearchTerm, triggerSearch]);
   
   const handleCategorySelect = (categoryId: string | null) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -129,19 +158,21 @@ export default function HomePageClient({ initialProducts, totalPages, categories
   };
 
   const handleSearchTermChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newSearchTerm = event.target.value;
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('keyword', newSearchTerm);
-    if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
-    debounceTimeout.current = setTimeout(() => {
-        updateSearchParams(params);
-    }, 500);
+    setInputValue(event.target.value);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      // 디바운스 중인 검색이 있다면 취소하고 즉시 검색 실행
+      if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+      triggerSearch(inputValue);
+    }
   };
 
   const handleClearSearchTerm = () => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete('keyword');
-    updateSearchParams(params);
+    setInputValue('');
+    triggerSearch('');
   };
 
   const selectedCategoryId = selectedCategory ? parseInt(selectedCategory, 10) : null;
@@ -159,9 +190,10 @@ export default function HomePageClient({ initialProducts, totalPages, categories
           onSelectCategory={handleCategorySelect}
           sortOrder={sortOrder}
           onSortOrderChange={handleSortOrderChange}
-          searchTerm={searchTerm}
+          searchTerm={inputValue}
           onSearchTermChange={handleSearchTermChange}
           onClearSearchTerm={handleClearSearchTerm}
+          onKeyDown={handleKeyDown}
         />
       </div>
       <div className="pt-15">
