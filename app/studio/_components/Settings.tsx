@@ -5,6 +5,8 @@ import Input from '@/components/commons/Input';
 import Select, { SelectItemType } from '@/components/commons/Select';
 import Image from 'next/image';
 import { useState } from 'react';
+import RemoveIcon from '@/public/icon/remove.svg';
+import CreditIcon from '@/public/icon/credit.svg';
 
 export default function Settings() {
   const [resolution, setResolution] = useState('2k');
@@ -88,9 +90,13 @@ export default function Settings() {
             />
             <Select value={ratio} onValueChange={() => setRatio(ratio)} items={ratioItems} />
           </div>
-          <Button variant="solid" size="md">
-            생성하기
-          </Button>
+          <span className="inline-flex items-center justify-start gap-1.5 rounded-full px-2.5 py-1.5 outline outline-1 outline-offset-[-1px] outline-gray-500">
+            <div className="flex items-center justify-start gap-0.5">
+              <RemoveIcon width={10} height={10} />
+              <p className="flex items-center justify-center gap-2.5">600</p>
+            </div>
+            <CreditIcon />
+          </span>
         </div>
       </div>
       <div className="flex w-full justify-end">

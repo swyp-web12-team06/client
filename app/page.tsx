@@ -12,7 +12,6 @@ import { useSearchParams } from 'next/navigation';
 function View({ data }: { data: LookbookImage[] }) {
   const searchParams = useSearchParams();
   const view = searchParams.get('view') || 'lookbook';
-
   return view === 'gallery' ? <Gallery data={data} /> : <Lookbook data={data} />;
 }
 
