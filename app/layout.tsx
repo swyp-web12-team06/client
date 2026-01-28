@@ -26,9 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Suspense fallback={<div className="h-20 w-full"></div>}>
             <GlobalHeader />
           </Suspense>
-          <main className='h-[calc(100vh-112px)] mt-20'>
-            {children}
-          </main>
+          {children}
         </AuthProvider>
       </body>
     </html>
