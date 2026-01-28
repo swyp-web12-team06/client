@@ -80,9 +80,9 @@
   }
 
   /* Heading */
-  .typo-heading1-bold {
+  .typo-heading1-semibold {
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 40px; /* 125% */
     letter-spacing: -0.5px;
   }
@@ -94,9 +94,9 @@
     letter-spacing: -0.5px;
   }
 
-  .typo-heading2-bold {
+  .typo-heading2-semibold {
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 32px; /* 133.333% */
     letter-spacing: -0.25px;
   }
@@ -115,9 +115,9 @@
     letter-spacing: -0.25px;
   }
 
-  .typo-heading3-bold {
+  .typo-heading3-semibold {
     font-size: 1.125rem;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 26px; /* 144.444% */
     letter-spacing: -0.25px;
   }
@@ -137,9 +137,9 @@
   }
 
   /* Body */
-  .typo-body1-bold {
+  .typo-body1-semibold {
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 24px; /* 150% */
   }
 
@@ -155,9 +155,9 @@
     line-height: 24px; /* 150% */
   }
 
-  .typo-body2-bold {
+  .typo-body2-semibold {
     font-size: 0.875rem;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 20px; /* 142.857% */
   }
 
@@ -174,9 +174,9 @@
   }
 
   /* Caption */
-  .typo-caption-bold {
+  .typo-caption-medium {
     font-size: 0.75rem;
-    font-weight: 700;
+    font-weight: 500;
     line-height: 20px; /* 166.667% */
     letter-spacing: 0.25px;
   }
@@ -200,6 +200,9 @@ html {
 body {
   background: var(--color-bg-lightest);
   color: var(--color-darkest);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* 현재 다크모드 지원 안함 - 다크모드 지원 시 사용 */
