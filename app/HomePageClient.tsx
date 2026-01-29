@@ -180,7 +180,7 @@ export default function HomePageClient({ initialProducts, totalPages, categories
   return (
     <main className="min-h-screen w-full pt-20">
       <div
-        className={`fixed z-5 w-[calc(100%-32px)] bg-white transition duration-300 ease-in-out ${
+        className={`fixed z-5 w-[calc(100%-32px)] bg-gray-50 transition duration-300 ease-in-out ${
           isSearchingVisible ? 'translate-y-0 pb-4 opacity-100' : '-translate-y-full opacity-0'
         }`}
       >
