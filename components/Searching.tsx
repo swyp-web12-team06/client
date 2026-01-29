@@ -1,16 +1,17 @@
 import Select, { SelectItemType } from "./commons/Select";
-import { Category } from "@/type/category";
 import Input from "./commons/Input";
+import { Category } from "@/type/category";
 
-interface props {
+interface SearchingProps {
   categories: Category[];
-  selectedCategory: string | null;
-  onSelectCategory: (category: string | null) => void;
+  selectedCategory: number | null;
+  onSelectCategory: (categoryId: string | null) => void;
   sortOrder: string;
   onSortOrderChange: (sortOrder: string) => void;
   searchTerm: string;
   onSearchTermChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onClearSearchTerm: () => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 export default function Searching({
@@ -22,7 +23,8 @@ export default function Searching({
   searchTerm,
   onSearchTermChange,
   onClearSearchTerm,
-}: props) {
+  onKeyDown,
+}: SearchingProps) {
 
   const sortItems: SelectItemType[] = [
     {
@@ -31,10 +33,6 @@ export default function Searching({
       items: [
         { value: 'new', label: 'Newest first' },
         { value: 'old', label: 'Oldest first' },
-        { type: 'separator' },
-        { value: 'popular', label: 'Most popular', disabled: true },
-        { value: 'liked', label: 'Most liked', disabled: true },
-        { value: 'bookmarked', label: 'Most bookmarked', disabled: true },
       ],
     },
     { type: 'separator' },
@@ -53,9 +51,9 @@ export default function Searching({
       type: 'group',
       label: 'Category',
       items: [
-        { value: 'All', label: 'All' },
+        { value: 'all', label: 'All' },
         ...categories.map((category) => ({
-          value: category.name,
+          value: String(category.id),
           label: category.name,
         })),
       ],
@@ -71,8 +69,8 @@ export default function Searching({
           items={sortItems}
         />
         <Select
-          value={selectedCategory || 'All'}
-          onValueChange={(value) => onSelectCategory(value === 'All' ? null : value)}
+          value={selectedCategory ? String(selectedCategory) : 'all'}
+          onValueChange={(value) => onSelectCategory(value === 'all' ? null : value)}
           items={categoryItems}
         />
       </div>
@@ -82,6 +80,7 @@ export default function Searching({
         placeholder="search by model, category and more.."
         onChange={onSearchTermChange}
         onClear={onClearSearchTerm}
+        onKeyDown={onKeyDown}
         className="ml-[10.98px] max-w-202.75"
       />
     </div>
