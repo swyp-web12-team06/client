@@ -3,11 +3,67 @@
 import { Button } from '@/components/commons/Button';
 import PlusIcon from '@/public/icon/plus.svg';
 import Input from '@/components/commons/Input';
+import { Tabs } from '@/components/commons/Tabs';
+import { TabContent } from './_components/TabContent';
 import CreditCard from '../credit/_components/CreditCard';
 import { Radio } from '@/components/commons/Radio';
 import { useState } from 'react';
 
 export default function Test() {
+  const [tab, setTab] = useState('1');
+  const [tab2, setTab2] = useState('1');
+  const [variable, setVariable] = useState('');
+  const [variable2, setVariable2] = useState('');
+
+  const items = [
+    {
+      value: '1',
+      label: variable ? variable : '1번탭',
+      content: <TabContent setVariable={setVariable} />,
+    },
+    {
+      value: '2',
+      label: variable2 ? variable2 : '2번탭',
+      content: <TabContent setVariable={setVariable2} />,
+    },
+    {
+      value: '3',
+      label: '3번탭',
+      disabled: true,
+      content: <div>disabled</div>,
+    },
+  ];
+
+  const items2 = [
+    {
+      value: '1',
+      label: '1번탭',
+      content: <div>test</div>,
+    },
+    {
+      value: '2',
+      label: '2번탭',
+      content: <div>test2</div>,
+    },
+    {
+      value: '3',
+      label: '3번탭',
+      content: <div>test3</div>,
+    },
+    {
+      value: '4',
+      label: '4번탭',
+      disabled: true,
+      content: <div>disabled</div>,
+    },
+    {
+      value: '5',
+      label: '5번탭',
+      disabled: true,
+      content: <div>disabled</div>,
+    },
+  ];
+
   const [value, setValue] = useState('a');
 
   return (
@@ -202,42 +258,74 @@ export default function Test() {
         <h1 className="text-4xl font-semibold">Input</h1>
         <section className="grid grid-cols-2 gap-4">
           <div className="space-y-4">
-            <h3 className="text-2xl font-semibold text-gray-500">primary</h3>
-            <Input size="small" placeholder="small size" />
-            <Input size="medium" placeholder="medium size" />
-            <Input size="large" placeholder="large size" />
-            <Input placeholder="textAlign right" textAlign="right" />
-            <Input disabled />
-            <Input label="label" />
-            <Input label="label" bottomLabel="bottom label" />
-            <Input label="label" bottomLabel="bottom label" sideLabel="side label" />
-            <Input isSearching />
+            <div className="space-y-4">
+              <h3 className="text-2xl font-semibold text-gray-500">primary</h3>
+              <Input size="small" placeholder="small size" />
+              <Input size="medium" placeholder="medium size" />
+              <Input size="large" placeholder="large size" />
+              <Input placeholder="textAlign right" textAlign="right" />
+              <Input size="small" placeholder="small size" />
+              <Input size="medium" placeholder="medium size" />
+              <Input size="large" placeholder="large size" />
+              <Input placeholder="textAlign right" textAlign="right" />
+              <Input disabled />
+              <Input label="label" />
+              <Input label="label" bottomLabel="bottom label" />
+              <Input label="label" bottomLabel="bottom label" sideLabel="side label" />
+              <Input label="label" />
+              <Input label="label" bottomLabel="bottom label" />
+              <Input label="label" bottomLabel="bottom label" sideLabel="side label" />
+              <Input isSearching />
+            </div>
           </div>
           <div className="space-y-4">
-            <h3 className="text-2xl font-semibold text-gray-500">secondary</h3>
-            <Input variant="secondary" size="small" placeholder="small size" />
-            <Input variant="secondary" size="medium" placeholder="medium size" />
-            <Input variant="secondary" size="large" placeholder="large size" />
-            <Input variant="secondary" placeholder="textAlign right" textAlign="right" />
-            <Input variant="secondary" disabled />
-            <Input variant="secondary" label="label" />
-            <Input variant="secondary" label="label" bottomLabel="bottom label" />
-            <Input
-              variant="secondary"
-              label="label"
-              bottomLabel="bottom label"
-              sideLabel="side label"
-            />
-            <Input
-              variant="secondary"
-              placeholder="원하는 충전 금액을 입력해 주세요."
-              label="직접 입력"
-              bottomLabel="3,000원 이상 50,000원 이하로 입력해 주세요."
-              sideLabel="원"
-              textAlign="right"
-            />
+            <div className="space-y-4">
+              <h3 className="text-2xl font-semibold text-gray-500">secondary</h3>
+              <Input variant="secondary" size="small" placeholder="small size" />
+              <Input variant="secondary" size="medium" placeholder="medium size" />
+              <Input variant="secondary" size="large" placeholder="large size" />
+              <Input variant="secondary" placeholder="textAlign right" textAlign="right" />
+              <Input variant="secondary" size="small" placeholder="small size" />
+              <Input variant="secondary" size="medium" placeholder="medium size" />
+              <Input variant="secondary" size="large" placeholder="large size" />
+              <Input variant="secondary" placeholder="textAlign right" textAlign="right" />
+              <Input variant="secondary" disabled />
+              <Input variant="secondary" label="label" />
+              <Input variant="secondary" label="label" bottomLabel="bottom label" />
+              <Input
+                variant="secondary"
+                label="label"
+                bottomLabel="bottom label"
+                sideLabel="side label"
+              />
+              <Input variant="secondary" label="label" />
+              <Input variant="secondary" label="label" bottomLabel="bottom label" />
+              <Input
+                variant="secondary"
+                label="label"
+                bottomLabel="bottom label"
+                sideLabel="side label"
+              />
+              <Input
+                variant="secondary"
+                placeholder="원하는 충전 금액을 입력해 주세요."
+                label="직접 입력"
+                bottomLabel="3,000원 이상 50,000원 이하로 입력해 주세요."
+                sideLabel="원"
+                textAlign="right"
+              />
+            </div>
           </div>
         </section>
+      </div>
+      <div className="flex w-[80%] flex-col gap-10">
+        <h1 className="text-4xl font-semibold">Tabs</h1>
+        <div className="rounded-[10px] p-5 shadow-[0px_0px_7px_0px_rgba(112,112,112,0.25)]">
+          <Tabs items={items} value={tab} onValueChange={setTab} />
+        </div>
+        <div className="rounded-[10px] p-5 shadow-[0px_0px_7px_0px_rgba(112,112,112,0.25)]">
+          <Tabs items={items2} value={tab2} onValueChange={setTab2} />
+        </div>
       </div>
       <div className="flex w-[80%] flex-col gap-10">
         <h1 className="text-4xl font-semibold">CreditCard</h1>
