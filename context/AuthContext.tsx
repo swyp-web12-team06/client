@@ -16,6 +16,7 @@ interface AuthContextType {
     accessToken: string | null;
     user: User | null;
     login: () => Promise<{ isNewUser: boolean; role: string; userId: number }>;
+    loginDev: () => Promise<void>;
     logout: () => void;
     isLoading: boolean;
     setUserInfo: (userInfo: User) => void;
@@ -38,11 +39,13 @@ function decodeJwt(token: string): any {
 }
 
 const apiClient = {
-    get: async function <T>(path: string, token: string): Promise<T> {
+    get: async function <T>(path: string, token?: string): Promise<T> {
         const headers: HeadersInit = {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
         };
+        if (token) {
+            headers["Authorization"] = `Bearer ${token}`;
+        }
         const response = await fetch(`/api${path}`, {
             method: "GET",
             headers: headers,
@@ -124,6 +127,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return await reissueTokenAndFetchUser();
     }, [reissueTokenAndFetchUser]);
 
+    const loginDev = useCallback(async () => {
+        setIsLoading(true);
+        try {
+          const response = await apiClient.get<{ data: { accessToken: string } }>('/dev/token');
+          const newAccessToken = response.data.accessToken;
+          setAccessToken(newAccessToken);
+          await fetchUser(newAccessToken);
+        } catch (error) {
+          console.error('개발용 토큰 발급 실패:', error);
+          setAccessToken(null);
+          setUser(null);
+        } finally {
+          setIsLoading(false);
+        }
+      }, [fetchUser]);
+
     const logout = useCallback(async function () {
         if (accessToken) {
             try {
@@ -148,6 +167,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         accessToken,
         user,
         login,
+        loginDev,
         logout,
         isLoading,
         setUserInfo,
@@ -163,4 +183,3 @@ export const useAuth = () => {
     }
     return context;
 };
-
