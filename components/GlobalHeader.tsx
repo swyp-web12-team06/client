@@ -16,7 +16,7 @@ import { useState } from 'react';
 import SocialLoginModal from './SocialLoginModal';
 
 export default function GlobalHeader() {
-  const { isLoggedIn, user, logout, isLoading } = useAuth();
+  const { isLoggedIn, user, logout, isLoading, loginDev } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentView = searchParams.get('view') || 'lookbook';
@@ -61,12 +61,17 @@ export default function GlobalHeader() {
           {isLoading ? (
             <p className="typo-body1-medium">로딩중...</p>
           ) : !isLoggedIn ? (
-            <Button size="md" onClick={openModal}>
-              로그인
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button size="md" onClick={openModal}>
+                로그인
+              </Button>
+              <Button size="md" variant="outline" onClick={loginDev}>
+                테스트 로그인
+              </Button>
+            </div>
           ) : (
             <>
-              <Button variant="gradientSolid" size="md" suffixIcon={<SubmitStarIcon />}>
+              <Button onClick={()=>router.push('/sales')} variant="gradientSolid" size="md" suffixIcon={<SubmitStarIcon />}>
                 프롬프트 등록
               </Button>
               <div className="inline-flex items-center gap-1 rounded-full">
