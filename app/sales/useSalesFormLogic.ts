@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, SetStateAction } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 
@@ -21,6 +21,8 @@ export interface ImageInfo {
 // SalesForm 컨텍스트의 전체 데이터 형태를 정의하는 인터페이스
 // 이 훅이 반환하는 모든 상태와 함수들을 포함
 export interface SalesFormContextType {
+    step: number;
+    setStep: (value: number) => void;
     promptName: string;
     setPromptName: (value: string) => void;
     promptDescription: string;
@@ -54,9 +56,10 @@ export interface SalesFormContextType {
     modelItems: { value: number; label: string; }[];
     categoryItems: { value: number; label: string; }[];
     error: string | null;
+    setError: (value: SetStateAction<string | null>) => void
     loading: boolean;
     successMessage: string | null;
-    handleSubmit: (e: React.FormEvent, currentStep: number) => Promise<void>;
+    handleSubmit: (e: React.FormEvent) => Promise<void>;
 }
 
 /**
@@ -64,16 +67,19 @@ export interface SalesFormContextType {
  * @param props - UI의 현재 스텝(단계) 정보를 담은 객체.
  * @returns SalesFormContext에 제공될 상태와 함수들.
  */
-export function useSalesFormLogic(props: { currentStep: number }): SalesFormContextType {
+export function useSalesFormLogic(): SalesFormContextType {
     const router = useRouter();
     const { accessToken } = useAuth(); // 로그인 정보 (액세스 토큰) 가져오기
 
     // --- 상태(State) 선언부 ---
+    const [step, setStep] = useState<number>(1);
     const [promptName, setPromptName] = useState(''); // 프롬프트 이름
     const [promptDescription, setPromptDescription] = useState(''); // 프롬프트 설명
+    const [modelItems, setModelItems] = useState<{ value: number; label: string; }[]>([]); // 생성 모델 목록
+    const [categoryItems, setCategoryItems] = useState<{ value: number; label: string; }[]>([]); // 카테고리 목록
     const [bestModel, setBestModel] = useState(0); // 생성 모델
     const [categoryId, setCategoryId] = useState(0); // 카테고리 ID
-    const [credit, setCredit] = useState(0); // 가격
+    const [credit, setCredit] = useState(500); // 가격
     const [tags, setTags] = useState<string[]>([]); // 태그 목록
     const [images, setImages] = useState<ImageInfo[]>([]); // 업로드된 이미지 정보 목록
     const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null); // 사용자가 선택한 이미지의 인덱스 (옵션 값 편집용)
@@ -85,8 +91,6 @@ export function useSalesFormLogic(props: { currentStep: number }): SalesFormCont
     const [error, setError] = useState<string | null>(null); // 서버 에러 메시지
     const [loading, setLoading] = useState(false); // 로딩 상태 (API 요청 등)
     const [successMessage, setSuccessMessage] = useState<string | null>(null); // 성공 메시지
-    const [modelItems, setModelItems] = useState<{ value: number; label: string; }[]>([]); // AI 모델
-    const [categoryItems, setCategoryItems] = useState<{ value: number; label: string; }[]>([]); // 카테고리
 
     const displayRef = useRef<HTMLDivElement | null>(null);
 
@@ -221,43 +225,70 @@ export function useSalesFormLogic(props: { currentStep: number }): SalesFormCont
         return index === -1 ? null : "변수 " + (index + 1);
     };
 
-    const handleSubmit = async (e: React.FormEvent, currentStep: number) => {
-        e.preventDefault();
+    useEffect(() => {
+        setError(null);
+        setSuccessMessage(null);
+        setLoading(true);
 
-        if (props.currentStep !== 3) {
-            return;
+        if (!accessToken) {
+            alert('로그인이 필요합니다.');
+            router.push('/');
         }
+
+        if (step === 1) {
+            if (!promptName || !promptDescription) setError('프롬프트의 이름과 설명은 필수 입력 필드입니다.');
+            if (promptDescription.length < 20) setError('프롬프트 설명은 20자 이상이어야 합니다.');
+            if (credit % 100 !== 0) setError('가격은 100원 단위로 설정해야 합니다.');
+            if (tags.length < 2 || tags.length > 5) setError('태그는 최소 2개, 최대 5개까지 등록해야 합니다.');
+            if (tags.some(tag => tag.length < 2 || tag.length > 12)) setError('각 태그는 2~12자 이내여야 합니다.');
+            const tagRegex = /^[가-힣a-zA-Z0-9 ]+$/;
+            if (tags.some(tag => !tagRegex.test(tag))) setError('태그는 한글, 영문, 숫자, 공백만 사용 가능합니다.');
+            setStep(1);
+            setLoading(false);
+        }
+
+        if (step === 2) {
+            if (prompt.length < 20) setError('프롬프트는 최소 20자 이상으로 입력해야 합니다.');
+            if (variables.length < 1) setError('변수를 최소 1개 이상 지정해야 합니다.');
+            setStep(2);
+            setLoading(false);
+        }
+
+        if (step === 3) {
+            if (images.length < 1) setError('최소 1개의 이미지를 등록해야 합니다.');
+            const hasThumbnail = images.some(img => img.isThumbnail1 || img.isThumbnail2);
+            if (!hasThumbnail) setError('최소 1개의 썸네일 이미지를 지정해야 합니다.');
+            for (const image of images) {
+                for (const variable of variables) {
+                    if (!image.optionValues?.[variable]) {
+                        setError(`'${image.file.name.slice(0, 10)}' 이미지의 '${variable}' 변수 값을 입력해주세요.`);
+
+                    }
+                }
+            }
+            setStep(3);
+            setLoading(false);
+        }
+
+    }, [step, accessToken, prompt, promptName, promptDescription, variables, credit, tags, images])
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
 
         setError(null);
         setSuccessMessage(null);
         setLoading(true);
 
-        // --- 클라이언트 측 유효성 검사 ---
-        if (!accessToken) {
-            alert('로그인이 필요합니다.');
-            setLoading(false);
-            return;
-        }
-        if (!promptName || !promptDescription) {
-            setError('프롬프트의 이름과 설명은 필수 입력 필드입니다.');
-            setLoading(false);
-            return;
-        }
-        if (credit <= 0) {
-            setError('프롬프트의 가격은 0보다 커야 합니다.');
-            setLoading(false);
-            return;
-        }
-        if (images.length < 1) {
-            setError('최소 1개의 이미지를 등록해야 합니다.');
-            setLoading(false);
-            return;
-        }
-
         try {
             // --- 이미지 업로드 프로세스 (2단계) ---
             const uploadedImageDetails = await Promise.all(
                 images.map(async (imageInfo) => {
+                    // 이미지 파일 크기 5MB 제한
+                    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+                    if (imageInfo.file.size > MAX_FILE_SIZE) {
+                        alert('이미지 파일 크기는 5MB 이하여야 합니다.');
+                        throw new Error(`이미지 파일 크기가 5MB를 초과합니다: ${imageInfo.file.name}`);
+                    }
                     // 1단계: 서버에 Presigned URL 요청
                     const presignedUrlResponse = await fetch(
                         `/api/image/presigned-upload?fileName=${encodeURIComponent(imageInfo.file.name)}&contentType=${encodeURIComponent(imageInfo.file.type)}`,
@@ -285,7 +316,7 @@ export function useSalesFormLogic(props: { currentStep: number }): SalesFormCont
 
                     // 업로드 성공 후, 필요한 정보 반환
                     return {
-                        imageUrl: publicUrl,
+                        imageUrl: savedFileName,
                         isRepresentative: imageInfo.isRepresentative ?? false,
                         isThumbnail1: imageInfo.isThumbnail1 ?? false,
                         isThumbnail2: imageInfo.isThumbnail2 ?? false,
@@ -310,13 +341,11 @@ export function useSalesFormLogic(props: { currentStep: number }): SalesFormCont
                 })),
                 images: uploadedImageDetails.map(detail => ({
                     imageUrl: detail.imageUrl,
-                    isRepresentative: detail.isRepresentative,
-                    isPreview: detail.isThumbnail1 || detail.isThumbnail2,
+                    isRepresentative: detail.isRepresentative || detail.isThumbnail1 || detail.isThumbnail2,
+                    isPreview: detail.isRepresentative,
                     optionValues: detail.optionValues
                 })),
             };
-
-            console.log(payload);
 
             // 서버에 최종 데이터 제출 (POST 요청)
             const response = await fetch('/api/product', {
@@ -333,8 +362,10 @@ export function useSalesFormLogic(props: { currentStep: number }): SalesFormCont
                 throw new Error(errorData.message || '상품 등록에 실패했습니다.');
             }
 
-            setSuccessMessage('상품이 성공적으로 등록되었습니다!');
-            router.push('/'); // 성공 시 홈으로 이동
+            if (response.ok) {
+                alert('상품이 성공적으로 등록되었습니다!');
+                router.push('/'); // 성공 시 홈으로 이동
+            }
 
         } catch (err: any) {
             setError(err.message || '상품 등록 중 오류가 발생했습니다.');
@@ -344,9 +375,10 @@ export function useSalesFormLogic(props: { currentStep: number }): SalesFormCont
     };
 
     return {
+        step, setStep,
         promptName, setPromptName,
         promptDescription, setPromptDescription,
-        bestModel, setBestModel,
+        bestModel, setBestModel, modelItems,
         categoryId, setCategoryId, categoryItems,
         credit, setCredit,
         tags, setTags,
@@ -361,7 +393,6 @@ export function useSalesFormLogic(props: { currentStep: number }): SalesFormCont
         handleSelectionChange,
         handleAddVariableFromSelection,
         getVariableName,
-        modelItems,
-        error, loading, successMessage, handleSubmit,
+        error, loading, successMessage, setError, handleSubmit,
     };
 }
