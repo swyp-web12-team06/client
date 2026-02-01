@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { Button } from '@/components/commons/Button';
 import { cn } from '@/utils/styles';
 import { SalesFormContext } from './SalesFormContext';
@@ -10,11 +9,10 @@ import VariableStep from './VariableStep';
 import ThumbnailStep from './ThumbnailStep';
 
 export default function SalesPage() {
-    const [step, setStep] = useState(1);
 
-    const salesForm = useSalesFormLogic({ currentStep: step });
-    const { handleSubmit, loading, error, successMessage } = salesForm;
-
+    const salesForm = useSalesFormLogic();
+    const { handleSubmit, loading, error, successMessage, step, setStep, setError } = salesForm;
+    const isLoadingOrError = error !== null || loading
     return (
         <SalesFormContext.Provider value={salesForm}>
             <div className='w-308 flex flex-wrap justify-between gap-20 mx-auto pt-43.5'>
@@ -35,8 +33,7 @@ export default function SalesPage() {
 
                 <form
                     className='flex flex-col justify-between w-178 min-h-177.5'
-                    // 3단계에서는 handleSubmit 함수를 호출하고, 그 외 단계에서는 기본 이벤트 방지
-                    onSubmit={step === 3 ? (e) => handleSubmit(e, step) : (e) => e.preventDefault()}
+                    onSubmit={(e) => handleSubmit(e)}
                 >
                     <div>
                         <h3 className='text-gray-600 typo-heading1-semibold mb-9'>
@@ -56,18 +53,30 @@ export default function SalesPage() {
                             <Button
                                 className={cn('w-32.5', step === 1 && 'opacity-0 cursor-default')}
                                 type="button"
-                                onClick={() => setStep(step - 1)}
+                                onClick={() => {
+                                    if (step === 1) return;
+                                    setError(null);
+                                    setStep(Math.max(1, step - 1));
+                                }}
                                 variant="graySolid"
                                 disabled={step === 1}
                             >
                                 이전
                             </Button>
                             {step < 3 ? (
-                                <Button className='w-32.5' type="button" onClick={() => setStep(step + 1)}>
+                                <Button
+                                    className='w-32.5'
+                                    type="button"
+                                    onClick={() => {
+                                        if (step >= 3) return;
+                                        setError(null);
+                                        setStep(step + 1);
+                                    }}
+                                >
                                     다음
                                 </Button>
                             ) : (
-                                <Button className='w-32.5' type="submit" disabled={loading}>
+                                <Button className='w-32.5' type="submit" disabled={isLoadingOrError}>
                                     {loading ? '등록 중...' : '등록'}
                                 </Button>
                             )}

@@ -106,16 +106,21 @@ export default function ThumbnailStep() {
         if (draggedImageIndex === null) return;
 
         setImages(prev => {
-            const newImages = prev.map(img => ({ ...img })); // 불변성을 위해 깊은 복사
+            const newImages = prev.map(img => ({ ...img }));
 
-            // 현재 해당 역할을 가지고 있는 이미지가 있다면 그 역할을 해제
+            // 다른 이미지에 지정되어 있던 새로운 역할을 해제
             const currentHolderIndex = newImages.findIndex(img => img[role]);
-            if (currentHolderIndex > -1) {
+            if (currentHolderIndex !== -1) {
                 newImages[currentHolderIndex][role] = false;
             }
 
-            // 드롭된 이미지에 해당 역할을 부여
+            // 드래그된 이미지에 새로운 역할 부여
             newImages[draggedImageIndex][role] = true;
+
+            // 드래그된 이미지에 새로운 역할을 부여할 때 모든 기존 역할을 명시적으로 재설정
+            newImages[draggedImageIndex].isRepresentative = (role === 'isRepresentative');
+            newImages[draggedImageIndex].isThumbnail1 = (role === 'isThumbnail1');
+            newImages[draggedImageIndex].isThumbnail2 = (role === 'isThumbnail2');
 
             return newImages;
         });
@@ -270,7 +275,7 @@ export default function ThumbnailStep() {
                         {representativeImage ? (
                             <Image src={URL.createObjectURL(representativeImage.file)} alt="representative" fill className="object-cover" />
                         ) : (
-                            <span className='typo-caption-regular text-center text-gray-500 p-1.5'>위에서<br />선택</span>
+                            <span className='typo-caption-regular flex justify-center items-center w-full text-center text-gray-500 p-1.5'>위에서<br />선택</span>
                         )}
                     </div>
                 </div>
@@ -284,7 +289,7 @@ export default function ThumbnailStep() {
                         {thumbnail1Image ? (
                             <Image src={URL.createObjectURL(thumbnail1Image.file)} alt="thumbnail1" fill className="object-cover" />
                         ) : (
-                            <span className='typo-caption-regular text-center text-gray-500 p-1.5'>위에서<br />선택</span>
+                            <span className='typo-caption-regular flex justify-center items-center w-full text-center text-gray-500 p-1.5'>위에서<br />선택</span>
                         )}
                     </div>
                 </div>
@@ -298,7 +303,7 @@ export default function ThumbnailStep() {
                         {thumbnail2Image ? (
                             <Image src={URL.createObjectURL(thumbnail2Image.file)} alt="thumbnail2" fill className="object-cover" />
                         ) : (
-                            <span className='typo-caption-regular text-center text-gray-500 p-1.5'>위에서<br />선택</span>
+                            <span className='typo-caption-regular flex justify-center items-center w-full text-center text-gray-500 p-1.5'>위에서<br />선택</span>
                         )}
                     </div>
                 </div>

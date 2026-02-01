@@ -87,6 +87,9 @@ export default function PromptInfoStep() {
                     className='w-full'
                     variant='secondary'
                     sideLabel='C'
+                    min={500}
+                    max={1000}
+                    step={100}
                 />
             </div>
 
