@@ -51,8 +51,7 @@ export default function HomePageClient({ initialProducts, totalPages, categories
   const [inputValue, setInputValue] = useState(committedSearchTerm);
 
   const [isSearchingVisible, setIsSearchingVisible] = useState(true);
-  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
-  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
+  const scrollTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // URL의 searchTerm이 바뀔 때(예: 뒤로가기) input 값 동기화
   useEffect(() => {
@@ -164,8 +163,6 @@ export default function HomePageClient({ initialProducts, totalPages, categories
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      // 디바운스 중인 검색이 있다면 취소하고 즉시 검색 실행
-      if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
       triggerSearch(inputValue);
     }
   };

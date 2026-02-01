@@ -2,7 +2,7 @@ import Select, { SelectItemType } from "./commons/Select";
 import Input from "./commons/Input";
 import { Category } from "@/type/category";
 
-interface SearchingProps {
+interface props {
   categories: Category[];
   selectedCategory: number | null;
   onSelectCategory: (categoryId: string | null) => void;
@@ -24,7 +24,7 @@ export default function Searching({
   onSearchTermChange,
   onClearSearchTerm,
   onKeyDown,
-}: SearchingProps) {
+}: props) {
 
   const sortItems: SelectItemType[] = [
     {
