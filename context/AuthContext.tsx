@@ -16,6 +16,7 @@ interface AuthContextType {
     accessToken: string | null;
     user: User | null;
     login: () => Promise<{ isNewUser: boolean; role: string; userId: number }>;
+    loginDev: () => Promise<{ isNewUser: boolean; role: string; userId: number }>;
     logout: () => void;
     isLoading: boolean;
     setUserInfo: (userInfo: User) => void;
@@ -38,14 +39,17 @@ function decodeJwt(token: string): any {
 }
 
 const apiClient = {
-    get: async function <T>(path: string, token: string): Promise<T> {
+    get: async function <T>(path: string, token?: string): Promise<T> {
         const headers: HeadersInit = {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
         };
+        if (token) {
+            headers["Authorization"] = `Bearer ${token}`;
+        }
         const response = await fetch(`/api${path}`, {
             method: "GET",
             headers: headers,
+            credentials: 'include',
         });
         if (!response.ok) {
             const error = await response.json();
@@ -61,6 +65,7 @@ const apiClient = {
         const response = await fetch(`/api${path}`, {
             method: "POST",
             headers: headers,
+            credentials: 'include',
         });
         if (!response.ok) {
             const error = await response.json();
@@ -87,42 +92,62 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     }, []);
 
-    const reissueTokenAndFetchUser = useCallback(async function (): Promise<{ isNewUser: boolean; role: string; userId: number }> {
-        setIsLoading(true);
-        try {
-            const response = await apiClient.post<{ data: { accessToken: string; isNewUser: boolean; role: string } }>("/auth/reissue");
-            const { accessToken: newAccessToken, isNewUser, role } = response.data;
-            setAccessToken(newAccessToken);
+    const processAuthentication = useCallback(
+        async (
+            tokenPromise: Promise<{ data: { accessToken: string; isNewUser: boolean; role: string } }>,
+            errorLog: string
+        ): Promise<{ isNewUser: boolean; role: string; userId: number }> => {
+            setIsLoading(true);
+            try {
+                const response = await tokenPromise;
+                const { accessToken: newAccessToken, isNewUser, role } = response.data;
+                setAccessToken(newAccessToken);
 
-            const decodedToken = decodeJwt(newAccessToken);
-            const userId = parseInt(decodedToken.sub);
+                const decodedToken = decodeJwt(newAccessToken);
+                const userId = parseInt(decodedToken.sub);
 
-            if (role !== 'GUEST') {
-                await fetchUser(newAccessToken);
-            } else {
-                setUser({ id: userId, role: 'GUEST' });
+                if (role !== 'GUEST') {
+                    await fetchUser(newAccessToken);
+                } else {
+                    setUser({ id: userId, role: 'GUEST' });
+                }
+                return { isNewUser, role, userId };
+            } catch (error) {
+                console.error(errorLog, error);
+                setAccessToken(null);
+                setUser(null);
+                throw error;
+            } finally {
+                setIsLoading(false);
             }
+        },
+        [fetchUser]
+    );
 
-            return { isNewUser, role, userId };
-        } catch (error) {
-            setAccessToken(null);
-            setUser(null);
-            throw error;
-        } finally {
-            setIsLoading(false);
-        }
-    }, [fetchUser]);
+    const reissueTokenAndFetchUser = useCallback(async function (): Promise<{ isNewUser: boolean; role: string; userId: number }> {
+        return processAuthentication(
+            apiClient.post("/auth/reissue"),
+            "토큰 재발급 실패:"
+        );
+    }, [processAuthentication]);
 
     useEffect(() => {
         reissueTokenAndFetchUser().catch(() => {
             // 초기 재발행은 새로 고침 토큰이 없으면 실패할 수 있으며, 이는 정상입니다.
-            // 오류는 reissueTokenAndFetchUser에서 처리됩니다.
+            // 오류는 processAuthentication에서 처리됩니다.
         });
     }, [reissueTokenAndFetchUser]);
 
     const login = useCallback(async function (): Promise<{ isNewUser: boolean; role: string; userId: number }> {
         return await reissueTokenAndFetchUser();
     }, [reissueTokenAndFetchUser]);
+
+    const loginDev = useCallback(async (): Promise<{ isNewUser: boolean; role: string; userId: number }> => {
+        return processAuthentication(
+            apiClient.get("/dev/token"),
+            "개발용 토큰 발급 실패:"
+        );
+    }, [processAuthentication]);
 
     const logout = useCallback(async function () {
         if (accessToken) {
@@ -148,6 +173,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         accessToken,
         user,
         login,
+        loginDev,
         logout,
         isLoading,
         setUserInfo,
@@ -163,4 +189,3 @@ export const useAuth = () => {
     }
     return context;
 };
-
