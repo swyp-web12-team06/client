@@ -3,8 +3,10 @@
 import { Button } from '@/components/commons/Button';
 import Input from '@/components/commons/Input';
 import PortOne from '@portone/browser-sdk/v2';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CreditCard from './_components/CreditCard';
+import { getCreditBalance, getCreditOptions } from '@/lib/api';
+import { CreditOptions, CreditBalance } from '@/type/credit';
 
 export default function Credit() {
   const [paymentStatus, setPaymentStatus] = useState<{
@@ -14,6 +16,18 @@ export default function Credit() {
     status: 'IDLE',
   });
   const [credit, setCredit] = useState('0');
+  const [creditBalance, setCreditBalance] = useState<CreditBalance | null>(null);
+  const [creditOptions, setCreditOptions] = useState<CreditOptions[]>([]);
+
+  useEffect(() => {
+    const fetchCreditOptions = async () => {
+      const options = await getCreditOptions();
+      const balance = await getCreditBalance();
+      setCreditOptions(options);
+      setCreditBalance(balance.creditBalance || 0);
+    };
+    fetchCreditOptions();
+  }, []);
 
   function randomId() {
     return [...crypto.getRandomValues(new Uint32Array(2))]
@@ -76,15 +90,15 @@ export default function Credit() {
         <div className="w-full rounded-[10px] bg-gray-900 px-7 py-6">
           <h3 className="typo-body1-semibold text-background">잔여 크레딧</h3>
           <div className="flex items-center gap-3">
-            <p className="typo-heading1-semibold text-background">50 C</p>
+            <p className="typo-heading1-semibold text-background">{balance.creditBalance || 0} C</p>
             <p className="typo-heading3-medium text-background">= 5,000원</p>
           </div>
         </div>
         <div className="flex flex-col gap-3">
           <h2 className="typo-body1-medium text-gray-700">원하는 충전 금액 선택</h2>
           <div className="flex flex-wrap gap-4">
-            {[1, 2, 3, 4, 5].map((item) => (
-              <CreditCard key={item} value={credit} setValue={setCredit} />
+            {creditOptions.map((option) => (
+              <CreditCard key={option.id} value={credit} setValue={setCredit} option={option} />
             ))}
           </div>
         </div>
