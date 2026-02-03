@@ -6,7 +6,7 @@ interface props {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
-  size: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
 }
 
 const Modal = ({ isOpen, onClose, size = 'sm', children }: props) => {
