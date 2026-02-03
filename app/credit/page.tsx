@@ -6,7 +6,9 @@ import PortOne from '@portone/browser-sdk/v2';
 import { useEffect, useState } from 'react';
 import CreditCard from './_components/CreditCard';
 import { getCreditBalance, getCreditOptions } from '@/lib/api';
-import { CreditOptions, CreditBalance } from '@/type/credit';
+import { Options, Balance } from '@/type/credit';
+
+const TOKEN = process.env.NEXT_PUBLIC_TEST_TOKEN;
 
 export default function Credit() {
   const [paymentStatus, setPaymentStatus] = useState<{
@@ -15,19 +17,33 @@ export default function Credit() {
   }>({
     status: 'IDLE',
   });
-  const [credit, setCredit] = useState('0');
-  const [creditBalance, setCreditBalance] = useState<CreditBalance | null>(null);
-  const [creditOptions, setCreditOptions] = useState<CreditOptions[]>([]);
+  const [amount, setAmount] = useState('0');
+  const [balance, setBalance] = useState<number>(0);
+  const [options, setOptions] = useState<Options[]>([]);
 
   useEffect(() => {
     const fetchCreditOptions = async () => {
       const options = await getCreditOptions();
       const balance = await getCreditBalance();
-      setCreditOptions(options);
-      setCreditBalance(balance.creditBalance || 0);
+      setOptions(options);
+      setBalance(balance.creditBalance);
     };
     fetchCreditOptions();
   }, []);
+
+  function getCreditBonus(inputAmount: number) {
+    const matchedTarget = [...options].reverse().find((item) => inputAmount >= item.amount);
+    if (!matchedTarget) {
+      return 0;
+    }
+    const rate = parseInt(matchedTarget.bonusRateText) || 0;
+    const bonus = Math.ceil((inputAmount * rate) / 10000);
+    return bonus;
+  }
+
+  function getCredit(inputAmount: number) {
+    return inputAmount / 100;
+  }
 
   function randomId() {
     return [...crypto.getRandomValues(new Uint32Array(2))]
@@ -36,7 +52,7 @@ export default function Credit() {
   }
 
   const handlePayment = async () => {
-    if (Number(credit) <= 0) {
+    if (Number(amount) <= 0) {
       setPaymentStatus({ status: 'FAILED', message: '충전 금액은 0원 이상이어야 합니다.' });
       console.log(paymentStatus.message);
       return;
@@ -48,8 +64,8 @@ export default function Credit() {
       storeId: 'store-38dddffa-1b53-4ade-ae69-6af853b3934c',
       channelKey: 'channel-key-eadc0e01-f43a-416e-9120-bc0d2d207ad8',
       paymentId,
-      orderName: `${credit}원`,
-      totalAmount: Number(credit),
+      orderName: `${amount}원`,
+      totalAmount: Number(amount),
       currency: 'KRW',
       payMethod: 'CARD',
     });
@@ -61,10 +77,11 @@ export default function Credit() {
       });
       return;
     }
-    const completeResponse = await fetch('/credit/charge', {
+    const completeResponse = await fetch('http://localhost:8080/credit/charge', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${TOKEN}`,
       },
       body: JSON.stringify({
         paymentId: payment?.paymentId,
@@ -76,6 +93,7 @@ export default function Credit() {
       setPaymentStatus({
         status: paymentComplete.status,
       });
+      console.log(paymentComplete);
     } else {
       setPaymentStatus({
         status: 'FAILED',
@@ -90,15 +108,15 @@ export default function Credit() {
         <div className="w-full rounded-[10px] bg-gray-900 px-7 py-6">
           <h3 className="typo-body1-semibold text-background">잔여 크레딧</h3>
           <div className="flex items-center gap-3">
-            <p className="typo-heading1-semibold text-background">{balance.creditBalance || 0} C</p>
+            <p className="typo-heading1-semibold text-background">{balance} C</p>
             <p className="typo-heading3-medium text-background">= 5,000원</p>
           </div>
         </div>
         <div className="flex flex-col gap-3">
           <h2 className="typo-body1-medium text-gray-700">원하는 충전 금액 선택</h2>
           <div className="flex flex-wrap gap-4">
-            {creditOptions.map((option) => (
-              <CreditCard key={option.id} value={credit} setValue={setCredit} option={option} />
+            {options.map((option) => (
+              <CreditCard key={option.id} value={amount} setValue={setAmount} option={option} />
             ))}
           </div>
         </div>
@@ -109,8 +127,8 @@ export default function Credit() {
             placeholder="0"
             label="직접입력"
             bottomLabel="3,000원 이상 50,000원 이하로 입력해 주세요."
-            value={credit}
-            onChange={(e) => setCredit(e.target.value)}
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
           />
           <p className="typo-heading3-semibold text-gray-600">원</p>
         </div>
@@ -119,19 +137,21 @@ export default function Credit() {
         <div className="flex w-full flex-col items-start justify-start gap-5">
           <div className="border-gray-450 inline-flex w-full justify-between border-b pb-3">
             <p className="typo-body1-medium text-gray-800">결제 금액</p>
-            <p className="typo-body1-medium text-gray-800">10,000 원</p>
+            <p className="typo-body1-medium text-gray-800">{amount} 원</p>
           </div>
           <div className="border-gray-450 inline-flex w-full justify-between border-b pb-3">
-            <p className="typo-body1-medium text-gray-800">결제 금액</p>
-            <p className="typo-body1-medium text-gray-800">10,000 원</p>
+            <p className="typo-body1-medium text-gray-800">충전 크레딧</p>
+            <p className="typo-body1-medium text-gray-800">{getCredit(Number(amount))}C</p>
           </div>
           <div className="border-gray-450 inline-flex w-full justify-between border-b pb-3">
-            <p className="typo-body1-medium text-gray-800">결제 금액</p>
-            <p className="typo-body1-medium text-gray-800">10,000 원</p>
+            <p className="typo-body1-medium text-gray-800">보너스 크레딧</p>
+            <p className="typo-body1-medium text-gray-800">{getCreditBonus(Number(amount))}C</p>
           </div>
           <div className="inline-flex w-full justify-between border-b border-gray-800 pb-4">
-            <p className="typo-heading3-medium text-gray-800">결제 금액</p>
-            <p className="typo-heading3-medium text-gray-800">10,000 원</p>
+            <p className="typo-heading3-medium text-gray-800">총 충전 크레딧</p>
+            <p className="typo-heading3-medium text-gray-800">
+              {getCredit(Number(amount)) + getCreditBonus(Number(amount))}C
+            </p>
           </div>
         </div>
         <div className="inline-flex w-full gap-3">

@@ -1,8 +1,9 @@
 import { Category } from '@/type/category';
-import { CreditBalance, CreditOptions } from '@/type/credit';
+import { Balance, Options } from '@/type/credit';
 import { PaginatedProducts } from '@/type/paginate';
 
 const API_BASE_URL = 'http://localhost:8080';
+const TOKEN = process.env.NEXT_PUBLIC_TEST_TOKEN;
 
 export async function getCategories(): Promise<Category[]> {
   try {
@@ -86,7 +87,7 @@ export async function getProducts(searchParams: {
   }
 }
 
-export async function getCreditOptions(): Promise<CreditOptions[]> {
+export async function getCreditOptions(): Promise<Options[]> {
   try {
     const res = await fetch(`${API_BASE_URL}/credit/options`, { cache: 'force-cache' });
     if (!res.ok) {
@@ -101,17 +102,22 @@ export async function getCreditOptions(): Promise<CreditOptions[]> {
   }
 }
 
-export async function getCreditBalance(): Promise<CreditBalance> {
+//로그인 이후 개선 필요
+export async function getCreditBalance(): Promise<Balance> {
   try {
-    const res = await fetch(`${API_BASE_URL}/credit/balance`, { cache: 'force-cache' });
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${TOKEN}`,
+    };
+    const res = await fetch(`${API_BASE_URL}/credit/balance`, { cache: 'force-cache', headers });
     if (!res.ok) {
       console.error(res.status, await res.text());
-      return {};
+      return { creditBalance: 0 };
     }
     const data = await res.json();
     return data.data || {};
   } catch (error) {
     console.error(error);
-    return {};
+    return { creditBalance: 0 };
   }
 }

@@ -1,10 +1,10 @@
 import { Radio } from '@/components/commons/Radio';
-import { CreditOptions } from '@/type/credit';
+import { Options } from '@/type/credit';
 
 interface IProps {
   setValue: (value: string) => void;
   value: string;
-  option: CreditOptions;
+  option: Options;
 }
 
 export default function CreditCard({ setValue, value, option }: IProps) {

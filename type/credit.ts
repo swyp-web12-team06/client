@@ -1,8 +1,8 @@
-export type CreditBalance = {
+export type Balance = {
   creditBalance: number;
 };
 
-export type CreditOptions = {
+export type Options = {
   id: number;
   amount: number;
   basicCredit: number;
