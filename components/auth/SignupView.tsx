@@ -28,7 +28,6 @@ export default function SignupView({ onSuccess }: SignupViewProps) {
     privacy: false,
     marketing: false,
   });
-  const [error, setError] = useState('');
 
   const agreementList: Agreement[] = [
     { id: 'service', text: '[필수] 서비스 이용약관', required: true },
@@ -57,7 +56,6 @@ export default function SignupView({ onSuccess }: SignupViewProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
 
     if (!agreements.service || !agreements.privacy) {
       alert('필수 약관에 모두 동의해야 합니다.');
@@ -86,7 +84,7 @@ export default function SignupView({ onSuccess }: SignupViewProps) {
 
       if (!response.ok) {
         const errorData = await response.json();
-        setError(errorData.message);
+        alert(errorData.message);
         throw new Error(errorData.message || '회원가입에 실패했습니다.');
       }
 
@@ -95,7 +93,7 @@ export default function SignupView({ onSuccess }: SignupViewProps) {
       onSuccess();
     } catch (err: any) {
       const errorMessage = err.message || '알 수 없는 오류가 발생했습니다.';
-      setError(errorMessage);
+      alert(errorMessage);
       console.error('Signup error:', err);
     }
   };
