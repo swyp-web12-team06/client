@@ -36,11 +36,11 @@ export default function AuthModal({ isOpen, onClose, initialView = 'login' }: Au
   return (
     <Modal isOpen={isOpen} onClose={handleClose}>
       <div>
-        <h3 className="typo-heading2-semibold text-gray-800">
+        <h3 className="typo-heading2-semibold text-gray-800 mb-3">
           {view === 'login' ? '로그인' : '약관 동의'}
         </h3>
         <Image src="/icon/logo.svg" alt="Logo" width={81} height={20.25} />
-        <p className="typo-body1-regular text-gray-800">
+        <p className="typo-body1-regular text-gray-800 mt-2.5">
           {view === 'login'
             ? 'AI 이미지를 찾아 떠나는 여정을 시작해 보세요!'
             : '서비스 이용을 위해 약관에 동의해 주세요.'}
