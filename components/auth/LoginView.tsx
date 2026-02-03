@@ -9,35 +9,32 @@ interface LoginViewProps {
 }
 
 export default function LoginView({ handleSocialLogin }: LoginViewProps) {
+  const socialLogins: {
+    provider: 'google' | 'naver' | 'kakao';
+    name: string;
+    icon: string;
+  }[] = [
+    { provider: 'kakao', name: 'Kakao', icon: '/icon/kakao.svg' },
+    { provider: 'naver', name: 'Naver', icon: '/icon/naver.svg' },
+    { provider: 'google', name: 'Google', icon: '/icon/google.svg' },
+  ];
+
   return (
     <>
-      <div className="mt-12 mb-15 flex flex-col-reverse justify-center gap-4">
-        <Button
-          onClick={() => handleSocialLogin('google')}
-          variant="outline"
-          size="sm"
-          prefixIcon={<Image src="/icon/google.svg" alt="Google icon" width={24} height={24} />}
-        >
-          <span className="typo-body1-semibold text-gray-800">Google로 로그인하기</span>
-        </Button>
-        <Button
-          onClick={() => handleSocialLogin('naver')}
-          variant="outline"
-          size="sm"
-          prefixIcon={<Image src="/icon/naver.svg" alt="Naver icon" width={24} height={24} />}
-        >
-          <span className="typo-body1-semibold text-gray-800">Naver로 로그인하기</span>
-        </Button>
-        <Button
-          onClick={() => handleSocialLogin('kakao')}
-          variant="outline"
-          size="sm"
-          prefixIcon={<Image src="/icon/kakao.svg" alt="Kakao icon" width={24} height={24} />}
-        >
-          <span className="typo-body1-semibold text-gray-800">Kakao로 로그인하기</span>
-        </Button>
+      <div className="mt-12 mb-15 flex flex-col justify-center gap-4">
+        {socialLogins.map(({ provider, name, icon }) => (
+          <Button
+            key={provider}
+            onClick={() => handleSocialLogin(provider)}
+            variant="outline"
+            size="sm"
+            prefixIcon={<Image src={icon} alt={`${name} icon`} width={24} height={24} />}
+          >
+            <span className="typo-body1-semibold text-gray-800">{name}로 로그인하기</span>
+          </Button>
+        ))}
       </div>
-      <div className="max-w-66.25 flex justify-between gap-11 mx-auto">
+      <div className="mx-auto flex max-w-66.25 justify-between gap-11">
         <span className="typo-body2-regular text-gray-600">로그인에 문제가 있으신가요?</span>
         <Link className="text-primary-200 typo-body2-regular" href="#">
           고객센터
