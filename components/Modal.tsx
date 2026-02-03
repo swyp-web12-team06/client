@@ -24,9 +24,18 @@ const Modal = ({ isOpen, onClose, size = 'sm', children }: props) => {
         )}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="mb-2.5 h-6 w-full flex justify-end">
-          <button className="cursor-pointer w-6 aspect-square flex justify-center items-center" onClick={onClose}>
-            <Image className='w-3 h-3' src="/icon/input-clear.svg" alt="Close modal button" width={12} height={12} />
+        <div className="mb-2.5 flex h-6 w-full justify-end">
+          <button
+            className="flex aspect-square w-6 cursor-pointer items-center justify-center"
+            onClick={onClose}
+          >
+            <Image
+              className="h-3 w-3"
+              src="/icon/close-x.svg"
+              alt="Close modal button"
+              width={12}
+              height={12}
+            />
           </button>
         </div>
         {children}
