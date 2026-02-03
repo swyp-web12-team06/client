@@ -82,7 +82,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                         />
                         {hasValue && onClear && (
                             <button type="button" onClick={onClear} className="absolute cursor-pointer w-3 h-3 right-4.25 top-1/2 -translate-y-1/2 p-1">
-                                <Image src="/icon/input-clear.svg" alt="Clear Input" fill />
+                                <Image src="/icon/close-x.svg" alt="Clear Input" fill />
                             </button>
                         )}
                     </div>

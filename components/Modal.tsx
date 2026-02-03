@@ -19,14 +19,14 @@ const Modal = ({ isOpen, onClose, size = 'sm', children }: props) => {
     >
       <div
         className={cn(
-          'rounded-[10px] bg-gray-50 p-6',
+          'rounded-[10px] bg-gray-50 px-7 py-6',
           size === 'sm' ? 'w-100' : size === 'md' ? 'w-137.5' : 'w-150',
         )}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="mb-2.5 h-6 w-full text-end">
-          <button className="cursor-pointer" onClick={onClose}>
-            <Image src="/icon/input-clear.svg" alt="Close modal button" width={24} height={24} />
+        <div className="mb-2.5 h-6 w-full flex justify-end">
+          <button className="cursor-pointer w-6 aspect-square flex justify-center items-center" onClick={onClose}>
+            <Image className='w-3 h-3' src="/icon/input-clear.svg" alt="Close modal button" width={12} height={12} />
           </button>
         </div>
         {children}
