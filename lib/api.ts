@@ -112,12 +112,12 @@ export async function getCreditBalance(): Promise<Balance> {
     const res = await fetch(`${API_BASE_URL}/credit/balance`, { cache: 'force-cache', headers });
     if (!res.ok) {
       console.error(res.status, await res.text());
-      return { creditBalance: 0 };
+      return { currentCredit: 0 };
     }
     const data = await res.json();
-    return data.data || {};
+    return data.data;
   } catch (error) {
     console.error(error);
-    return { creditBalance: 0 };
+    return { currentCredit: 0 };
   }
 }

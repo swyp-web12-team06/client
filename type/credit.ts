@@ -1,5 +1,5 @@
 export type Balance = {
-  creditBalance: number;
+  currentCredit: number;
 };
 
 export type Options = {
@@ -9,4 +9,11 @@ export type Options = {
   bonusCredit: number;
   totalCredit: number;
   bonusRateText: string;
+};
+
+export type Result = {
+  status: string;
+  paymentId: string;
+  addedCredit: number;
+  totalBalance: number;
 };
