@@ -31,7 +31,7 @@ const Modal = ({ isOpen, onClose, size = 'sm', children }: props) => {
           >
             <Image
               className="h-3 w-3"
-              src="/icon/input-clear.svg"
+              src="/icon/close-x.svg"
               alt="Close modal button"
               width={12}
               height={12}
