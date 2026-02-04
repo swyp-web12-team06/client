@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
         // source: a pattern to match against incoming requests
         source: '/api/:path*',
         // destination: the URL to proxy the request to
-        destination: 'https://test.redot.store/:path*',
+        destination: '@backend/api/:path*',
       },
     ];
   },
