@@ -1,11 +1,9 @@
 import { Category } from "@/type/category";
 import { PaginatedProducts } from "@/type/paginate";
 
-const API_BASE_URL = 'http://localhost:8080';
-
 export async function getCategories(): Promise<Category[]> {
     try {
-        const res = await fetch(`${API_BASE_URL}/metadata/categories`, { cache: 'force-cache' });
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/metadata/categories`, { cache: 'force-cache' });
         // '카테고리 목록' 자주 변경되지 않는 정적인 데이터이므로 'force-cache' 사용
         if (!res.ok) {
             console.error(res.status, await res.text());
@@ -44,7 +42,7 @@ export async function getProducts(searchParams: { [key: string]: string | string
 
     params.append('size', String(searchParams.size || '12'));
 
-    const url = `${API_BASE_URL}/product?${params.toString()}`;
+    const url = `${process.env.NEXT_PUBLIC_API_BASE}/product?${params.toString()}`;
     
     try {
         // 'no-store'를 사용하여 모든 요청에 대해 데이터가 새로워지도록 합니다.

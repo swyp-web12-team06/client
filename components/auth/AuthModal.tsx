@@ -22,7 +22,7 @@ export default function AuthModal({ isOpen, onClose, initialView = 'login' }: Au
   }, [initialView, isOpen]); // isOpen 추가: 모달이 다시 열릴 때 initialView를 다시 존중하도록
 
   const handleSocialLogin = (provider: 'google' | 'naver' | 'kakao') => {
-    window.location.href = `/api/oauth2/authorization/${provider}`;
+    window.location.href = `${process.env.NEXT_PUBLIC_API_BASE}/oauth2/authorization/${provider}`;
   };
 
   const handleSignupSuccess = () => {

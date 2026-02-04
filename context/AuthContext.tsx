@@ -46,7 +46,7 @@ const apiClient = {
     if (token) {
       headers['Authorization'] = `Bearer ${token}`;
     }
-    const response = await fetch(`/api${path}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}${path}`, {
       method: 'GET',
       headers: headers,
       credentials: 'include',
@@ -62,7 +62,7 @@ const apiClient = {
     if (token) {
       headers['Authorization'] = `Bearer ${token}`;
     }
-    const response = await fetch(`/api${path}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}${path}`, {
       method: 'POST',
       headers: headers,
       credentials: 'include',
