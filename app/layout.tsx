@@ -14,8 +14,8 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: 'PromptLook',
-  description: 'A prompt creation and trading platform...',
+  title: 'Redot',
+  description: 'A prompt creation and trading platform.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
