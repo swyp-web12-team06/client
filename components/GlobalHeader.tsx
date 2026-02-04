@@ -22,9 +22,6 @@ export default function GlobalHeader() {
   const currentView = searchParams.get('view') || 'lookbook';
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-
   const handleViewChange = (value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('view', value);
@@ -63,7 +60,7 @@ export default function GlobalHeader() {
           {isLoading ? (
             <p className="typo-body1-medium">로딩중...</p>
           ) : !isLoggedIn ? (
-            <Button size="md" onClick={openModal}>
+            <Button size="md" onClick={() => setIsModalOpen(true)}>
               로그인
             </Button>
           ) : (
@@ -89,7 +86,7 @@ export default function GlobalHeader() {
           )}
         </div>
       </header>
-      <SocialLoginModal isOpen={isModalOpen} onClose={closeModal} />
+      <SocialLoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
 }
