@@ -83,7 +83,7 @@ export default function Select({
     <div ref={selectRef} className="relative w-full">
       {/* 트리거 버튼 */}
       <Button
-        className='w-44 h-11 px-3 justify-between text-gray-800 font-medium hover:bg-gray-50'
+        className='w-44 h-11 px-3 justify-between text-gray-800 bg-gray-200 typo-body1-medium hover:bg-gray-50 focus:border-primary-200'
         variant="outline" onClick={() => setIsOpen(!isOpen)}
         suffixIcon={<DropDown className={`w-6 h-6 text-gray-500 transition-transform duration-200 ${isOpen ? 'transform rotate-180' : ''}`} />}>
         <span className={cn("truncate", { "text-gray-800": !selectedItem })}>{selectedItem?.label}</span>
@@ -91,12 +91,12 @@ export default function Select({
 
       {/* 드롭다운 메뉴 */}
       {isOpen && (
-        <div className="absolute z-10 w-full mt-1.75 bg-gray-50 border border-gray-300 focus:border-primary-200 rounded-lg shadow-[0_0_24px_0_#00000033]">
+        <div className="absolute z-10 w-full mt-1.75 bg-gray-100 border border-gray-300 focus:border-primary-200 rounded-lg shadow-[0_0_24px_0_#00000033]">
           {items.map((item, index) => {
             if ('type' in item && item.type === 'group') {
               return (
                 <div key={`group-${index}`}>
-                  {item.label && <div className="px-4 pt-2 pb-1 text-xs font-bold text-gray-500 uppercase">{item.label}</div>}
+                  {item.label && <div className="px-4 pt-2 pb-1 typo-body2-regular text-gray-500 uppercase">{item.label}</div>}
                   {item.items.map(renderItem)}
                 </div>
               );
