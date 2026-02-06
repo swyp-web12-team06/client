@@ -1,14 +1,18 @@
-"use client";
+'use client';
 
-import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
+import { httpClient } from '@/lib/api';
+import { decodeJwt } from '@/utils/auth';
 
 interface User {
-    id: number;
-    nickname?: string;
-    email?: string;
-    profileImageUrl?: string;
-    role: string;
+  id: number;
+  nickname?: string;
+  email?: string;
+  profileImageUrl?: string;
+  bio?: string;
+  creditBalance?: number;
+  role: string;
 }
 
 interface AuthContextType {
@@ -24,66 +28,15 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-function decodeJwt(token: string): any {
-    try {
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-        return JSON.parse(jsonPayload);
-    } catch (e) {
-        console.error("Failed to decode JWT:", e);
-        return null;
-    }
-}
-
-const apiClient = {
-  get: async function <T>(path: string, token?: string): Promise<T> {
-    const headers: HeadersInit = {
-      'Content-Type': 'application/json',
-    };
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
-    }
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}${path}`, {
-      method: 'GET',
-      headers: headers,
-      credentials: 'include',
-    });
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message);
-    }
-    return response.json();
-  },
-  post: async function <T>(path: string, token?: string): Promise<T> {
-    const headers: HeadersInit = { 'Content-Type': 'application/json' };
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
-    }
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}${path}`, {
-      method: 'POST',
-      headers: headers,
-      credentials: 'include',
-    });
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message);
-    }
-    return response.json();
-  },
-};
-
 export function AuthProvider({ children }: { children: ReactNode }) {
-    const [accessToken, setAccessToken] = useState<string | null>(null);
-    const [user, setUser] = useState<User | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const router = useRouter();
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   const fetchUser = useCallback(async function (token: string) {
     try {
-      const response = await apiClient.get<{ data: User }>('/user/me', token);
+      const response = await httpClient.get<{ data: User }>('/user/me', token);
       setUser(response.data);
     } catch (error) {
       console.error(error);
@@ -95,7 +48,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const processAuthentication = useCallback(
     async (
       tokenPromise: Promise<{ data: { accessToken: string; isNewUser: boolean; role: string } }>,
-      errorLog: string,
     ): Promise<{ isNewUser: boolean; role: string; userId: number }> => {
       setIsLoading(true);
       try {
@@ -113,7 +65,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
         return { isNewUser, role, userId };
       } catch (error) {
-        console.error(errorLog, error);
+        console.error('Authentication process failed:', error);
         setAccessToken(null);
         setUser(null);
         throw error;
@@ -124,25 +76,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [fetchUser],
   );
 
-  const reissueTokenAndFetchUser = useCallback(
+  const completeAuthentication = useCallback(
     async function (): Promise<{ isNewUser: boolean; role: string; userId: number }> {
-      return processAuthentication(apiClient.post('/auth/reissue'), '토큰 재발급 실패:');
+      return processAuthentication(httpClient.post('/auth/reissue'));
     },
     [processAuthentication],
   );
 
   useEffect(() => {
-    reissueTokenAndFetchUser().catch(() => {
+    completeAuthentication().catch(() => {
       // 초기 재발행은 새로 고침 토큰이 없으면 실패할 수 있으며, 이는 정상입니다.
       // 오류는 processAuthentication에서 처리됩니다.
     });
-  }, [reissueTokenAndFetchUser]);
+  }, [completeAuthentication]);
 
   const login = useCallback(
     async function (): Promise<{ isNewUser: boolean; role: string; userId: number }> {
-      return await reissueTokenAndFetchUser();
+      return await completeAuthentication();
     },
-    [reissueTokenAndFetchUser],
+    [completeAuthentication],
   );
 
   const loginDev = useCallback(async (): Promise<{
@@ -150,14 +102,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     role: string;
     userId: number;
   }> => {
-    return processAuthentication(apiClient.get('/dev/token'), '개발용 토큰 발급 실패:');
+    return processAuthentication(httpClient.get('/dev/token?userId=2&role=SELLER'));
   }, [processAuthentication]);
 
   const logout = useCallback(
     async function () {
       if (accessToken) {
         try {
-          await apiClient.post('/auth/logout', accessToken);
+          await httpClient.post('/auth/logout', accessToken);
         } catch (error) {
           console.error(error);
         }
@@ -186,7 +138,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUserInfo,
   };
 
-    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export const useAuth = () => {
@@ -196,4 +148,3 @@ export const useAuth = () => {
   }
   return context;
 };
-

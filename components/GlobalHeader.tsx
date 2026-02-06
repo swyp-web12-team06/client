@@ -141,7 +141,16 @@ export default function GlobalHeader() {
                 <Button size="md" prefixIcon={<PlusIcon />} className="p-3" />
               </div>
               <div className="inline-flex items-center gap-1 rounded-full">
-                <span className="h-10 w-10 rounded-full bg-gray-500"></span>
+                <Link
+                  href="/profile"
+                  className="h-10 w-10 overflow-hidden rounded-full bg-gray-500"
+                >
+                  {user?.profileImageUrl ? (
+                    <Image src={user.profileImageUrl} alt="Profile image" width={40} height={40} />
+                  ) : (
+                    <div className="h-10 w-10 rounded-full bg-gray-500" />
+                  )}
+                </Link>
                 <p className="typo-body1-medium">{user?.nickname}</p>
               </div>
               <Button variant="outline" size="md" className="text-gray-600" onClick={logout}>
