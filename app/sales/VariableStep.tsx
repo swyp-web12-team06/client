@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/commons/Button';
-import { useSalesForm } from './SalesFormContext';
+import { useSalesForm } from '../../context/SalesFormContext';
 import { Tab } from '@/components/commons/Tabs/Tab';
 
 export default function VariableStep() {

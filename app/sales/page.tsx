@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/commons/Button';
 import { cn } from '@/utils/styles';
-import { SalesFormContext } from './SalesFormContext';
+import { SalesFormContext } from '../../context/SalesFormContext';
 import { useSalesFormLogic } from './useSalesFormLogic';
 import PromptInfoStep from './PromptInfoStep';
 import VariableStep from './VariableStep';

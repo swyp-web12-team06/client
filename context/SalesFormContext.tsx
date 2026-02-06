@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext } from 'react';
-import { SalesFormContextType } from './useSalesFormLogic';
+import { SalesFormContextType } from '../app/sales/useSalesFormLogic';
 
 export const SalesFormContext = createContext<SalesFormContextType | null>(null);
 

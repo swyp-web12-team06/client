@@ -3,7 +3,7 @@
 import Input from '@/components/commons/Input';
 import Select from '@/components/commons/Select';
 import TagInput from '@/app/sales/TagInput';
-import { useSalesForm } from './SalesFormContext';
+import { useSalesForm } from '../../context/SalesFormContext';
 
 export default function PromptInfoStep() {
     const {
