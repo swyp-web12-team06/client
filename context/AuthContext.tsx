@@ -12,14 +12,14 @@ interface User {
 }
 
 interface AuthContextType {
-    isLoggedIn: boolean;
-    accessToken: string | null;
-    user: User | null;
-    login: () => Promise<{ isNewUser: boolean; role: string; userId: number }>;
-    loginDev: () => Promise<void>;
-    logout: () => void;
-    isLoading: boolean;
-    setUserInfo: (userInfo: User) => void;
+  isLoggedIn: boolean;
+  accessToken: string | null;
+  user: User | null;
+  login: () => Promise<{ isNewUser: boolean; role: string; userId: number }>;
+  loginDev: () => Promise<{ isNewUser: boolean; role: string; userId: number }>;
+  logout: () => void;
+  isLoading: boolean;
+  setUserInfo: (userInfo: User) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -39,38 +39,40 @@ function decodeJwt(token: string): any {
 }
 
 const apiClient = {
-    get: async function <T>(path: string, token?: string): Promise<T> {
-        const headers: HeadersInit = {
-            "Content-Type": "application/json",
-        };
-        if (token) {
-            headers["Authorization"] = `Bearer ${token}`;
-        }
-        const response = await fetch(`/api${path}`, {
-            method: "GET",
-            headers: headers,
-        });
-        if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.message);
-        }
-        return response.json();
-    },
-    post: async function <T>(path: string, token?: string): Promise<T> {
-        const headers: HeadersInit = { "Content-Type": "application/json" };
-        if (token) {
-            headers["Authorization"] = `Bearer ${token}`;
-        }
-        const response = await fetch(`/api${path}`, {
-            method: "POST",
-            headers: headers,
-        });
-        if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.message);
-        }
-        return response.json();
-    },
+  get: async function <T>(path: string, token?: string): Promise<T> {
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}${path}`, {
+      method: 'GET',
+      headers: headers,
+      credentials: 'include',
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+    return response.json();
+  },
+  post: async function <T>(path: string, token?: string): Promise<T> {
+    const headers: HeadersInit = { 'Content-Type': 'application/json' };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}${path}`, {
+      method: 'POST',
+      headers: headers,
+      credentials: 'include',
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+    return response.json();
+  },
 };
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -79,107 +81,119 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
 
-    const fetchUser = useCallback(async function (token: string) {
-        try {
-            const response = await apiClient.get<{ data: User }>("/user/me", token);
-            setUser(response.data);
-        } catch (error) {
-            console.error(error);
-            setAccessToken(null);
-            setUser(null);
-        }
-    }, []);
+  const fetchUser = useCallback(async function (token: string) {
+    try {
+      const response = await apiClient.get<{ data: User }>('/user/me', token);
+      setUser(response.data);
+    } catch (error) {
+      console.error(error);
+      setAccessToken(null);
+      setUser(null);
+    }
+  }, []);
 
-    const reissueTokenAndFetchUser = useCallback(async function (): Promise<{ isNewUser: boolean; role: string; userId: number }> {
-        setIsLoading(true);
-        try {
-            const response = await apiClient.post<{ data: { accessToken: string; isNewUser: boolean; role: string } }>("/auth/reissue");
-            const { accessToken: newAccessToken, isNewUser, role } = response.data;
-            setAccessToken(newAccessToken);
+  const processAuthentication = useCallback(
+    async (
+      tokenPromise: Promise<{ data: { accessToken: string; isNewUser: boolean; role: string } }>,
+      errorLog: string,
+    ): Promise<{ isNewUser: boolean; role: string; userId: number }> => {
+      setIsLoading(true);
+      try {
+        const response = await tokenPromise;
+        const { accessToken: newAccessToken, isNewUser, role } = response.data;
+        setAccessToken(newAccessToken);
 
-            const decodedToken = decodeJwt(newAccessToken);
-            const userId = parseInt(decodedToken.sub);
+        const decodedToken = decodeJwt(newAccessToken);
+        const userId = parseInt(decodedToken.sub);
 
-            if (role !== 'GUEST') {
-                await fetchUser(newAccessToken);
-            } else {
-                setUser({ id: userId, role: 'GUEST' });
-            }
-
-            return { isNewUser, role, userId };
-        } catch (error) {
-            setAccessToken(null);
-            setUser(null);
-            throw error;
-        } finally {
-            setIsLoading(false);
-        }
-    }, [fetchUser]);
-
-    useEffect(() => {
-        reissueTokenAndFetchUser().catch(() => {
-            // 초기 재발행은 새로 고침 토큰이 없으면 실패할 수 있으며, 이는 정상입니다.
-            // 오류는 reissueTokenAndFetchUser에서 처리됩니다.
-        });
-    }, [reissueTokenAndFetchUser]);
-
-    const login = useCallback(async function (): Promise<{ isNewUser: boolean; role: string; userId: number }> {
-        return await reissueTokenAndFetchUser();
-    }, [reissueTokenAndFetchUser]);
-
-    const loginDev = useCallback(async () => {
-        setIsLoading(true);
-        try {
-          const response = await apiClient.get<{ data: { accessToken: string } }>('/dev/token');
-          const newAccessToken = response.data.accessToken;
-          setAccessToken(newAccessToken);
+        if (role !== 'GUEST') {
           await fetchUser(newAccessToken);
-        } catch (error) {
-          console.error('개발용 토큰 발급 실패:', error);
-          setAccessToken(null);
-          setUser(null);
-        } finally {
-          setIsLoading(false);
+        } else {
+          setUser({ id: userId, role: 'GUEST' });
         }
-      }, [fetchUser]);
-
-    const logout = useCallback(async function () {
-        if (accessToken) {
-            try {
-                await apiClient.post("/auth/logout", accessToken);
-            } catch (error) {
-                console.error(error);
-            }
-        }
+        return { isNewUser, role, userId };
+      } catch (error) {
+        console.error(errorLog, error);
         setAccessToken(null);
         setUser(null);
-        router.push("/");
-    }, [accessToken, router]);
+        throw error;
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [fetchUser],
+  );
 
-    const setUserInfo = (newUserInfo: Partial<User>) => {
-        if (user) {
-            setUser({ ...user, ...newUserInfo });
+  const reissueTokenAndFetchUser = useCallback(
+    async function (): Promise<{ isNewUser: boolean; role: string; userId: number }> {
+      return processAuthentication(apiClient.post('/auth/reissue'), '토큰 재발급 실패:');
+    },
+    [processAuthentication],
+  );
+
+  useEffect(() => {
+    reissueTokenAndFetchUser().catch(() => {
+      // 초기 재발행은 새로 고침 토큰이 없으면 실패할 수 있으며, 이는 정상입니다.
+      // 오류는 processAuthentication에서 처리됩니다.
+    });
+  }, [reissueTokenAndFetchUser]);
+
+  const login = useCallback(
+    async function (): Promise<{ isNewUser: boolean; role: string; userId: number }> {
+      return await reissueTokenAndFetchUser();
+    },
+    [reissueTokenAndFetchUser],
+  );
+
+  const loginDev = useCallback(async (): Promise<{
+    isNewUser: boolean;
+    role: string;
+    userId: number;
+  }> => {
+    return processAuthentication(apiClient.get('/dev/token'), '개발용 토큰 발급 실패:');
+  }, [processAuthentication]);
+
+  const logout = useCallback(
+    async function () {
+      if (accessToken) {
+        try {
+          await apiClient.post('/auth/logout', accessToken);
+        } catch (error) {
+          console.error(error);
         }
-    };
+      }
+      setAccessToken(null);
+      setUser(null);
+      router.push('/');
+    },
+    [accessToken, router],
+  );
 
-    const value = {
-        isLoggedIn: !!accessToken && !!user,
-        accessToken,
-        user,
-        login,
-        loginDev,
-        logout,
-        isLoading,
-        setUserInfo,
-    };
+  const setUserInfo = (newUserInfo: Partial<User>) => {
+    if (user) {
+      setUser({ ...user, ...newUserInfo });
+    }
+  };
+
+  const value = {
+    isLoggedIn: !!accessToken && !!user,
+    accessToken,
+    user,
+    login,
+    loginDev,
+    logout,
+    isLoading,
+    setUserInfo,
+  };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (context === undefined) {
-        throw new Error("useAuth는 반드시 AuthProvider에서 사용되어야 합니다.");
-    }
-    return context;
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth는 반드시 AuthProvider에서 사용되어야 합니다.');
+  }
+  return context;
 };
+
