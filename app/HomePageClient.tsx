@@ -18,17 +18,15 @@ interface props {
 
 function View({
   data,
-  handleRefreshLookbook,
 }: {
   data: Product[];
-  handleRefreshLookbook: () => void;
 }) {
   const searchParams = useSearchParams();
   const view = searchParams.get('view') || 'lookbook';
   return view === 'gallery' ? (
     <Gallery data={data} />
   ) : (
-    <Lookbook data={data} onRefreshLookbook={handleRefreshLookbook} />
+    <Lookbook data={data} />
   );
 }
 
@@ -195,12 +193,6 @@ export default function HomePageClient({ initialProducts, totalPages, categories
     reissueToken();
   }, [isLoggedIn]);
 
-  const handleRefreshLookbook = () => {
-    setPage(1);
-    setProducts([]);
-    setHasMore(true);
-  };
-
   return (
     <main className="min-h-screen w-full pt-20">
       <div
@@ -222,7 +214,7 @@ export default function HomePageClient({ initialProducts, totalPages, categories
       </div>
       <div className="pt-15">
         <Suspense fallback={<div>Loading...</div>}>
-          <View data={products} handleRefreshLookbook={handleRefreshLookbook} />
+          <View data={products} />
         </Suspense>
       </div>
 
