@@ -124,6 +124,27 @@ export const httpClient = {
     }
     return response.json();
   },
+
+  patch: async function <T>(path: string, body?: any, token?: string): Promise<T> {
+    const headers: HeadersInit = { 'Content-Type': 'application/json' };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    const options: RequestInit = {
+      method: 'PATCH',
+      headers: headers,
+      credentials: 'include',
+    };
+    if (body) {
+      options.body = JSON.stringify(body);
+    }
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}${path}`, options);
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+    return response.json();
+  },
 };
 
 export async function upgradeToSeller(token: string, agreeToSellerTerms: boolean): Promise<any> {

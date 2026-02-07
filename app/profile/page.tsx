@@ -6,17 +6,20 @@ import { useAuth } from '@/context/AuthContext';
 import Image from 'next/image';
 import { Product } from '@/type/product';
 import Lookbook from '../_components/Lookbook';
+import ProfileEditModal from '@/app/profile/ProfileEditModal';
+import { cn } from '@/utils/styles';
 
 export default function ProfilePage() {
-  const { user, isLoggedIn, isLoading, accessToken } = useAuth();
+  const { user, isLoggedIn, isLoading, accessToken, reissueToken } = useAuth();
   const router = useRouter();
   const [requestType, setRequestType] = useState('sales');
-  const [products, setProducts] = useState<Product[]>([]); // Initialize as empty array
+  const [products, setProducts] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10); // API 명세에 맞춰 10으로 변경
+  const [pageSize, setPageSize] = useState(10);
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const loadMoreRef = useRef<HTMLDivElement>(null); // Ref for the infinite scroll trigger
+  const loadMoreRef = useRef<HTMLDivElement>(null); // 무한 스크롤 트리거 참조
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   const fetchLibrary = async (requestType: string, page: number, size: number) => {
     const headers: HeadersInit = { 'Content-Type': 'application/json' };
@@ -44,7 +47,7 @@ export default function ProfilePage() {
         ...item,
         promptId: item.prompt_id,
         previewImageUrl: item.preview_image_url,
-        representativeImageUrls: item.preview_image_url ? [item.preview_image_url] : [], // Lookbook needs representativeImageUrls
+        representativeImageUrls: item.preview_image_url ? [item.preview_image_url] : [],
         createdAt: item.created_at,
       }));
     } else if (requestType === 'purchases') {
@@ -81,24 +84,31 @@ export default function ProfilePage() {
         ...item,
         promptId: item.prompt_id,
         previewImageUrl: item.preview_image_url,
-        representativeImageUrls: item.preview_image_url ? [item.preview_image_url] : [], // Fallback for other types
+        representativeImageUrls: item.preview_image_url ? [item.preview_image_url] : [],
         createdAt: item.created_at,
       }));
     }
 
-    return transformedData; // Transformed data is the array of products
+    return transformedData; // 변환된 데이터는 제품 배열
   };
 
-  // Effect for fetching library data based on currentPage and other dependencies
+  useEffect(() => {
+    setCurrentPage(1);
+    setProducts([]);
+    setHasMore(true);
+  }, [requestType]);
+
+  // 무한스크롤
   useEffect(() => {
     if (!isLoading && !isLoggedIn) {
       router.push('/');
     }
 
     const getLibrary = async () => {
-      // Prevent fetching if not logged in, no token, or already loading
+      // 로그인하지 않았거나 토큰이 없거나 이미 로드된 경우 가져오기 방지
       if (!isLoggedIn || !accessToken || loadingMore) return;
-      if (!hasMore && currentPage > 1) return; // Prevent fetching if no more items and not the first page
+      // 첫 페이지가 아닌 항목이 더 이상 없는 경우 가져오기 방지
+      if (!hasMore && currentPage > 1) return;
 
       setLoadingMore(true);
       try {
@@ -109,10 +119,10 @@ export default function ProfilePage() {
         } else {
           setProducts((prevProducts) => [...(prevProducts || []), ...newProducts]);
         }
-        setHasMore(newProducts.length === pageSize); // Determine if there are more pages
+        setHasMore(newProducts.length === pageSize); // 페이지가 더 있는지 확인
       } catch (error) {
         console.error('Failed to fetch library:', error);
-        setHasMore(false); // If an error occurs, assume no more items can be loaded
+        setHasMore(false);
       } finally {
         setLoadingMore(false);
       }
@@ -123,16 +133,16 @@ export default function ProfilePage() {
     }
   }, [isLoading, isLoggedIn, router, requestType, accessToken, currentPage, pageSize]);
 
-  // Effect for Intersection Observer
+  // 옵저버
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        // If the trigger element is visible, and there are more items, and not currently loading
+        // 트리거 요소가 보이고 더 많은 항목이 있으며 현재 로드되지 않는 경우
         if (entries[0].isIntersecting && hasMore && !loadingMore) {
           setCurrentPage((prevPage) => prevPage + 1);
         }
       },
-      { threshold: 1.0 }, // Trigger when 100% of the target is visible
+      { threshold: 1.0 },
     );
 
     if (loadMoreRef.current) {
@@ -144,26 +154,31 @@ export default function ProfilePage() {
         observer.unobserve(loadMoreRef.current);
       }
     };
-  }, [hasMore, loadingMore]); // Re-run observer setup if hasMore or loadingMore changes
+  }, [hasMore, loadingMore]);
 
   if (isLoading || !products) {
     return <div className="flex min-h-screen items-center justify-center">Loading profile...</div>;
   }
 
   if (!isLoggedIn || !user) {
-    return null; // Should be redirected by useEffect, but good to have as a fallback
+    return null;
   }
 
+  const libraryTabStyleHandle = (type: string) => {
+    return cn(
+      'typo-body1-medium cursor-pointer',
+      requestType === type ? 'text-primary-200 border-primary-200 border-b-2' : 'text-gray-500',
+    );
+  };
+
   return (
-    <div className="flex w-full flex-col">
+    <main className="no-padding flex w-full flex-col">
       <div className="relative h-85 w-full bg-gray-400">
         <button className="absolute -bottom-18.5 left-1/2 mx-auto flex h-37 w-37 -translate-x-1/2 cursor-pointer items-center justify-center rounded-full border-[6px] border-gray-50 bg-gray-400 text-gray-500">
           {user.profileImageUrl ? (
-            <Image
+            <img
               src={user.profileImageUrl}
               alt="Profile image"
-              width={148}
-              height={148}
               className="h-full w-full rounded-full object-cover"
             />
           ) : (
@@ -174,7 +189,7 @@ export default function ProfilePage() {
       <div className="mt-18.5 pt-1.5">
         <h3 className="typo-heading1-semibold flex items-center justify-center text-gray-800">
           {user.nickname}
-          <button className="ml-1.5 cursor-pointer">
+          <button className="ml-1.5 cursor-pointer" onClick={() => setIsProfileModalOpen(true)}>
             <Image src="/icon/name-edit.svg" alt="Nickname edit icon" width={28} height={28} />
           </button>
         </h3>
@@ -182,14 +197,33 @@ export default function ProfilePage() {
           {user.bio}
         </span>
       </div>
-      {/* Tab selection for sales/favorites/etc. would go here */}
-      <div className="mx-auto w-308 px-4 pb-28">
-        <div>
-          <button onClick={() => setRequestType('sales')}>판매 목록</button>
-          <button onClick={() => setRequestType('purchases')}>구매 목록</button>
+      <div className="mx-auto w-full md:max-w-308 px-4 pb-28">
+        <div className="mb-5 flex w-full gap-11 border-b border-gray-500">
+          <button
+            className={libraryTabStyleHandle('sales')}
+            onClick={() => setRequestType('sales')}
+          >
+            판매 목록
+          </button>
+          <button
+            className={libraryTabStyleHandle('purchases')}
+            onClick={() => setRequestType('purchases')}
+          >
+            구매 목록
+          </button>
         </div>
         <Lookbook data={products} />
+        <div ref={loadMoreRef} className="h-10 w-full" /> {/* 무한스크롤 트리거 */}
       </div>
-    </div>
+
+      <ProfileEditModal
+        isOpen={isProfileModalOpen}
+        onClose={() => setIsProfileModalOpen(false)}
+        currentNickname={user.nickname}
+        currentBio={user.bio}
+        currentProfileImageUrl={user.profileImageUrl}
+        onProfileUpdate={reissueToken}
+      />
+    </main>
   );
 }

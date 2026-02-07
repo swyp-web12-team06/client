@@ -14,9 +14,9 @@ import PlusIcon from '@/public/icon/plus.svg';
 import CreditIcon from '@/public/icon/credit.svg';
 import { useState, useEffect, useRef } from 'react';
 import AuthModal from './auth/AuthModal';
-import { upgradeToSeller } from '@/lib/api';
 import Modal from './Modal';
 import SellerTermsAndConditions from './terms/TC-seller';
+import { upgradeToSeller } from '@/lib/api';
 
 type ModalView = 'login' | 'signup';
 
@@ -188,7 +188,7 @@ export default function GlobalHeader() {
                   className="h-10 w-10 overflow-hidden rounded-full bg-gray-500"
                 >
                   {user?.profileImageUrl ? (
-                    <Image src={user.profileImageUrl} alt="Profile image" width={40} height={40} />
+                    <img src={user.profileImageUrl} alt="Profile image" />
                   ) : (
                     <div className="h-10 w-10 rounded-full bg-gray-500" />
                   )}

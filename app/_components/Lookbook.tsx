@@ -12,7 +12,7 @@ export default function Lookbook({ data }: { data: Product[] }) {
   }
 
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
       {data.map((p) => {
         // 데이터가 없는 상품은 렌더링 제외
         if (!p.representativeImageUrls || p.representativeImageUrls.length === 0) {
