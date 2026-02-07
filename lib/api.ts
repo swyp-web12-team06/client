@@ -145,6 +145,25 @@ export const httpClient = {
     }
     return response.json();
   },
+
+  delete: async function <T>(path: string, token?: string): Promise<T> {
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}${path}`, {
+      method: 'DELETE',
+      headers: headers,
+      credentials: 'include',
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+    return response.json();
+  },
 };
 
 export async function upgradeToSeller(token: string, agreeToSellerTerms: boolean): Promise<any> {
