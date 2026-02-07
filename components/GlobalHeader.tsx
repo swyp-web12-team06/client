@@ -188,7 +188,7 @@ export default function GlobalHeader() {
                   className="h-10 w-10 overflow-hidden rounded-full bg-gray-500"
                 >
                   {user?.profileImageUrl ? (
-                    <Image src={user.profileImageUrl} alt="Profile image" width={40} height={40} />
+                    <img src={user.profileImageUrl} alt="Profile image" />
                   ) : (
                     <div className="h-10 w-10 rounded-full bg-gray-500" />
                   )}
