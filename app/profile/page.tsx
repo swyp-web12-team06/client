@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import Image from 'next/image';
 import { Product } from '@/type/product';
-import Lookbook from '@/components/Lookbook';
+import Lookbook from '../_components/Lookbook';
 
 export default function ProfilePage() {
   const { user, isLoggedIn, isLoading, accessToken } = useAuth();

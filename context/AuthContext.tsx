@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { httpClient } from '@/lib/api';
+import { decodeJwt } from '@/utils/auth';
 
 interface User {
   id: number;
@@ -23,6 +24,7 @@ interface AuthContextType {
   logout: () => void;
   isLoading: boolean;
   setUserInfo: (userInfo: User) => void;
+  reissueToken: () => Promise<{ isNewUser: boolean; role: string; userId: number }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -32,62 +34,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
-
-  function decodeJwt(token: string): any {
-    try {
-      const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const jsonPayload = decodeURIComponent(
-        atob(base64)
-          .split('')
-          .map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-          })
-          .join(''),
-      );
-      return JSON.parse(jsonPayload);
-    } catch (e) {
-      console.error('Failed to decode JWT:', e);
-      return null;
-    }
-  }
-
-  const apiClient = {
-    get: async function <T>(path: string, token?: string): Promise<T> {
-      const headers: HeadersInit = {
-        'Content-Type': 'application/json',
-      };
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-      }
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}${path}`, {
-        method: 'GET',
-        headers: headers,
-        credentials: 'include',
-      });
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message);
-      }
-      return response.json();
-    },
-    post: async function <T>(path: string, token?: string): Promise<T> {
-      const headers: HeadersInit = { 'Content-Type': 'application/json' };
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-      }
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}${path}`, {
-        method: 'POST',
-        headers: headers,
-        credentials: 'include',
-      });
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message);
-      }
-      return response.json();
-    },
-  };
 
   const fetchUser = useCallback(async function (token: string) {
     try {
@@ -133,7 +79,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const completeAuthentication = useCallback(
     async function (): Promise<{ isNewUser: boolean; role: string; userId: number }> {
-      return processAuthentication(apiClient.post('/auth/reissue'));
+      return processAuthentication(httpClient.post('/auth/reissue'));
     },
     [processAuthentication],
   );
@@ -157,7 +103,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     role: string;
     userId: number;
   }> => {
-    return processAuthentication(apiClient.get('/dev/token?userId=2&role=SELLER'));
+    return processAuthentication(httpClient.get('/dev/token?userId=2&role=SELLER'));
   }, [processAuthentication]);
 
   const logout = useCallback(
@@ -191,6 +137,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     logout,
     isLoading,
     setUserInfo,
+    reissueToken: completeAuthentication,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
