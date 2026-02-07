@@ -3,6 +3,7 @@
 import { Button } from '@/components/commons/Button';
 import { Product } from '@/type/product';
 import { useEffect } from 'react';
+import Link from 'next/link';
 
 export default function ProductDetailModal({
   isOpen,
@@ -134,8 +135,10 @@ export default function ProductDetailModal({
                 </div>
 
                 <div className="flex gap-2">
-                  <Button>장바구니</Button>
-                  <Button size="sm">구매하기</Button>
+                  <Button size="sm">장바구니</Button>
+                  <Link href={`/studio/${product.promptId}`}>
+                    <Button size="sm">구매하기</Button>
+                  </Link>
                 </div>
               </div>
             </>

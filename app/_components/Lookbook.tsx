@@ -13,12 +13,12 @@ export default function Lookbook({ data }: { data: Product[] }) {
 
   return (
     <div className="grid grid-cols-3 gap-4">
-      {data.map((p) => {
+      {data.map((p, index) => {
         if (!p.representativeImageUrls?.length) return null;
 
         return (
           <div
-            key={p.promptId}
+            key={index}
             className="flex cursor-pointer divide-x divide-gray-300 overflow-hidden rounded-2xl border border-gray-300 bg-gray-400"
             onClick={() => handleProductDetail(p)}
           >

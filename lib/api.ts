@@ -1,6 +1,6 @@
 import { Category } from '@/type/category';
 import { PaginatedProducts } from '@/type/paginate';
-import { ProductForPurchase } from '@/type/product';
+import { GeneratedImage, ProductForPurchase } from '@/type/product';
 
 const TOKEN = process.env.NEXT_PUBLIC_TEST_TOKEN || '';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE || '';
@@ -89,14 +89,18 @@ export async function getProducts(searchParams: {
   }
 }
 
-export async function getProductForPurchase(promptId: string): Promise<ProductForPurchase> {
+export async function getProductForPurchase(
+  promptId: string,
+  accessToken: string,
+): Promise<ProductForPurchase> {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/product/${promptId}/purchase`, {
-      cache: 'force-cache',
+      cache: 'no-store',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${TOKEN}`,
+        Authorization: `Bearer ${accessToken}`,
       },
+      credentials: 'include',
     });
 
     if (!res.ok) {
@@ -104,7 +108,7 @@ export async function getProductForPurchase(promptId: string): Promise<ProductFo
       return {} as ProductForPurchase;
     }
     const data = await res.json();
-    return data.data || {};
+    return data.data || ({} as ProductForPurchase);
   } catch (error) {
     console.error(error);
     return {} as ProductForPurchase;
@@ -112,19 +116,20 @@ export async function getProductForPurchase(promptId: string): Promise<ProductFo
 }
 
 export async function getPriceEstimate(
-  promptId: string,
+  promptId: number,
   body: {
     modelId: number;
     aspectRatio: string;
     resolution: string;
   },
+  accessToken: string,
 ): Promise<number> {
   const res = await fetch(`${API_BASE_URL}/product/${promptId}/estimate`, {
     method: 'POST',
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${TOKEN}`,
+      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(body),
   });
@@ -147,37 +152,33 @@ export async function getPriceEstimate(
   return json.data;
 }
 
-export async function createImage(
-  promptId: string,
+export async function generateImage(
+  promptId: number,
   body: {
-    variable_value: number;
     aspect_ratio: string;
     resolution: string;
+    variable_value: any;
   },
-): Promise<number> {
-  const res = await fetch(`${API_BASE_URL}/product/${promptId}/estimate`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${TOKEN}`,
-    },
-    body: JSON.stringify(body),
-  });
+  accessToken?: string,
+): Promise<GeneratedImage> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/product/${promptId}/generate`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(body),
+    });
 
-  if (!res.ok) {
-    const text = await res.text().catch(() => '');
-    throw new Error(`estimate failed: HTTP ${res.status} ${text}`);
+    if (!res.ok) {
+      console.error(res.status, await res.text());
+      return {} as GeneratedImage;
+    }
+    const data = await res.json();
+    return data.data;
+  } catch (error) {
+    console.error(error);
+    return {} as GeneratedImage;
   }
-
-  const json: { code: string; message: string; data: number } = await res.json();
-
-  if (json.code !== 'SUCCESS') {
-    throw new Error(json.message || 'estimate failed');
-  }
-
-  if (typeof json.data !== 'number') {
-    throw new Error('estimate response data is not a number');
-  }
-
-  return json.data;
 }

@@ -8,12 +8,13 @@ import { useEffect, useState } from 'react';
 import RemoveIcon from '@/public/icon/remove.svg';
 import CreditIcon from '@/public/icon/credit.svg';
 import { PromptVariables } from '@/type/product';
-import { getPriceEstimate } from '@/lib/api';
+import { generateImage, getPriceEstimate } from '@/lib/api';
 import { Tabs } from '@/components/commons/Tabs';
 import { VariableTabContent } from './VariableTabContent';
+import { useAuth } from '@/context/AuthContext';
 
 interface props {
-  promptId: string;
+  promptId: number;
   aspectRatios: string[];
   resolutions: string[] | null;
   promptVariables: PromptVariables[];
@@ -33,7 +34,7 @@ export default function Settings({
   const [estimate, setEstimate] = useState<number>(0);
   const [tab, setTab] = useState('0');
   const [variableValues, setVariableValues] = useState<Record<string | number, string>>({});
-
+  const { accessToken, isLoading, isLoggedIn, login } = useAuth();
   const ratioItems: SelectItemType[] = [
     {
       type: 'group',
@@ -58,6 +59,13 @@ export default function Settings({
     }));
   };
 
+  const transformData = (obj: Record<number, string>) => {
+    return Object.entries(obj).map(([key, value]) => ({
+      id: Number(key),
+      value: value,
+    }));
+  };
+
   const items =
     promptVariablesList.length > 0
       ? promptVariablesList.map((variable) => ({
@@ -79,27 +87,42 @@ export default function Settings({
       : [];
 
   useEffect(() => {
-    let cancelled = false;
+    if (!accessToken) return;
 
-    const run = async () => {
-      try {
-        const data = await getPriceEstimate(promptId, {
+    const fetchData = async () => {
+      const data = await getPriceEstimate(
+        promptId,
+        {
           modelId,
           aspectRatio: ratio,
           resolution,
-        });
-        console.log(data);
-        if (!cancelled) setEstimate(data);
-      } catch (e: any) {
-        if (!cancelled) alert(e?.message ?? '에러');
-      }
+        },
+        accessToken,
+      );
+      setEstimate(data);
     };
 
-    run();
-    return () => {
-      cancelled = true;
-    };
+    fetchData();
   }, [ratio, resolution]);
+
+  async function handleGenerateImage() {
+    if (!accessToken || !promptId) {
+      console.error('로그인이 필요하거나 프롬프트 ID가 없습니다.');
+      return;
+    }
+    const variable_value = transformData(variableValues);
+    const data = await generateImage(
+      promptId,
+      {
+        aspect_ratio: ratio,
+        resolution,
+        variable_value,
+      },
+      accessToken,
+    );
+
+    console.log('data', variableValues);
+  }
 
   return (
     <div className="flex w-full flex-col gap-17">
@@ -131,7 +154,7 @@ export default function Settings({
         </div>
       </div>
       <div className="flex w-full justify-end">
-        <Button variant="solid" size="md">
+        <Button variant="solid" size="md" onClick={() => handleGenerateImage()}>
           생성하기
         </Button>
       </div>

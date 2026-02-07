@@ -50,3 +50,10 @@ export type ProductForPurchase = {
   };
   promptVariables: PromptVariables[];
 };
+
+export type GeneratedImage = {
+  image_id: number;
+  image_url: string;
+  total_price: number;
+  current_credit: number;
+};
