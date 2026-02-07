@@ -205,6 +205,10 @@ body {
   align-items: center;
 }
 
+body:has(.no-padding) {
+  padding: 0;
+}
+
 /* 현재 다크모드 지원 안함 - 다크모드 지원 시 사용 */
 /* @media (prefers-color-scheme: dark) {
   :root {

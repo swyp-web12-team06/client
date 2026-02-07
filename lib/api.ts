@@ -1,6 +1,8 @@
 import { Category } from '@/type/category';
+
 import { PaginatedProducts } from '@/type/paginate';
 import { GeneratedImage, ProductForPurchase } from '@/type/product';
+import { Balance, Options } from '@/type/credit';
 
 const TOKEN = process.env.NEXT_PUBLIC_TEST_TOKEN || '';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE || '';
@@ -181,4 +183,128 @@ export async function generateImage(
     console.error(error);
     return {} as GeneratedImage;
   }
+}
+
+export async function getCreditOptions(): Promise<Options[]> {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/credit/options`, {
+      cache: 'force-cache',
+    });
+    if (!res.ok) {
+      console.error(res.status, await res.text());
+      return [];
+    }
+    const data = await res.json();
+    return data.data || [];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+export async function getCreditBalance(accessToken?: string): Promise<Balance> {
+  try {
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    };
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/credit/balance`, {
+      cache: 'force-cache',
+      headers,
+    });
+    if (!res.ok) {
+      console.error(res.status, await res.text());
+      return { currentCredit: 0 };
+    }
+    const data = await res.json();
+    return data.data;
+  } catch (error) {
+    console.error(error);
+    return { currentCredit: 0 };
+  }
+}
+
+export const httpClient = {
+  get: async function <T>(path: string, token?: string): Promise<T> {
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}${path}`, {
+      method: 'GET',
+      headers: headers,
+      credentials: 'include',
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+    return response.json();
+  },
+  post: async function <T>(path: string, token?: string, body?: any): Promise<T> {
+    const headers: HeadersInit = { 'Content-Type': 'application/json' };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    const options: RequestInit = {
+      method: 'POST',
+      headers: headers,
+      credentials: 'include',
+    };
+    if (body) {
+      options.body = JSON.stringify(body);
+    }
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}${path}`, options);
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+    return response.json();
+  },
+
+  patch: async function <T>(path: string, body?: any, token?: string): Promise<T> {
+    const headers: HeadersInit = { 'Content-Type': 'application/json' };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    const options: RequestInit = {
+      method: 'PATCH',
+      headers: headers,
+      credentials: 'include',
+    };
+    if (body) {
+      options.body = JSON.stringify(body);
+    }
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}${path}`, options);
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+    return response.json();
+  },
+
+  delete: async function <T>(path: string, token?: string): Promise<T> {
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}${path}`, {
+      method: 'DELETE',
+      headers: headers,
+      credentials: 'include',
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+    return response.json();
+  },
+};
+
+export async function upgradeToSeller(token: string, agreeToSellerTerms: boolean): Promise<any> {
+  return httpClient.post('/user/upgrade-seller', token, { agreeToSellerTerms });
 }

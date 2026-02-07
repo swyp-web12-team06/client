@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from './commons/Button';
 import GalleryActiveIcon from '@/public/icon/gallery-active.svg';
@@ -14,23 +14,40 @@ import PlusIcon from '@/public/icon/plus.svg';
 import CreditIcon from '@/public/icon/credit.svg';
 import { useState, useEffect, useRef } from 'react';
 import AuthModal from './auth/AuthModal';
+import { getCreditBalance } from '@/lib/api';
+import Modal from './Modal';
+import SellerTermsAndConditions from './terms/TC-seller';
+import { upgradeToSeller } from '@/lib/api';
 
 type ModalView = 'login' | 'signup';
 
 export default function GlobalHeader() {
-  const { isLoggedIn, user, logout, isLoading, loginDev } = useAuth();
+  const { isLoggedIn, user, logout, isLoading, loginDev, accessToken, reissueToken } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const pathName = usePathname();
   const currentView = searchParams.get('view') || 'lookbook';
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalView, setModalView] = useState<ModalView>('login');
   const justSignedUp = useRef(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [balance, setBalance] = useState<number>(0);
+  const [showUpgradeSellerModal, setShowUpgradeSellerModal] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
     // 서버와 클라이언트의 렌더링 불일치 문제 (Hydration Mismatch) 해결 위한 isMounted 상태를 이용한 렌더링 시점 제어
   }, []);
+
+  useEffect(() => {
+    if (!accessToken) return;
+    const fetchDatas = async () => {
+      const balance = await getCreditBalance(accessToken);
+      setBalance(balance.currentCredit);
+      console.log('balance', balance.currentCredit);
+    };
+    fetchDatas();
+  }, [accessToken]);
 
   useEffect(() => {
     // 직전 렌더링에서 회원가입이 막 완료되었다면, GUEST->USER 역할 변경이
@@ -81,6 +98,43 @@ export default function GlobalHeader() {
     router.push(`/?${params.toString()}`);
   };
 
+  const handlePromptButtonInteraction = async () => {
+    if (accessToken && isLoggedIn && user) {
+      // 사용자 데이터(특히 역할)의 신선함을 보장하기 위해 토큰을 재발급
+      const reissuedAuth = await reissueToken();
+      // 재발행된 토큰의 데이터에서 업데이트된 역할 사용
+      const currentRole = reissuedAuth.role;
+      if (currentRole === 'SELLER') {
+        router.push('/sales');
+      } else {
+        setShowUpgradeSellerModal(true);
+      }
+    } else {
+      alert('로그인이 필요합니다.');
+      openModal('login');
+    }
+  };
+
+  const handleUpgradeSeller = async () => {
+    if (!accessToken || !user) {
+      alert('로그인이 필요합니다.');
+      setShowUpgradeSellerModal(false);
+      router.push('/login');
+      return;
+    }
+    try {
+      await upgradeToSeller(accessToken, true);
+      await reissueToken(); // 서버에서 사용자 데이터 새로 고침
+      alert('판매자로 등록되었습니다!');
+      setShowUpgradeSellerModal(false);
+      router.push('/sales');
+    } catch (error) {
+      console.error('Failed to upgrade to seller:', error);
+      alert('판매자 등록에 실패했습니다. 다시 시도해주세요.');
+      setShowUpgradeSellerModal(false);
+    }
+  };
+
   return (
     <>
       <header className="fixed top-3 z-15 flex w-[calc(100%-32px)] items-center justify-between rounded-3xl bg-white px-7 py-3 shadow-[0px_0px_10px_0px_rgba(20,20,20,0.10)]">
@@ -123,9 +177,9 @@ export default function GlobalHeader() {
             </div>
           ) : (
             <>
-              {user?.role !== 'GUEST' && (
+              {pathName !== '/sales' && (
                 <Button
-                  onClick={() => router.push('/sales')}
+                  onClick={handlePromptButtonInteraction}
                   variant="gradientSolid"
                   size="md"
                   suffixIcon={<SubmitStarIcon />}
@@ -135,13 +189,24 @@ export default function GlobalHeader() {
               )}
               <div className="inline-flex items-center gap-1 rounded-full">
                 <span className="inline-flex items-center gap-1 rounded-full px-5 py-2.5 outline outline-2 outline-offset-[-2px] outline-gray-500">
-                  <p className="typo-body1-bold">4800</p>
+                  <p className="typo-body1-bold">{balance}</p>
                   <CreditIcon className="h-5 w-5" />
                 </span>
-                <Button size="md" prefixIcon={<PlusIcon />} className="p-3" />
+                <Link href="/credit">
+                  <Button size="md" prefixIcon={<PlusIcon />} className="p-3" />
+                </Link>
               </div>
               <div className="inline-flex items-center gap-1 rounded-full">
-                <span className="h-10 w-10 rounded-full bg-gray-500"></span>
+                <Link
+                  href="/profile"
+                  className="h-10 w-10 overflow-hidden rounded-full bg-gray-500"
+                >
+                  {user?.profileImageUrl ? (
+                    <img src={user.profileImageUrl} alt="Profile image" />
+                  ) : (
+                    <div className="h-10 w-10 rounded-full bg-gray-500" />
+                  )}
+                </Link>
                 <p className="typo-body1-medium">{user?.nickname}</p>
               </div>
               <Button variant="outline" size="md" className="text-gray-600" onClick={logout}>
@@ -152,6 +217,28 @@ export default function GlobalHeader() {
         </div>
       </header>
       <AuthModal isOpen={isModalOpen} onClose={closeModal} initialView={modalView} />
+
+      <Modal
+        size="lg"
+        isOpen={showUpgradeSellerModal}
+        onClose={() => setShowUpgradeSellerModal(false)}
+      >
+        <div className="mb-3 space-y-3">
+          <h2 className="typo-heading2-semibold text-gray-800">판매자 신청</h2>
+          <p className="typo-body2-regular text-gray-800">
+            프롬포트를 등록하고 수익을 창출하려면{' '}
+            <b className="typo-body2-semibold">판매자 신청 동의</b>가 필요합니다.
+          </p>
+          <div className="h-36.75 overflow-y-scroll rounded-lg bg-gray-300 text-gray-800">
+            <SellerTermsAndConditions />
+          </div>
+        </div>
+        <div className="text-right">
+          <Button size="sm" onClick={handleUpgradeSeller}>
+            신청하기
+          </Button>
+        </div>
+      </Modal>
     </>
   );
 }

@@ -2,16 +2,9 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-
-interface User {
-  id: number;
-  nickname?: string;
-  email?: string;
-  profileImageUrl?: string;
-  bio?: string;
-  creditBalance?: number;
-  role: string;
-}
+import { httpClient } from '@/lib/api';
+import { decodeJwt } from '@/utils/auth';
+import { User } from '@/type/user';
 
 interface AuthContextType {
   isLoggedIn: boolean;
@@ -22,6 +15,7 @@ interface AuthContextType {
   logout: () => void;
   isLoading: boolean;
   setUserInfo: (userInfo: User) => void;
+  reissueToken: () => Promise<{ isNewUser: boolean; role: string; userId: number }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -32,65 +26,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
-  function decodeJwt(token: string): any {
-    try {
-      const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const jsonPayload = decodeURIComponent(
-        atob(base64)
-          .split('')
-          .map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-          })
-          .join(''),
-      );
-      return JSON.parse(jsonPayload);
-    } catch (e) {
-      console.error('Failed to decode JWT:', e);
-      return null;
-    }
-  }
-
-  const apiClient = {
-    get: async function <T>(path: string, token?: string): Promise<T> {
-      const headers: HeadersInit = {
-        'Content-Type': 'application/json',
-      };
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-      }
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}${path}`, {
-        method: 'GET',
-        headers: headers,
-        credentials: 'include',
-      });
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message);
-      }
-      return response.json();
-    },
-    post: async function <T>(path: string, token?: string): Promise<T> {
-      const headers: HeadersInit = { 'Content-Type': 'application/json' };
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-      }
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}${path}`, {
-        method: 'POST',
-        headers: headers,
-        credentials: 'include',
-      });
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message);
-      }
-      return response.json();
-    },
-  };
-
   const fetchUser = useCallback(async function (token: string) {
     try {
-      const response = await apiClient.get<{ data: User }>('/user/me', token);
+      const response = await httpClient.get<{ data: User }>('/user/me', token);
       setUser(response.data);
     } catch (error) {
       console.error(error);
@@ -114,8 +52,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         if (role !== 'GUEST') {
           await fetchUser(newAccessToken);
+          setUserInfo({ id: userId });
+          sessionStorage.setItem('user', JSON.stringify(user));
+          console.log(user);
         } else {
           setUser({ id: userId, role: 'GUEST' });
+          sessionStorage.setItem('user', JSON.stringify(user));
+          console.log(user);
         }
         return { isNewUser, role, userId };
       } catch (error) {
@@ -132,7 +75,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const completeAuthentication = useCallback(
     async function (): Promise<{ isNewUser: boolean; role: string; userId: number }> {
-      return processAuthentication(apiClient.post('/auth/reissue'));
+      return processAuthentication(httpClient.post('/auth/reissue'));
     },
     [processAuthentication],
   );
@@ -156,14 +99,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     role: string;
     userId: number;
   }> => {
-    return processAuthentication(apiClient.get('/dev/token?userId=2&role=SELLER'));
+    return processAuthentication(httpClient.get('/dev/token?userId=2&role=SELLER'));
   }, [processAuthentication]);
 
   const logout = useCallback(
     async function () {
       if (accessToken) {
         try {
-          await apiClient.post('/auth/logout', accessToken);
+          await httpClient.post('/auth/logout', accessToken);
         } catch (error) {
           console.error(error);
         }
@@ -190,6 +133,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     logout,
     isLoading,
     setUserInfo,
+    reissueToken: completeAuthentication,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
