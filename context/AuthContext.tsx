@@ -4,16 +4,7 @@ import { createContext, useContext, useState, useEffect, ReactNode, useCallback 
 import { useRouter } from 'next/navigation';
 import { httpClient } from '@/lib/api';
 import { decodeJwt } from '@/utils/auth';
-
-interface User {
-  id: number;
-  nickname?: string;
-  email?: string;
-  profileImageUrl?: string;
-  bio?: string;
-  creditBalance?: number;
-  role: string;
-}
+import { User } from '@/type/user';
 
 interface AuthContextType {
   isLoggedIn: boolean;
@@ -61,6 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         if (role !== 'GUEST') {
           await fetchUser(newAccessToken);
+          setUserInfo({ id: userId });
         } else {
           setUser({ id: userId, role: 'GUEST' });
         }

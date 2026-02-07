@@ -20,7 +20,7 @@ type Agreement = {
 };
 
 export default function SignupView({ onSuccess }: SignupViewProps) {
-  const { user, accessToken, setUserInfo } = useAuth();
+  const { user, accessToken, setUserInfo, reissueToken, isLoggedIn } = useAuth();
 
   const [nickname, setNickname] = useState('');
   const [agreements, setAgreements] = useState({
@@ -40,6 +40,10 @@ export default function SignupView({ onSuccess }: SignupViewProps) {
       setNickname(user.nickname || '');
     }
   }, [user]);
+
+  useEffect(() => {
+    reissueToken();
+  }, [isLoggedIn]);
 
   const handleAgreementChange = (id: keyof typeof agreements) => {
     setAgreements((prev) => ({ ...prev, [id]: !prev[id] }));

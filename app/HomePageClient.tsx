@@ -8,12 +8,8 @@ import Lookbook from './_components/Lookbook';
 import { Product } from '@/type/product';
 import { Category } from '@/type/category';
 import { getProducts } from '@/lib/api';
-
-function View({ data }: { data: Product[] }) {
-  const searchParams = useSearchParams();
-  const view = searchParams.get('view') || 'lookbook';
-  return view === 'gallery' ? <Gallery data={data} /> : <Lookbook data={data} />;
-}
+import { useAuth } from '@/context/AuthContext';
+import { User } from '@/type/user';
 
 interface props {
   initialProducts: Product[];
@@ -21,9 +17,16 @@ interface props {
   categories: Category[];
 }
 
+function View({ data }: { data: Product[] }) {
+  const searchParams = useSearchParams();
+  const view = searchParams.get('view') || 'lookbook';
+  return view === 'gallery' ? <Gallery data={data} /> : <Lookbook data={data} />;
+}
+
 export default function HomePageClient({ initialProducts, totalPages, categories }: props) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { isLoggedIn, reissueToken, user } = useAuth();
 
   // 무한스크롤 상태
   const [products, setProducts] = useState(initialProducts);
@@ -178,6 +181,10 @@ export default function HomePageClient({ initialProducts, totalPages, categories
   };
 
   const selectedCategoryId = selectedCategory ? parseInt(selectedCategory, 10) : null;
+
+  useEffect(() => {
+    reissueToken();
+  }, [isLoggedIn]);
 
   return (
     <main className="min-h-screen w-full pt-20">

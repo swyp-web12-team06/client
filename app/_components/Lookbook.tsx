@@ -1,6 +1,6 @@
 import { Product } from '@/type/product';
 import ProductDetailModal from './ProductDetailModal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Select, { SelectItem } from '@/components/commons/Select';
 import ProductEditModal from '@/app/_components/ProductEditModal';
 import { useAuth } from '@/context/AuthContext';
@@ -13,7 +13,7 @@ export default function Lookbook({
   data: Product[];
   onRefreshLookbook?: () => void;
 }) {
-  const { accessToken, user } = useAuth();
+  const { accessToken, user, isLoggedIn, setUserInfo, reissueToken } = useAuth();
   const [product, setProduct] = useState<Product | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isProductEditModalOpen, setIsProductEditModalOpen] = useState(false);
@@ -64,6 +64,14 @@ export default function Lookbook({
         break;
     }
   }
+
+  useEffect(() => {
+    if (!user) {
+      reissueToken();
+    } else {
+      setUserInfo({ ...user });
+    }
+  }, [isLoggedIn, user]);
 
   return (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
