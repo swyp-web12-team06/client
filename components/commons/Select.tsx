@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { cn } from '@/utils/styles';
 import { Button } from './Button';
 import DropDown from '@/public/icon/drop-down.svg';
+import DropDown2 from '@/public/icon/drop-down-2.svg';
 
 export interface SelectItem {
   value: string;
@@ -25,29 +26,28 @@ interface SelectProps {
   value?: string;
   onValueChange: (value: string) => void;
   items: SelectItemType[];
+  onClose?: () => void;
+  className?: string;
 }
 
-export default function Select({
-  value,
-  onValueChange,
-  items,
-}: SelectProps) {
+export default function Select({ value, onValueChange, items, onClose, className }: SelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
 
   const selectedItem = items
-    .flatMap(item => ('items' in item ? item.items : [item]))
-    .find(item => 'value' in item && item.value === value) as SelectItem | undefined;
+    .flatMap((item) => ('items' in item ? item.items : [item]))
+    .find((item) => 'value' in item && item.value === value) as SelectItem | undefined;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
         setIsOpen(false);
+        onClose?.();
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -58,7 +58,7 @@ export default function Select({
 
   const renderItem = (item: SelectItem | SelectSeparator, index: number) => {
     if ('type' in item && item.type === 'separator') {
-      return <div key={`separator-${index}`} className="h-px bg-gray-200 my-1" />;
+      return <div key={`separator-${index}`} className="my-1 h-px bg-gray-200" />;
     }
 
     if ('value' in item) {
@@ -67,9 +67,9 @@ export default function Select({
           key={item.value}
           onClick={() => !item.disabled && handleSelect(item.value)}
           className={cn(
-            "h-9 px-3 py-2 leading-5 text-left text-gray-800 cursor-pointer hover:bg-primary-50",
-            { "text-primary-200 hover:text-primary-400": value === item.value },
-            { "opacity-50 cursor-not-allowed": item.disabled }
+            'hover:bg-primary-50 h-9 cursor-pointer px-3 py-2 text-left leading-5 text-gray-800',
+            { 'text-primary-200 hover:text-primary-400': value === item.value },
+            { 'cursor-not-allowed opacity-50': item.disabled },
           )}
         >
           {item.label}
@@ -83,20 +83,44 @@ export default function Select({
     <div ref={selectRef} className="relative w-full">
       {/* 트리거 버튼 */}
       <Button
-        className='w-44 h-11 px-3 justify-between text-gray-800 bg-gray-200 typo-body1-medium hover:bg-gray-50 focus:border-primary-200'
-        variant="outline" onClick={() => setIsOpen(!isOpen)}
-        suffixIcon={<DropDown className={`w-6 h-6 text-gray-500 transition-transform duration-200 ${isOpen ? 'transform rotate-180' : ''}`} />}>
-        <span className={cn("truncate", { "text-gray-800": !selectedItem })}>{selectedItem?.label}</span>
+        className={cn(
+          className,
+          'typo-body1-medium focus:border-primary-200 h-11 w-44 justify-between overflow-hidden bg-gray-200 px-3 text-gray-800 hover:bg-gray-50',
+        )}
+        variant="outline"
+        onClick={() => setIsOpen(!isOpen)}
+        suffixIcon={
+          !className ? (
+            <DropDown
+              className={`h-6 w-6 text-gray-500 transition-transform duration-200 ${isOpen ? 'rotate-180 transform' : ''}`}
+            />
+          ) : (
+            <DropDown2 className="h-6 w-6" />
+          )
+        }
+      >
+        <span className={cn(className && 'hidden', 'truncate', { 'text-gray-800': !selectedItem })}>
+          {selectedItem?.label}
+        </span>
       </Button>
 
       {/* 드롭다운 메뉴 */}
       {isOpen && (
-        <div className="absolute z-10 w-full mt-1.75 bg-gray-100 border border-gray-300 focus:border-primary-200 rounded-lg shadow-[0_0_24px_0_#00000033]">
+        <div
+          className={cn(
+            className && 'right-0 min-w-44',
+            'focus:border-primary-200 absolute z-10 mt-1.75 w-full overflow-hidden rounded-lg border border-gray-300 bg-gray-100 shadow-[0_0_24px_0_#00000033]',
+          )}
+        >
           {items.map((item, index) => {
             if ('type' in item && item.type === 'group') {
               return (
                 <div key={`group-${index}`}>
-                  {item.label && <div className="px-4 pt-2 pb-1 typo-body2-regular text-gray-500 uppercase">{item.label}</div>}
+                  {item.label && (
+                    <div className="typo-body2-regular px-4 pt-2 pb-1 text-gray-500 uppercase">
+                      {item.label}
+                    </div>
+                  )}
                   {item.items.map(renderItem)}
                 </div>
               );

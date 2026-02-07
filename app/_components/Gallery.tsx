@@ -24,7 +24,7 @@ export default function Gallery({ data }: { data: Product[] }) {
             <img
               src={product.previewImageUrl}
               alt={product.title}
-              className="bg-gray-200 object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full bg-gray-500 object-cover transition-transform duration-300 group-hover:scale-105"
             />
           </div>
         );

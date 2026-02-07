@@ -1,5 +1,7 @@
 import { Category } from '@/type/category';
+
 import { Balance, Options } from '@/type/credit';
+
 import { PaginatedProducts } from '@/type/paginate';
 
 export async function getCategories(): Promise<Category[]> {
@@ -123,4 +125,88 @@ export async function getCreditBalance(accessToken?: string): Promise<Balance> {
     console.error(error);
     return { currentCredit: 0 };
   }
+}
+export const httpClient = {
+  get: async function <T>(path: string, token?: string): Promise<T> {
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}${path}`, {
+      method: 'GET',
+      headers: headers,
+      credentials: 'include',
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+    return response.json();
+  },
+  post: async function <T>(path: string, token?: string, body?: any): Promise<T> {
+    const headers: HeadersInit = { 'Content-Type': 'application/json' };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    const options: RequestInit = {
+      method: 'POST',
+      headers: headers,
+      credentials: 'include',
+    };
+    if (body) {
+      options.body = JSON.stringify(body);
+    }
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}${path}`, options);
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+    return response.json();
+  },
+
+  patch: async function <T>(path: string, body?: any, token?: string): Promise<T> {
+    const headers: HeadersInit = { 'Content-Type': 'application/json' };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    const options: RequestInit = {
+      method: 'PATCH',
+      headers: headers,
+      credentials: 'include',
+    };
+    if (body) {
+      options.body = JSON.stringify(body);
+    }
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}${path}`, options);
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+    return response.json();
+  },
+
+  delete: async function <T>(path: string, token?: string): Promise<T> {
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}${path}`, {
+      method: 'DELETE',
+      headers: headers,
+      credentials: 'include',
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+    return response.json();
+  },
+};
+
+export async function upgradeToSeller(token: string, agreeToSellerTerms: boolean): Promise<any> {
+  return httpClient.post('/user/upgrade-seller', token, { agreeToSellerTerms });
 }
