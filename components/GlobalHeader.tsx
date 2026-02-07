@@ -14,11 +14,13 @@ import PlusIcon from '@/public/icon/plus.svg';
 import CreditIcon from '@/public/icon/credit.svg';
 import { useState, useEffect, useRef } from 'react';
 import AuthModal from './auth/AuthModal';
+import { upgradeToSeller } from '@/lib/api';
+import Modal from './Modal';
 
 type ModalView = 'login' | 'signup';
 
 export default function GlobalHeader() {
-  const { isLoggedIn, user, logout, isLoading, loginDev } = useAuth();
+  const { isLoggedIn, user, logout, isLoading, loginDev, accessToken } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentView = searchParams.get('view') || 'lookbook';
@@ -26,6 +28,7 @@ export default function GlobalHeader() {
   const [modalView, setModalView] = useState<ModalView>('login');
   const justSignedUp = useRef(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [showUpgradeSellerModal, setShowUpgradeSellerModal] = useState(false); // New state
 
   useEffect(() => {
     setIsMounted(true);
@@ -81,6 +84,33 @@ export default function GlobalHeader() {
     router.push(`/?${params.toString()}`);
   };
 
+  const handlePromptButtonInteraction = () => {
+    if (user?.role === 'GUEST') {
+      setShowUpgradeSellerModal(true);
+    } else {
+      router.push('/sales');
+    }
+  };
+
+  const handleUpgradeSeller = async () => {
+    if (!accessToken) {
+      alert('로그인이 필요합니다.');
+      setShowUpgradeSellerModal(false);
+      router.push('/login'); // Or handle login flow
+      return;
+    }
+    try {
+      await upgradeToSeller(accessToken, true);
+      alert('판매자로 등록되었습니다!');
+      setShowUpgradeSellerModal(false);
+      router.push('/sales');
+    } catch (error) {
+      console.error('Failed to upgrade to seller:', error);
+      alert('판매자 등록에 실패했습니다. 다시 시도해주세요.');
+      setShowUpgradeSellerModal(false);
+    }
+  };
+
   return (
     <>
       <header className="fixed top-3 z-15 flex w-[calc(100%-32px)] items-center justify-between rounded-3xl bg-white px-7 py-3 shadow-[0px_0px_10px_0px_rgba(20,20,20,0.10)]">
@@ -125,7 +155,7 @@ export default function GlobalHeader() {
             <>
               {user?.role !== 'GUEST' && (
                 <Button
-                  onClick={() => router.push('/sales')}
+                  onClick={handlePromptButtonInteraction}
                   variant="gradientSolid"
                   size="md"
                   suffixIcon={<SubmitStarIcon />}
@@ -161,6 +191,17 @@ export default function GlobalHeader() {
         </div>
       </header>
       <AuthModal isOpen={isModalOpen} onClose={closeModal} initialView={modalView} />
+
+      <Modal isOpen={showUpgradeSellerModal} onClose={() => setShowUpgradeSellerModal(false)}>
+        <h2 className="typo-heading2-semibold text-gray-800">판매자 신청</h2>
+        <span className="typo-body2-regular text-gray-800">
+          프롬포트를 등록하고 수익을 창출하려면 판매자 신청 동의가 필요합니다.
+        </span>
+        <p>
+
+        </p>
+        <Button onClick={handleUpgradeSeller}>신청하기</Button>
+      </Modal>
     </>
   );
 }

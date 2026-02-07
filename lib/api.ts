@@ -125,3 +125,7 @@ export const httpClient = {
     return response.json();
   },
 };
+
+export async function upgradeToSeller(token: string, agreeToSellerTerms: boolean): Promise<any> {
+  return httpClient.post('/user/upgrade-seller', token, { agreeToSellerTerms });
+}
