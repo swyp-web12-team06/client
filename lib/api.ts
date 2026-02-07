@@ -103,22 +103,24 @@ export async function getCreditOptions(): Promise<Options[]> {
   }
 }
 
-//로그인 이후 개선 필요
-// export async function getCreditBalance(): Promise<Balance> {
-//   try {
-//     const headers = {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${TOKEN}`,
-//     };
-//     const res = await fetch(`${API_BASE_URL}/credit/balance`, { cache: 'force-cache', headers });
-//     if (!res.ok) {
-//       console.error(res.status, await res.text());
-//       return { currentCredit: 0 };
-//     }
-//     const data = await res.json();
-//     return data.data;
-//   } catch (error) {
-//     console.error(error);
-//     return { currentCredit: 0 };
-//   }
-// }
+export async function getCreditBalance(accessToken?: string): Promise<Balance> {
+  try {
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    };
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/credit/balance`, {
+      cache: 'force-cache',
+      headers,
+    });
+    if (!res.ok) {
+      console.error(res.status, await res.text());
+      return { currentCredit: 0 };
+    }
+    const data = await res.json();
+    return data.data;
+  } catch (error) {
+    console.error(error);
+    return { currentCredit: 0 };
+  }
+}

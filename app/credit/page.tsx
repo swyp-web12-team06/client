@@ -9,6 +9,7 @@ import { getCreditBalance, getCreditOptions } from '@/lib/api';
 import { Options, Balance, Result } from '@/type/credit';
 import ArrowRightIcon from '@/public/icon/arrow-right.svg';
 import SuccessCheckIcon from '@/public/icon/success-check.svg';
+import { useAuth } from '@/context/AuthContext';
 
 const TOKEN = process.env.NEXT_PUBLIC_TEST_TOKEN;
 
@@ -24,17 +25,19 @@ export default function Credit() {
   const [options, setOptions] = useState<Options[]>([]);
   const [isPurchased, setIsPurchased] = useState(false);
   const [result, setResult] = useState<Result>({} as Result);
+  const { accessToken, isLoading: isAuthLoading } = useAuth();
 
   useEffect(() => {
-    const fetchCreditOptions = async () => {
+    if (!accessToken) return;
+    const fetchDatas = async () => {
       const options = await getCreditOptions();
-      const balance = await getCreditBalance();
+      const balance = await getCreditBalance(accessToken);
       setOptions(options);
       setBalance(balance.currentCredit);
       console.log('balance', balance.currentCredit);
     };
-    fetchCreditOptions();
-  }, []);
+    fetchDatas();
+  }, [accessToken]);
 
   function getCreditBonus(inputAmount: number) {
     const matchedTarget = [...options].reverse().find((item) => inputAmount >= item.amount);
@@ -86,11 +89,11 @@ export default function Credit() {
       });
       return;
     }
-    const completeResponse = await fetch('http://localhost:8080/credit/charge', {
+    const completeResponse = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/credit/charge`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${TOKEN}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({
         paymentId: payment?.paymentId,
