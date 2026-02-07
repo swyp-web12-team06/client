@@ -11,7 +11,7 @@ export default function Lookbook({
   onRefreshLookbook,
 }: {
   data: Product[];
-  onRefreshLookbook?: () => void;
+  onRefreshLookbook: () => void;
 }) {
   const { accessToken, user } = useAuth();
   const [product, setProduct] = useState<Product | null>(null);
@@ -126,7 +126,7 @@ export default function Lookbook({
         product={productToEdit}
         onProductUpdated={() => {
           setIsProductEditModalOpen(false);
-          onRefreshLookbook?.();
+          onRefreshLookbook();
         }}
       />
     </div>

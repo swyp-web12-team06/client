@@ -25,7 +25,6 @@ export default function ProfilePage() {
     setCurrentPage(1);
     setProducts([]);
     setHasMore(true);
-    // 라이브러리 데이터 가져오기에 대한 useEffect는 현재 페이지 변경에 의해 트리거
   };
 
   const fetchLibrary = async (requestType: string, page: number, size: number) => {
