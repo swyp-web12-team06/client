@@ -53,12 +53,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (role !== 'GUEST') {
           await fetchUser(newAccessToken);
           setUserInfo({ id: userId });
-          sessionStorage.setItem('user', JSON.stringify(user));
-          console.log(user);
+          sessionStorage.setItem('userId', userId.toString());
         } else {
           setUser({ id: userId, role: 'GUEST' });
-          sessionStorage.setItem('user', JSON.stringify(user));
-          console.log(user);
+          sessionStorage.setItem('userId', userId.toString());
         }
         return { isNewUser, role, userId };
       } catch (error) {

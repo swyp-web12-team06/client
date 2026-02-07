@@ -65,6 +65,8 @@ export default function Lookbook({
     }
   }
 
+  const userId = sessionStorage.getItem('userId')
+
   return (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
       {data.map((p) => {
@@ -88,7 +90,7 @@ export default function Lookbook({
             key={p.promptId}
             className="relative flex cursor-pointer divide-x divide-gray-300 overflow-hidden rounded-2xl border border-gray-300 bg-gray-400"
           >
-            {p.seller.id === user?.id && (
+            {p.seller.id.toString() === userId && (
               <div className="absolute top-8 right-4.5 z-1">
                 <Select
                   items={options}
