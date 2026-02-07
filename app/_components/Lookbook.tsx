@@ -14,7 +14,20 @@ export default function Lookbook({ data }: { data: Product[] }) {
   return (
     <div className="grid grid-cols-3 gap-4">
       {data.map((p) => {
-        if (!p.representativeImageUrls?.length) return null;
+        // 데이터가 없는 상품은 렌더링 제외
+        if (!p.representativeImageUrls || p.representativeImageUrls.length === 0) {
+          return (
+            <div
+              key={p.promptId}
+              className="flex cursor-pointer divide-x divide-gray-300 overflow-hidden rounded-2xl border border-gray-300 bg-gray-400"
+              onClick={() => handleProductDetail(p)}
+            >
+              <div className="flex h-54 items-center justify-center rounded-2xl border border-gray-300 bg-gray-400 text-gray-500">
+                <span>No Image Available</span>
+              </div>
+            </div>
+          );
+        }
 
         return (
           <div
