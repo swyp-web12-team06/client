@@ -13,7 +13,7 @@ export default function Lookbook({
   data: Product[];
   onRefreshLookbook: () => void;
 }) {
-  const { accessToken, user } = useAuth();
+  const { accessToken, user, reissueToken } = useAuth();
   const [product, setProduct] = useState<Product | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isProductEditModalOpen, setIsProductEditModalOpen] = useState(false);
@@ -23,7 +23,7 @@ export default function Lookbook({
     if (onRefreshLookbook) {
       onRefreshLookbook();
     }
-  }, [user, onRefreshLookbook]);
+  }, [user, reissueToken]);
 
   const options: SelectItem[] = [
     { label: '수정', value: 'edit' },

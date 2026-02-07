@@ -9,7 +9,6 @@ import { Product } from '@/type/product';
 import { Category } from '@/type/category';
 import { getProducts } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
-import { User } from '@/type/user';
 
 interface props {
   initialProducts: Product[];
