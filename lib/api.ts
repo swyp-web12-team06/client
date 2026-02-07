@@ -1,4 +1,7 @@
 import { Category } from '@/type/category';
+
+import { Balance, Options } from '@/type/credit';
+
 import { PaginatedProducts } from '@/type/paginate';
 
 export async function getCategories(): Promise<Category[]> {
@@ -85,6 +88,44 @@ export async function getProducts(searchParams: {
   }
 }
 
+export async function getCreditOptions(): Promise<Options[]> {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/credit/options`, {
+      cache: 'force-cache',
+    });
+    if (!res.ok) {
+      console.error(res.status, await res.text());
+      return [];
+    }
+    const data = await res.json();
+    return data.data || [];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+export async function getCreditBalance(accessToken?: string): Promise<Balance> {
+  try {
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    };
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/credit/balance`, {
+      cache: 'force-cache',
+      headers,
+    });
+    if (!res.ok) {
+      console.error(res.status, await res.text());
+      return { currentCredit: 0 };
+    }
+    const data = await res.json();
+    return data.data;
+  } catch (error) {
+    console.error(error);
+    return { currentCredit: 0 };
+  }
+}
 export const httpClient = {
   get: async function <T>(path: string, token?: string): Promise<T> {
     const headers: HeadersInit = {

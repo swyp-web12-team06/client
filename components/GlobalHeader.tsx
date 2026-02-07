@@ -14,6 +14,7 @@ import PlusIcon from '@/public/icon/plus.svg';
 import CreditIcon from '@/public/icon/credit.svg';
 import { useState, useEffect, useRef } from 'react';
 import AuthModal from './auth/AuthModal';
+import { getCreditBalance } from '@/lib/api';
 import Modal from './Modal';
 import SellerTermsAndConditions from './terms/TC-seller';
 import { upgradeToSeller } from '@/lib/api';
@@ -30,12 +31,23 @@ export default function GlobalHeader() {
   const [modalView, setModalView] = useState<ModalView>('login');
   const justSignedUp = useRef(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [balance, setBalance] = useState<number>(0);
   const [showUpgradeSellerModal, setShowUpgradeSellerModal] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
     // 서버와 클라이언트의 렌더링 불일치 문제 (Hydration Mismatch) 해결 위한 isMounted 상태를 이용한 렌더링 시점 제어
   }, []);
+
+  useEffect(() => {
+    if (!accessToken) return;
+    const fetchDatas = async () => {
+      const balance = await getCreditBalance(accessToken);
+      setBalance(balance.currentCredit);
+      console.log('balance', balance.currentCredit);
+    };
+    fetchDatas();
+  }, [accessToken]);
 
   useEffect(() => {
     // 직전 렌더링에서 회원가입이 막 완료되었다면, GUEST->USER 역할 변경이
@@ -177,10 +189,12 @@ export default function GlobalHeader() {
               )}
               <div className="inline-flex items-center gap-1 rounded-full">
                 <span className="inline-flex items-center gap-1 rounded-full px-5 py-2.5 outline outline-2 outline-offset-[-2px] outline-gray-500">
-                  <p className="typo-body1-bold">4800</p>
+                  <p className="typo-body1-bold">{balance}</p>
                   <CreditIcon className="h-5 w-5" />
                 </span>
-                <Button size="md" prefixIcon={<PlusIcon />} className="p-3" />
+                <Link href="/credit">
+                  <Button size="md" prefixIcon={<PlusIcon />} className="p-3" />
+                </Link>
               </div>
               <div className="inline-flex items-center gap-1 rounded-full">
                 <Link
