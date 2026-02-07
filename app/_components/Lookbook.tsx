@@ -5,19 +5,15 @@ import Select, { SelectItem } from '@/components/commons/Select';
 import ProductEditModal from '@/app/_components/ProductEditModal';
 import { useAuth } from '@/context/AuthContext';
 import { httpClient } from '@/lib/api';
+import { useRouter } from 'next/router';
 
-export default function Lookbook({
-  data,
-  onRefreshLookbook,
-}: {
-  data: Product[];
-  onRefreshLookbook?: () => void;
-}) {
+export default function Lookbook({ data }: { data: Product[] }) {
   const { accessToken, user } = useAuth();
   const [product, setProduct] = useState<Product | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isProductEditModalOpen, setIsProductEditModalOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
+  const router = useRouter();
 
   const options: SelectItem[] = [
     { label: '수정', value: 'edit' },
@@ -55,7 +51,7 @@ export default function Lookbook({
           try {
             await httpClient.delete(`/product/${promptId}`, accessToken);
             alert('상품이 성공적으로 삭제되었습니다!');
-            onRefreshLookbook?.();
+            router.reload();
           } catch (err: any) {
             console.error('Product deletion failed:', err);
             alert(err.message || '상품 삭제에 실패했습니다.');
@@ -65,7 +61,7 @@ export default function Lookbook({
     }
   }
 
-  const userId = sessionStorage.getItem('userId')
+  const userId = sessionStorage.getItem('userId');
 
   return (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
@@ -122,7 +118,7 @@ export default function Lookbook({
         product={productToEdit}
         onProductUpdated={() => {
           setIsProductEditModalOpen(false);
-          onRefreshLookbook?.();
+          router.reload();
         }}
       />
     </div>

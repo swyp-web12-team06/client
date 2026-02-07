@@ -218,7 +218,7 @@ export default function ProfilePage() {
             구매 목록
           </button>
         </div>
-        <Lookbook data={products} onRefreshLookbook={handleRefreshLookbook} />
+        <Lookbook data={products} />
         <div ref={loadMoreRef} className="h-10 w-full" /> {/* 무한스크롤 트리거 */}
       </div>
 
