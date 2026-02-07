@@ -3,8 +3,8 @@
 import { useState, Suspense, useRef, useEffect, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Searching from '@/components/Searching';
-import Gallery from '@/components/Gallery';
-import Lookbook from '@/components/Lookbook';
+import Gallery from './_components/Gallery';
+import Lookbook from './_components/Lookbook';
 import { Product } from '@/type/product';
 import { Category } from '@/type/category';
 import { getProducts } from '@/lib/api';
@@ -24,7 +24,7 @@ interface props {
 export default function HomePageClient({ initialProducts, totalPages, categories }: props) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  
+
   // 무한스크롤 상태
   const [products, setProducts] = useState(initialProducts);
   const [page, setPage] = useState(1); // 서버에서 이미 첫 페이지를 불러왔으므로 다음(클라이언트)는 1부터 시작
@@ -41,12 +41,11 @@ export default function HomePageClient({ initialProducts, totalPages, categories
     setHasMore(totalPages > 1); // 더 많은 페이지가 있는지 여부 리셋
   }, [initialProducts, totalPages]);
 
-
   // 검색 및 필터링 상태
   const selectedCategory = searchParams.get('categoryId');
   const sortOrder = searchParams.get('sort') || 'new';
   const committedSearchTerm = searchParams.get('keyword') || '';
-  
+
   // 실시간 사용자 입력을 위한 상태
   const [inputValue, setInputValue] = useState(committedSearchTerm);
 
@@ -72,9 +71,9 @@ export default function HomePageClient({ initialProducts, totalPages, categories
   // 무한스크롤 데이터 로드 함수
   const loadMoreProducts = useCallback(async () => {
     if (isLoadingMore || !hasMore) return;
-    
+
     setIsLoadingMore(true);
-    
+
     // 현재 검색 파라미터 유지
     const currentParams: { [key: string]: string } = {};
     searchParams.forEach((value, key) => {
@@ -84,8 +83,8 @@ export default function HomePageClient({ initialProducts, totalPages, categories
     const newProductsData = await getProducts({ ...currentParams, page: String(page) });
 
     if (newProductsData && newProductsData.content.length > 0) {
-      setProducts(prev => [...prev, ...newProductsData.content]);
-      setPage(prev => prev + 1);
+      setProducts((prev) => [...prev, ...newProductsData.content]);
+      setPage((prev) => prev + 1);
       setHasMore(!newProductsData.last);
     } else {
       setHasMore(false);
@@ -102,7 +101,7 @@ export default function HomePageClient({ initialProducts, totalPages, categories
           loadMoreProducts();
         }
       },
-      { threshold: 1.0 }
+      { threshold: 1.0 },
     );
 
     if (observerRef.current) {
@@ -117,20 +116,26 @@ export default function HomePageClient({ initialProducts, totalPages, categories
   }, [loadMoreProducts]);
 
   // 검색 파라미터 업데이트 함수: 핸들러가 URL 매개변수를 업데이트하여 페이지 재장전 및 상태 재설정을 트리거
-  const updateSearchParams = useCallback((params: URLSearchParams) => {
-    params.delete('page');
-    router.push(`?${params.toString()}`, { scroll: false });
-  }, [router]);
+  const updateSearchParams = useCallback(
+    (params: URLSearchParams) => {
+      params.delete('page');
+      router.push(`?${params.toString()}`, { scroll: false });
+    },
+    [router],
+  );
 
-  const triggerSearch = useCallback((term: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (term) {
-      params.set('keyword', term);
-    } else {
-      params.delete('keyword');
-    }
-    updateSearchParams(params);
-  }, [searchParams, updateSearchParams]);
+  const triggerSearch = useCallback(
+    (term: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (term) {
+        params.set('keyword', term);
+      } else {
+        params.delete('keyword');
+      }
+      updateSearchParams(params);
+    },
+    [searchParams, updateSearchParams],
+  );
 
   // 디바운스 검색을 위한 useEffect
   useEffect(() => {
@@ -142,7 +147,7 @@ export default function HomePageClient({ initialProducts, totalPages, categories
       return () => clearTimeout(timeoutId);
     }
   }, [inputValue, committedSearchTerm, triggerSearch]);
-  
+
   const handleCategorySelect = (categoryId: string | null) => {
     const params = new URLSearchParams(searchParams.toString());
     if (categoryId) params.set('categoryId', categoryId);
