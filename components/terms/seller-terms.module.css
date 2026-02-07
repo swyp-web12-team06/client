@@ -1,0 +1,83 @@
+.sellerTermsContainer {
+  display: block;
+  padding: 10px;
+}
+
+.sellerTermsContainer h2 {
+  font-size: 24px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+  color: #111;
+}
+.sellerTermsContainer h3 {
+  font-size: 18px;
+  margin-top: 30px;
+  color: #333;
+}
+.sellerTermsContainer h4 {
+  font-size: 16px;
+  margin-top: 20px;
+  color: #555;
+}
+
+.sellerTermsContainer p {
+  margin-bottom: 15px;
+  color: #444;
+  word-break: keep-all;
+}
+
+.sellerTermsContainer ul,
+.sellerTermsContainer ol {
+  margin-bottom: 20px;
+  padding-left: 20px;
+  color: #444;
+}
+.sellerTermsContainer li {
+  margin-bottom: 8px;
+}
+
+/* 테이블 스타일 */
+.sellerTermsContainer table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 14px;
+}
+
+.sellerTermsContainer th,
+.sellerTermsContainer td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.sellerTermsContainer th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 박스 스타일 */
+.sellerTermsContainer .highlight-box {
+  background-color: #f8f9fa;
+  border: 1px solid #eee;
+  padding: 20px;
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+.sellerTermsContainer .check-box {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  background: #fff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sellerTermsContainer table {
+    display: block;
+    overflow-x: auto;
+  }
+}

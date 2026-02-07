@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from './commons/Button';
 import GalleryActiveIcon from '@/public/icon/gallery-active.svg';
@@ -16,19 +16,21 @@ import { useState, useEffect, useRef } from 'react';
 import AuthModal from './auth/AuthModal';
 import { upgradeToSeller } from '@/lib/api';
 import Modal from './Modal';
+import SellerTermsAndConditions from './terms/TC-seller';
 
 type ModalView = 'login' | 'signup';
 
 export default function GlobalHeader() {
-  const { isLoggedIn, user, logout, isLoading, loginDev, accessToken } = useAuth();
+  const { isLoggedIn, user, logout, isLoading, loginDev, accessToken, reissueToken } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const pathName = usePathname();
   const currentView = searchParams.get('view') || 'lookbook';
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalView, setModalView] = useState<ModalView>('login');
   const justSignedUp = useRef(false);
   const [isMounted, setIsMounted] = useState(false);
-  const [showUpgradeSellerModal, setShowUpgradeSellerModal] = useState(false); // New state
+  const [showUpgradeSellerModal, setShowUpgradeSellerModal] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -84,23 +86,33 @@ export default function GlobalHeader() {
     router.push(`/?${params.toString()}`);
   };
 
-  const handlePromptButtonInteraction = () => {
-    if (user?.role === 'GUEST') {
-      setShowUpgradeSellerModal(true);
+  const handlePromptButtonInteraction = async () => {
+    if (accessToken && isLoggedIn && user) {
+      // 사용자 데이터(특히 역할)의 신선함을 보장하기 위해 토큰을 재발급
+      const reissuedAuth = await reissueToken();
+      // 재발행된 토큰의 데이터에서 업데이트된 역할 사용
+      const currentRole = reissuedAuth.role;
+      if (currentRole === 'SELLER') {
+        router.push('/sales');
+      } else {
+        setShowUpgradeSellerModal(true);
+      }
     } else {
-      router.push('/sales');
+      alert('로그인이 필요합니다.');
+      openModal('login');
     }
   };
 
   const handleUpgradeSeller = async () => {
-    if (!accessToken) {
+    if (!accessToken || !user) {
       alert('로그인이 필요합니다.');
       setShowUpgradeSellerModal(false);
-      router.push('/login'); // Or handle login flow
+      router.push('/login');
       return;
     }
     try {
       await upgradeToSeller(accessToken, true);
+      await reissueToken(); // 서버에서 사용자 데이터 새로 고침
       alert('판매자로 등록되었습니다!');
       setShowUpgradeSellerModal(false);
       router.push('/sales');
@@ -153,7 +165,7 @@ export default function GlobalHeader() {
             </div>
           ) : (
             <>
-              {user?.role !== 'GUEST' && (
+              {pathName !== '/sales' && (
                 <Button
                   onClick={handlePromptButtonInteraction}
                   variant="gradientSolid"
@@ -192,15 +204,26 @@ export default function GlobalHeader() {
       </header>
       <AuthModal isOpen={isModalOpen} onClose={closeModal} initialView={modalView} />
 
-      <Modal isOpen={showUpgradeSellerModal} onClose={() => setShowUpgradeSellerModal(false)}>
-        <h2 className="typo-heading2-semibold text-gray-800">판매자 신청</h2>
-        <span className="typo-body2-regular text-gray-800">
-          프롬포트를 등록하고 수익을 창출하려면 판매자 신청 동의가 필요합니다.
-        </span>
-        <p>
-
-        </p>
-        <Button onClick={handleUpgradeSeller}>신청하기</Button>
+      <Modal
+        size="lg"
+        isOpen={showUpgradeSellerModal}
+        onClose={() => setShowUpgradeSellerModal(false)}
+      >
+        <div className="mb-3 space-y-3">
+          <h2 className="typo-heading2-semibold text-gray-800">판매자 신청</h2>
+          <p className="typo-body2-regular text-gray-800">
+            프롬포트를 등록하고 수익을 창출하려면{' '}
+            <b className="typo-body2-semibold">판매자 신청 동의</b>가 필요합니다.
+          </p>
+          <div className="h-36.75 overflow-y-scroll rounded-lg bg-gray-300 text-gray-800">
+            <SellerTermsAndConditions />
+          </div>
+        </div>
+        <div className="text-right">
+          <Button size="sm" onClick={handleUpgradeSeller}>
+            신청하기
+          </Button>
+        </div>
       </Modal>
     </>
   );
