@@ -2,8 +2,8 @@ import { Category } from '@/type/category';
 import { PaginatedProducts } from '@/type/paginate';
 import { ProductForPurchase } from '@/type/product';
 
-const API_BASE_URL = 'http://localhost:8080';
 const TOKEN = process.env.NEXT_PUBLIC_TEST_TOKEN || '';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE || '';
 
 export async function getCategories(): Promise<Category[]> {
   try {
@@ -91,13 +91,14 @@ export async function getProducts(searchParams: {
 
 export async function getProductForPurchase(promptId: string): Promise<ProductForPurchase> {
   try {
-    const res = await fetch(`${API_BASE_URL}/product/${promptId}/purchase`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/product/${promptId}/purchase`, {
       cache: 'force-cache',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${TOKEN}`,
       },
     });
+
     if (!res.ok) {
       console.error(res.status, await res.text());
       return {} as ProductForPurchase;
@@ -120,6 +121,7 @@ export async function getPriceEstimate(
 ): Promise<number> {
   const res = await fetch(`${API_BASE_URL}/product/${promptId}/estimate`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${TOKEN}`,
