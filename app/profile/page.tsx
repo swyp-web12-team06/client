@@ -21,6 +21,13 @@ export default function ProfilePage() {
   const loadMoreRef = useRef<HTMLDivElement>(null); // 무한 스크롤 트리거 참조
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
+  const handleRefreshLookbook = () => {
+    setCurrentPage(1);
+    setProducts([]);
+    setHasMore(true);
+    // 라이브러리 데이터 가져오기에 대한 useEffect는 현재 페이지 변경에 의해 트리거
+  };
+
   const fetchLibrary = async (requestType: string, page: number, size: number) => {
     const headers: HeadersInit = { 'Content-Type': 'application/json' };
     if (accessToken) {
@@ -197,7 +204,7 @@ export default function ProfilePage() {
           {user.bio}
         </span>
       </div>
-      <div className="mx-auto w-full md:max-w-308 px-4 pb-28">
+      <div className="mx-auto w-full px-4 pb-28 md:max-w-308">
         <div className="mb-5 flex w-full gap-11 border-b border-gray-500">
           <button
             className={libraryTabStyleHandle('sales')}
@@ -212,7 +219,7 @@ export default function ProfilePage() {
             구매 목록
           </button>
         </div>
-        <Lookbook data={products} />
+        <Lookbook data={products} onRefreshLookbook={handleRefreshLookbook} />
         <div ref={loadMoreRef} className="h-10 w-full" /> {/* 무한스크롤 트리거 */}
       </div>
 
