@@ -21,12 +21,6 @@ export default function ProfilePage() {
   const loadMoreRef = useRef<HTMLDivElement>(null); // 무한 스크롤 트리거 참조
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
-  const handleRefreshLookbook = () => {
-    setCurrentPage(1);
-    setProducts([]);
-    setHasMore(true);
-  };
-
   const fetchLibrary = async (requestType: string, page: number, size: number) => {
     const headers: HeadersInit = { 'Content-Type': 'application/json' };
     if (accessToken) {

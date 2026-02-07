@@ -1,11 +1,10 @@
 import { Product } from '@/type/product';
 import ProductDetailModal from './ProductDetailModal';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Select, { SelectItem } from '@/components/commons/Select';
 import ProductEditModal from '@/app/_components/ProductEditModal';
 import { useAuth } from '@/context/AuthContext';
 import { httpClient } from '@/lib/api';
-import { useRouter } from 'next/router';
 
 export default function Lookbook({ data }: { data: Product[] }) {
   const { accessToken, user } = useAuth();
@@ -13,8 +12,6 @@ export default function Lookbook({ data }: { data: Product[] }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isProductEditModalOpen, setIsProductEditModalOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
-  const router = useRouter();
-
   const options: SelectItem[] = [
     { label: '수정', value: 'edit' },
     { label: '숨김', value: 'hide' },
@@ -51,7 +48,7 @@ export default function Lookbook({ data }: { data: Product[] }) {
           try {
             await httpClient.delete(`/product/${promptId}`, accessToken);
             alert('상품이 성공적으로 삭제되었습니다!');
-            router.reload();
+            window.location.reload();
           } catch (err: any) {
             console.error('Product deletion failed:', err);
             alert(err.message || '상품 삭제에 실패했습니다.');
@@ -118,7 +115,7 @@ export default function Lookbook({ data }: { data: Product[] }) {
         product={productToEdit}
         onProductUpdated={() => {
           setIsProductEditModalOpen(false);
-          router.reload();
+          window.location.reload();
         }}
       />
     </div>
