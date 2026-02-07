@@ -13,11 +13,17 @@ export default function Lookbook({
   data: Product[];
   onRefreshLookbook?: () => void;
 }) {
-  const { accessToken, user, isLoggedIn, setUserInfo, reissueToken } = useAuth();
+  const { accessToken, user } = useAuth();
   const [product, setProduct] = useState<Product | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isProductEditModalOpen, setIsProductEditModalOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
+
+  useEffect(() => {
+    if (onRefreshLookbook) {
+      onRefreshLookbook();
+    }
+  }, [user, onRefreshLookbook]);
 
   const options: SelectItem[] = [
     { label: '수정', value: 'edit' },
@@ -64,14 +70,6 @@ export default function Lookbook({
         break;
     }
   }
-
-  useEffect(() => {
-    if (!user) {
-      reissueToken();
-    } else {
-      setUserInfo({ ...user });
-    }
-  }, [isLoggedIn, user]);
 
   return (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
