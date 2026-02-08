@@ -17,9 +17,9 @@ export const metadata: Metadata = {
   title: 'Redot',
   description: 'A prompt creation and trading platform.',
   icons: {
-    icon: '/redot.png',
-    apple: '/redot.png',
-    shortcut: '/redot.png',
+    icon: '/icon/redot.png',
+    apple: '/icon/redot.png',
+    shortcut: '/icon/redot.png',
   },
 };
 

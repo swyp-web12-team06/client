@@ -20,6 +20,7 @@ interface props {
   modelId: number;
   setGeneratedImageUrl: Dispatch<SetStateAction<string>>;
   setImageId: Dispatch<SetStateAction<number>>;
+  setIsGenerated: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function Settings({
@@ -30,6 +31,7 @@ export default function Settings({
   modelId,
   setGeneratedImageUrl,
   setImageId,
+  setIsGenerated,
 }: props) {
   const promptVariablesList: PromptVariables[] = promptVariables;
   const [ratio, setRatio] = useState(aspectRatios[0]);
@@ -130,6 +132,7 @@ export default function Settings({
     if (status) {
       console.log(status);
       setGeneratedImageUrl(status.downloadUrl ?? '');
+      setIsGenerated(true);
     }
   }
 
@@ -161,7 +164,12 @@ export default function Settings({
         </div>
       </div>
       <div className="flex w-full justify-end">
-        <Button variant="solid" size="md" onClick={() => handleGenerateImage()}>
+        <Button
+          variant="solid"
+          size="md"
+          onClick={() => handleGenerateImage()}
+          disabled={promptVariablesList.length != Object.keys(variableValues).length}
+        >
           생성하기
         </Button>
       </div>

@@ -15,6 +15,7 @@ export default function Studio() {
   const [data, setData] = useState<ProductForPurchase | null>(null);
   const [generatedImageUrl, setGeneratedImageUrl] = useState('');
   const [imageId, setImageId] = useState<number>(0);
+  const [isGenerated, setIsGenerated] = useState<boolean>(false);
 
   useEffect(() => {
     if (!accessToken) return;
@@ -85,13 +86,19 @@ export default function Studio() {
           modelId={data.modelInfo.modelId}
           setGeneratedImageUrl={setGeneratedImageUrl}
           setImageId={setImageId}
+          setIsGenerated={setIsGenerated}
         />
       </div>
       <div className="w-full">
         <div className="flex flex-col items-center gap-5">
           <div className="flex w-full justify-between border-b-2 border-gray-400 pb-3">
             <h4 className="typo-heading2-medium">Preview</h4>
-            <Button variant="solid" size="sm" onClick={downloadWithSavePicker}>
+            <Button
+              variant="solid"
+              size="sm"
+              onClick={downloadWithSavePicker}
+              disabled={!isGenerated}
+            >
               Download
             </Button>
           </div>
