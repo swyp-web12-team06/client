@@ -31,11 +31,11 @@ export default function ProfilePage() {
     size: number,
     accessToken: string,
   ) => {
-    const libraryResult = await httpClient.get<{ data: Array<{ prompt_id: number }> }>(
+    const libraryResult = await httpClient.get<{ data: { content: PurchasedItem[] } }>(
       `/user/me/library/${requestType}?page=${page}&size=${size}`,
       accessToken,
     );
-    const libraryItems: { prompt_id: number }[] = libraryResult.data || [];
+    const libraryItems = libraryResult.data.content
 
     if (libraryItems.length === 0) {
       return [];
@@ -215,7 +215,7 @@ export default function ProfilePage() {
                 {purchasedItems.map((item) => (
                   <div key={item.purchase_id}>
                     {item.generated_images?.map((image) => (
-                      <div>
+                      <div className='h-28'>
                         <Image
                           onClick={() => setIsModalOpen(true)}
                           alt={image.image_url}
@@ -223,11 +223,8 @@ export default function ProfilePage() {
                           src={image.image_url}
                           width={200}
                           height={180}
-                          className="cursor-pointer rounded-2xl"
+                          className="h-full w-full cursor-pointer rounded-2xl"
                         />
-                        {item.variables.map((variable) => (
-                          <span className="mr-2">{variable.value}</span>
-                        ))}
                       </div>
                     ))}
                   </div>
