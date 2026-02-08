@@ -61,6 +61,8 @@ export default function Lookbook({ data, userId }: { data: Product[]; userId?: s
     }
   }
 
+  const userIdNumber = Number(userId)
+
   return (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
       {data.map((p) => {
@@ -98,7 +100,7 @@ export default function Lookbook({ data, userId }: { data: Product[]; userId?: s
               onClick={() => handleProductDetail(p)}
               className="absolute top-0 left-0 z-1 flex h-full w-full translate-y-full items-end bg-linear-to-t from-gray-900/50 to-transparent px-5 pb-3 transition group-hover:translate-y-0"
             >
-              {p.seller && p.seller.id.toString() === userId && pathName !== '/profile' && (
+              {p.seller && p.seller.id === userIdNumber && pathName !== '/profile' && (
                 <div onClick={(e) => e.stopPropagation()} className="absolute top-8 right-4.5">
                   <Select
                     items={options}
