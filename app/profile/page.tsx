@@ -211,8 +211,6 @@ export default function ProfilePage() {
           <div>
             {loadingMore && purchasedItems.length === 0 ? (
               <div className="flex justify-center items-center h-40">Loading generated images...</div>
-            ) : purchasedItems.length === 0 ? (
-              <div className="text-center text-gray-500 py-10">생성된 이미지가 없습니다.</div>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                 {purchasedItems.flatMap(items => items.generated_images || []).map((image) => (
