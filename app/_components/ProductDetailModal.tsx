@@ -7,6 +7,7 @@ import Link from 'next/link';
 import FavouriteIcon from '@/public/icon/favourite.svg';
 import HeartIcon from '@/public/icon/heart.svg';
 import LinkExternalIcon from '@/public/icon/link-external.svg';
+import Image from 'next/image';
 
 export default function ProductDetailModal({
   isOpen,
@@ -97,7 +98,17 @@ export default function ProductDetailModal({
               {/* 스크롤 영역 */}
               <div className="h-full overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 <div className="flex items-center gap-2 px-5 py-4">
-                  <div className="h-[40px] w-[40px] rounded-full bg-gray-400" />
+                  {product.seller.profileImageUrl ? (
+                    <Image
+                      src={product.seller.profileImageUrl}
+                      width={40}
+                      height={40}
+                      alt="Picture of the creater"
+                    />
+                  ) : (
+                    <div className="h-[40px] w-[40px] rounded-full bg-gray-400" />
+                  )}
+
                   <p className="typo-body1-medium text-white">{product.seller.nickname}</p>
                 </div>
 

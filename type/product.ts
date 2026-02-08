@@ -25,6 +25,7 @@ export type Product = {
   seller: {
     id: number;
     nickname: string;
+    profileImageUrl: string;
   };
   createdAt: string;
   updatedAt: string;
