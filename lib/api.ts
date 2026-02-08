@@ -1,9 +1,9 @@
 import { Category } from '@/type/category';
 
 import { PaginatedProducts } from '@/type/paginate';
-import { GeneratedImage, ProductForPurchase } from '@/type/product';
+import { ProductForPurchase } from '@/type/product';
 import { Balance, Options } from '@/type/credit';
-import { ImageDownloadInfo } from '@/type/image';
+import { GeneratedImage, ImageDownloadInfo } from '@/type/image';
 
 const TOKEN = process.env.NEXT_PUBLIC_TEST_TOKEN || '';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE || '';
@@ -163,7 +163,7 @@ export async function generateImage(
     variable_value: any;
   },
   accessToken?: string,
-): Promise<GeneratedImage> {
+): Promise<GeneratedImage | null> {
   try {
     const res = await fetch(`${API_BASE_URL}/product/${promptId}/generate`, {
       method: 'POST',
@@ -175,15 +175,18 @@ export async function generateImage(
     });
 
     if (!res.ok) {
-      console.error(res.status, await res.text());
-      return {} as GeneratedImage;
+      const errorDetail = await res.text();
+      console.error(`[API Error ${res.status}]:`, errorDetail);
+      return null;
     }
-    const data = await res.json();
-    console.log(data);
-    return data.data;
+
+    const response = await res.json();
+    console.log('Server Response:', response);
+
+    return response.data || response;
   } catch (error) {
-    console.error(error);
-    return {} as GeneratedImage;
+    console.error('Network Error:', error);
+    return null;
   }
 }
 

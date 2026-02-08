@@ -4,7 +4,7 @@ import { Button } from '@/components/commons/Button';
 import Input from '@/components/commons/Input';
 import Select, { SelectItemType } from '@/components/commons/Select';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import RemoveIcon from '@/public/icon/remove.svg';
 import CreditIcon from '@/public/icon/credit.svg';
 import { PromptVariables } from '@/type/product';
@@ -12,6 +12,7 @@ import { generateImage, getPriceEstimate } from '@/lib/api';
 import { Tabs } from '@/components/commons/Tabs';
 import { VariableTabContent } from './VariableTabContent';
 import { useAuth } from '@/context/AuthContext';
+import { pollImageUntilCompleted } from '@/lib/polling';
 
 interface props {
   promptId: number;
@@ -19,6 +20,7 @@ interface props {
   resolutions: string[] | null;
   promptVariables: PromptVariables[];
   modelId: number;
+  setGeneratedImageUrl: Dispatch<SetStateAction<string>>;
 }
 
 export default function Settings({
@@ -27,6 +29,7 @@ export default function Settings({
   resolutions,
   promptVariables,
   modelId,
+  setGeneratedImageUrl,
 }: props) {
   const promptVariablesList: PromptVariables[] = promptVariables;
   const [ratio, setRatio] = useState(aspectRatios[0]);
@@ -106,23 +109,31 @@ export default function Settings({
   }, [ratio, resolution]);
 
   async function handleGenerateImage() {
-    if (!accessToken || !promptId) {
-      console.error('로그인이 필요하거나 프롬프트 ID가 없습니다.');
-      return;
-    }
+    if (!accessToken || !promptId) return;
+
     const variable_value = transformData(variableValues);
-    const data = await generateImage(
+    const imageData = await generateImage(
       promptId,
-      {
-        aspect_ratio: ratio,
-        resolution,
-        variable_value,
-      },
+      { aspect_ratio: ratio, resolution, variable_value },
       accessToken,
     );
 
-    console.log('data', variable_value);
-    await console.log('data', data);
+    // ✨ 중요: imageData가 null인지, image_id가 있는지 확실히 체크!
+    if (!imageData || !imageData.image_id) {
+      alert('이미지 생성 요청에 실패했습니다. 로그를 확인하세요.');
+      return;
+    }
+
+    console.log('성공 - 이미지 ID:', imageData.image_id);
+
+    const status = await pollImageUntilCompleted(imageData.image_id, accessToken, {
+      intervalMs: 1500,
+      timeoutMs: 60_000,
+    });
+    if (status) {
+      console.log(status);
+      setGeneratedImageUrl(status.downloadUrl ?? '');
+    }
   }
 
   return (

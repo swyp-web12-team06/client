@@ -2,17 +2,18 @@
 
 import Image from 'next/image';
 import Settings from '../_components/Settings';
-import GeneratedImage from '../_components/GeneratedImage';
 import { getProductForPurchase } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 import { useEffect, useState } from 'react';
 import { ProductForPurchase } from '@/type/product';
 import { useParams } from 'next/navigation';
+import { Button } from '@/components/commons/Button';
 
 export default function Studio() {
   const params = useParams<{ id: string }>();
   const { accessToken, isLoading, isLoggedIn, login } = useAuth();
   const [data, setData] = useState<ProductForPurchase | null>(null);
+  const [generatedImageUrl, setGeneratedImageUrl] = useState('');
 
   useEffect(() => {
     if (!accessToken) return;
@@ -53,10 +54,25 @@ export default function Studio() {
           aspectRatios={data.modelInfo.aspectRatios}
           resolutions={data.modelInfo.resolutions}
           modelId={data.modelInfo.modelId}
+          setGeneratedImageUrl={setGeneratedImageUrl}
         />
       </div>
       <div className="w-full">
-        <GeneratedImage />
+        <div className="flex flex-col gap-5">
+          <div className="flex justify-between border-b-2 border-gray-400 pb-3">
+            <h4 className="typo-heading2-medium">Preview</h4>
+            <Button variant="solid" size="sm">
+              Download
+            </Button>
+          </div>
+          {generatedImageUrl ? (
+            <Image src={generatedImageUrl} width={588} height={588} alt="Generated Image" />
+          ) : (
+            <div className="flex h-[588px] w-[588px] items-center justify-center bg-gray-200">
+              이미지를 생성해주세요.
+            </div>
+          )}
+        </div>
       </div>
     </main>
   );
