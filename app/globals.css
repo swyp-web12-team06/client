@@ -200,9 +200,7 @@ html {
 body {
   background: var(--color-bg-lightest);
   color: var(--color-darkest);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: block;
 }
 
 body:has(.no-padding) {
