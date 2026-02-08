@@ -9,7 +9,7 @@ import { PurchasedItem } from '@/type/image';
 import Lookbook from '../_components/Lookbook';
 import ProfileEditModal from '@/app/profile/ProfileEditModal';
 import { cn } from '@/utils/styles';
-import { getImageDownloadInfo, httpClient } from '@/lib/api';
+import { httpClient } from '@/lib/api';
 
 export default function ProfilePage() {
   const { user, isLoggedIn, isLoading, accessToken, reissueToken } = useAuth();
@@ -160,34 +160,6 @@ export default function ProfilePage() {
     );
   };
 
-  async function downloadWithSavePicker(imageId: number) {
-    const info = await getImageDownloadInfo(imageId, accessToken ?? undefined);
-    const url = info?.download_url;
-    if (!url) throw new Error('download_url이 없습니다.');
-
-    const fileRes = await fetch(url, { cache: 'no-store' });
-    if (!fileRes.ok) throw new Error('파일 다운로드 실패');
-    const blob = await fileRes.blob();
-
-    const handle = await (window as any).showSaveFilePicker({
-      suggestedName: info.file_name ?? `image_${imageId}.png`,
-      types: [
-        {
-          description: 'Image',
-          accept: {
-            'image/png': ['.png'],
-            'image/jpeg': ['.jpg', '.jpeg'],
-            'image/webp': ['.webp'],
-          },
-        },
-      ],
-    });
-
-    const writable = await handle.createWritable();
-    await writable.write(blob);
-    await writable.close();
-  }
-
   return (
     <main className="no-padding flex w-full flex-col">
       <div className="relative h-85 w-full bg-gray-400">
@@ -243,17 +215,20 @@ export default function ProfilePage() {
                 {purchasedItems.map((item) => (
                   <div key={item.purchase_id}>
                     {item.generated_images?.map((image) => (
-                      <div onClick={() => downloadWithSavePicker(image.image_id)} className="h-48">
+                      <a
+                        key={image.image_id}
+                        href={image.image_url}
+                        download
+                        className="block h-48"
+                      >
                         <Image
-                          onClick={() => setIsModalOpen(true)}
-                          alt={image.image_url}
-                          key={image.image_id}
+                          alt={`Generated Image ${image.image_id}`}
                           src={image.image_url}
                           width={200}
                           height={180}
-                          className="h-full w-full cursor-pointer rounded-2xl object-cover"
+                          className="h-full w-full rounded-2xl object-cover"
                         />
-                      </div>
+                      </a>
                     ))}
                   </div>
                 ))}
