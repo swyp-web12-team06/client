@@ -60,6 +60,8 @@ export interface SalesFormContextType {
   loading: boolean;
   successMessage: string | null;
   handleSubmit: (e: React.FormEvent) => Promise<void>;
+  errorStep: number | null;
+  setErrorStep: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 /**
@@ -91,6 +93,7 @@ export function useSalesFormLogic(): SalesFormContextType {
   const [error, setError] = useState<string | null>(null); // 서버 에러 메시지
   const [loading, setLoading] = useState(false); // 로딩 상태 (API 요청 등)
   const [successMessage, setSuccessMessage] = useState<string | null>(null); // 성공 메시지
+  const [errorStep, setErrorStep] = useState<number | null>(null); // 에러 스텝 구간 파악 상태
 
   const displayRef = useRef<HTMLDivElement | null>(null);
 
@@ -235,6 +238,7 @@ export function useSalesFormLogic(): SalesFormContextType {
   useEffect(() => {
     setError(null);
     setSuccessMessage(null);
+    setErrorStep(null); // Reset error step when re-evaluating
 
     if (isAuthLoading) {
       // 인증이 로드되는 동안 여기서는 아무것도 안함
@@ -249,37 +253,48 @@ export function useSalesFormLogic(): SalesFormContextType {
     }
 
     if (step === 1) {
-      if (!promptName || !promptDescription)
+      if (!promptName || !promptDescription) {
         setError('프롬프트의 이름과 설명은 필수 입력 필드입니다.');
-      else if (promptDescription.length < 20) setError('프롬프트 설명은 20자 이상이어야 합니다.');
-      else if (credit % 100 !== 0) setError('가격은 100원 단위로 설정해야 합니다.');
-      else if (tags.length < 2 || tags.length > 5)
+        setErrorStep(1);
+      } else if (promptDescription.length < 20) {
+        setError('프롬프트 설명은 20자 이상이어야 합니다.');
+        setErrorStep(1);
+      } else if (credit % 100 !== 0) {
+        setError('가격은 100원 단위로 설정해야 합니다.');
+        setErrorStep(1);
+      } else if (tags.length < 2 || tags.length > 5) {
         setError('태그는 최소 2개, 최대 5개까지 등록해야 합니다.');
-      else if (tags.some((tag) => tag.length < 2 || tag.length > 12))
+        setErrorStep(1);
+      } else if (tags.some((tag) => tag.length < 2 || tag.length > 12)) {
         setError('각 태그는 2~12자 이내여야 합니다.');
-      else {
+        setErrorStep(1);
+      } else {
         const tagRegex = /^[가-힣a-zA-Z0-9 ]+$/;
-        if (tags.some((tag) => !tagRegex.test(tag)))
+        if (tags.some((tag) => !tagRegex.test(tag))) {
           setError('태그는 한글, 영문, 숫자, 공백만 사용 가능합니다.');
+          setErrorStep(1);
+        }
       }
     } else if (step === 2) {
-      if (prompt.length < 20) setError('프롬프트는 최소 20자 이상으로 입력해야 합니다.');
-      else if (variables.length < 1) setError('변수를 최소 1개 이상 지정해야 합니다.');
+      if (prompt.length < 20) {
+        setError('프롬프트는 최소 20자 이상으로 입력해야 합니다.');
+        setErrorStep(2);
+      } else if (variables.length < 1) {
+        setError('변수를 최소 1개 이상 지정해야 합니다.');
+        setErrorStep(2);
+      }
     } else if (step === 3) {
-      if (images.length < 1) setError('최소 1개의 이미지를 등록해야 합니다.');
-      else {
-        const hasThumbnail = images.some((img) => img.isThumbnail1 || img.isThumbnail2);
-        if (!hasThumbnail) setError('최소 1개의 썸네일 이미지를 지정해야 합니다.');
-        else {
-          for (const image of images) {
-            for (const variable of variables) {
-              if (!image.optionValues?.[variable]) {
-                setError(
-                  `'${image.file.name.slice(0, 10)}' 이미지의 '${variable}' 변수 값을 입력해주세요.`,
-                );
-                // No break here, allow all errors to be collected or just show the first one.
-                // For now, it will set the last error found.
-              }
+      if (images.length < 1) {
+        setError('최소 1개의 이미지를 등록해야 합니다.');
+        setErrorStep(3);
+      } else {
+        for (const image of images) {
+          for (const variable of variables) {
+            if (!image.optionValues?.[variable]) {
+              setError(
+                `'${image.file.name.slice(0, 10)}' 이미지의 '${variable}' 변수 값을 입력해주세요.`,
+              );
+              setErrorStep(3);
             }
           }
         }
@@ -440,5 +455,7 @@ export function useSalesFormLogic(): SalesFormContextType {
     successMessage,
     setError,
     handleSubmit,
+    errorStep,
+    setErrorStep,
   };
 }

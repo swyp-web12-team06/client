@@ -16,18 +16,10 @@ interface props {
   categories: Category[];
 }
 
-function View({
-  data,
-}: {
-  data: Product[];
-}) {
+function View({ data, userId }: { data: Product[]; userId?: string }) {
   const searchParams = useSearchParams();
   const view = searchParams.get('view') || 'lookbook';
-  return view === 'gallery' ? (
-    <Gallery data={data} />
-  ) : (
-    <Lookbook data={data} />
-  );
+  return view === 'gallery' ? <Gallery data={data} /> : <Lookbook data={data} userId={userId} />;
 }
 
 export default function HomePageClient({ initialProducts, totalPages, categories }: props) {
@@ -40,6 +32,7 @@ export default function HomePageClient({ initialProducts, totalPages, categories
   const [page, setPage] = useState(1); // 서버에서 이미 첫 페이지를 불러왔으므로 다음(클라이언트)는 1부터 시작
   const [hasMore, setHasMore] = useState(totalPages > 1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
 
   // IntersectionObserver 참조
   const observerRef = useRef<HTMLDivElement | null>(null);
@@ -102,6 +95,11 @@ export default function HomePageClient({ initialProducts, totalPages, categories
 
     setIsLoadingMore(false);
   }, [page, hasMore, isLoadingMore, searchParams]);
+
+  useEffect(() => {
+    const id = sessionStorage.getItem('userId');
+    setUserId(id);
+  }, []);
 
   // IntersectionObserver 설정
   useEffect(() => {
@@ -214,7 +212,7 @@ export default function HomePageClient({ initialProducts, totalPages, categories
       </div>
       <div className="pt-15">
         <Suspense fallback={<div>Loading...</div>}>
-          <View data={products} />
+          {userId ? <View data={products} userId={userId} /> : <View data={products} />}
         </Suspense>
       </div>
 

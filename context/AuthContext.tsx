@@ -55,7 +55,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setUserInfo({ id: userId });
           sessionStorage.setItem('userId', userId.toString());
         } else {
-          setUser({ id: userId, role: 'GUEST' });
+          setUserInfo({ id: userId });
+          setUser({ id: userId, role });
           sessionStorage.setItem('userId', userId.toString());
         }
         return { isNewUser, role, userId };
@@ -119,6 +120,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const setUserInfo = (newUserInfo: Partial<User>) => {
     if (user) {
       setUser({ ...user, ...newUserInfo });
+    }
+    if (newUserInfo.id) {
+      const userIdtoString = newUserInfo.id.toString();
+      sessionStorage.setItem('userId', userIdtoString);
     }
   };
 

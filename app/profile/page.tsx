@@ -174,7 +174,7 @@ export default function ProfilePage() {
   return (
     <main className="no-padding flex w-full flex-col">
       <div className="relative h-85 w-full bg-gray-400">
-        <button className="absolute -bottom-18.5 left-1/2 mx-auto flex h-37 w-37 -translate-x-1/2 cursor-pointer items-center justify-center rounded-full border-[6px] border-gray-50 bg-gray-400 text-gray-500">
+        <button className="absolute -bottom-18.5 left-1/2 mx-auto flex h-37 w-37 -translate-x-1/2 items-center justify-center rounded-full border-[6px] border-gray-50 bg-gray-400 text-gray-500">
           {user.profileImageUrl ? (
             <img
               src={user.profileImageUrl}

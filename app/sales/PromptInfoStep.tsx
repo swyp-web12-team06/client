@@ -72,7 +72,7 @@ export default function PromptInfoStep() {
         </div>
         <Input
           id="sales-prompt-credit"
-          type="number" // Use number type for price input
+          type="number"
           label="가격"
           size="small"
           placeholder="500"
