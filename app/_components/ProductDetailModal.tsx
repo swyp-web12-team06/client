@@ -99,13 +99,15 @@ export default function ProductDetailModal({
               <div className="h-full overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 <div className="flex items-center gap-2 px-5 py-4">
                   {product.seller.profileImageUrl ? (
-                    <Image
-                      src={product.seller.profileImageUrl}
-                      width={40}
-                      height={40}
-                      className="rounded-full"
-                      alt="Picture of the creater"
-                    />
+                    <div className="h-10 w-10 overflow-hidden rounded-full">
+                      <Image
+                        src={product.seller.profileImageUrl}
+                        width={40}
+                        height={40}
+                        alt="Picture of the creator"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
                   ) : (
                     <div className="h-[40px] w-[40px] rounded-full bg-gray-400" />
                   )}
