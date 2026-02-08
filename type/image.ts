@@ -18,3 +18,18 @@ export type ImageStatusItem = {
   imageId: number;
   downloadUrl?: string | null;
 };
+
+export type VariableInfo = {
+  key: string;
+  value: string;
+};
+
+export type PurchasedItem = {
+  purchase_id: number;
+  prompt_id: number;
+  title: string;
+  amount: number;
+  variables: VariableInfo[];
+  generated_images?: GeneratedImage[];
+  purchased_at: string;
+};

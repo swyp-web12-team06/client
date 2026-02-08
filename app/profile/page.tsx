@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import Image from 'next/image';
 import { Product } from '@/type/product';
+import {  PurchasedItem } from '@/type/image';
 import Lookbook from '../_components/Lookbook';
 import ProfileEditModal from '@/app/profile/ProfileEditModal';
 import { cn } from '@/utils/styles';
@@ -13,8 +14,9 @@ import { httpClient } from '@/lib/api';
 export default function ProfilePage() {
   const { user, isLoggedIn, isLoading, accessToken, reissueToken } = useAuth();
   const router = useRouter();
-  const [requestType, setRequestType] = useState('sales');
+  const [activeTab, setActiveTab] = useState<'sales' | 'purchases' | 'archive'>('sales');
   const [products, setProducts] = useState<Product[]>([]);
+  const [generatedImages, setGeneratedImages] = useState<PurchasedItem[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -22,7 +24,7 @@ export default function ProfilePage() {
   const loadMoreRef = useRef<HTMLDivElement>(null); // 무한 스크롤 트리거 참조
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
-  const fetchLibrary = async (
+  const fetchProductsLibrary = async (
     requestType: string,
     page: number,
     size: number,
@@ -58,11 +60,23 @@ export default function ProfilePage() {
     return transformedData;
   };
 
+  const fetchGeneratedImages = async (
+    page: number,
+    size: number,
+    accessToken: string,
+  ) => {
+    const imagesResult = await httpClient.get<{ data: { content: PurchasedItem[] } }>(
+      `/user/me/library/purchases?page=${page}&size=${size}`,
+      accessToken
+    );
+    return imagesResult.data.content || [];
+  };
+
   useEffect(() => {
     setCurrentPage(1);
     setProducts([]);
     setHasMore(true);
-  }, [requestType]);
+  }, [activeTab]);
 
   // 무한스크롤
   useEffect(() => {
@@ -71,21 +85,30 @@ export default function ProfilePage() {
     }
 
     const getLibrary = async () => {
-      // 로그인하지 않았거나 토큰이 없거나 이미 로드된 경우 가져오기 방지
       if (!isLoggedIn || !accessToken || loadingMore) return;
-      // 첫 페이지가 아닌 항목이 더 이상 없는 경우 가져오기 방지
       if (!hasMore && currentPage > 1) return;
 
       setLoadingMore(true);
       try {
-        const newProducts = await fetchLibrary(requestType, currentPage, pageSize, accessToken);
+        let newData: Product[] | PurchasedItem[];
 
-        if (currentPage === 1) {
-          setProducts(newProducts);
+        if (activeTab === 'archive') {
+          newData = await fetchGeneratedImages(currentPage, pageSize, accessToken);
+          if (currentPage === 1) {
+            setGeneratedImages(newData as PurchasedItem[]);
+          } else {
+            setGeneratedImages((prevImages) => [...(prevImages || []), ...(newData as PurchasedItem[])]);
+          }
+          setHasMore(newData.length === pageSize);
         } else {
-          setProducts((prevProducts) => [...(prevProducts || []), ...newProducts]);
+          newData = await fetchProductsLibrary(activeTab, currentPage, pageSize, accessToken);
+          if (currentPage === 1) {
+            setProducts(newData as Product[]);
+          } else {
+            setProducts((prevProducts) => [...(prevProducts || []), ...(newData as Product[])]);
+          }
+          setHasMore(newData.length === pageSize);
         }
-        setHasMore(newProducts.length === pageSize); // 페이지가 더 있는지 확인
       } catch (error) {
         console.error('Failed to fetch library:', error);
         setHasMore(false);
@@ -97,7 +120,7 @@ export default function ProfilePage() {
     if (isLoggedIn && accessToken) {
       getLibrary();
     }
-  }, [isLoading, isLoggedIn, router, requestType, accessToken, currentPage, pageSize]);
+  }, [isLoading, isLoggedIn, router, activeTab, accessToken, currentPage, pageSize]);
 
   // 옵저버
   useEffect(() => {
@@ -130,10 +153,10 @@ export default function ProfilePage() {
     return null;
   }
 
-  const libraryTabStyleHandle = (type: string) => {
+  const libraryTabStyleHandle = (type: 'sales' | 'purchases' | 'archive') => {
     return cn(
       'typo-body1-medium cursor-pointer',
-      requestType === type ? 'text-primary-200 border-primary-200 border-b-2' : 'text-gray-500',
+      activeTab === type ? 'text-primary-200 border-primary-200 border-b-2' : 'text-gray-500',
     );
   };
 
@@ -167,18 +190,49 @@ export default function ProfilePage() {
         <div className="mb-5 flex w-full gap-11 border-b border-gray-500">
           <button
             className={libraryTabStyleHandle('sales')}
-            onClick={() => setRequestType('sales')}
+            onClick={() => setActiveTab('sales')}
           >
             판매 목록
           </button>
           <button
             className={libraryTabStyleHandle('purchases')}
-            onClick={() => setRequestType('purchases')}
+            onClick={() => setActiveTab('purchases')}
           >
             구매 목록
           </button>
+          <button
+            className={libraryTabStyleHandle('archive')}
+            onClick={() => setActiveTab('archive')}
+          >
+            보관함
+          </button>
         </div>
-        <Lookbook data={products} />
+        {activeTab === 'archive' ? (
+          <div>
+            {loadingMore && generatedImages.length === 0 ? (
+              <div className="flex justify-center items-center h-40">Loading generated images...</div>
+            ) : generatedImages.length === 0 ? (
+              <div className="text-center text-gray-500 py-10">생성된 이미지가 없습니다.</div>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                {generatedImages.flatMap(purchasedItem => purchasedItem.generated_images || []).map((image) => (
+                  <div key={image.image_id} className="relative aspect-square">
+                    <Image
+                      src={image.image_url}
+                      alt={`Generated Image ${image.image_id}`}
+                      fill
+                      sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                      style={{ objectFit: 'cover' }}
+                      className="rounded-lg"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ) : (
+          <Lookbook data={products} />
+        )}
         <div ref={loadMoreRef} className="h-10 w-full" /> {/* 무한스크롤 트리거 */}
       </div>
 
