@@ -5,8 +5,6 @@ import Input from '@/components/commons/Input';
 import Select, { SelectItemType } from '@/components/commons/Select';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import RemoveIcon from '@/public/icon/remove.svg';
-import CreditIcon from '@/public/icon/credit.svg';
 import { PromptVariables } from '@/type/product';
 import { generateImage, getPriceEstimate } from '@/lib/api';
 import { Tabs } from '@/components/commons/Tabs';
@@ -74,18 +72,15 @@ export default function Settings({
   const items =
     promptVariablesList.length > 0
       ? promptVariablesList.map((variable) => ({
-          value: String(variable.orderIndex),
-          label: variableValues[variable.orderIndex]
-            ? variableValues[variable.orderIndex]
-            : variable.keyName,
+          value: String(variable.id),
+          label: variableValues[variable.id] ? variableValues[variable.id] : variable.keyName,
           content: (
             <VariableTabContent
-              index={variable.orderIndex}
+              tab={tab}
+              index={variable.id}
               variableName={variable.keyName}
               variableDescription={variable.description}
-              handleVariablesChange={(value: string) =>
-                handleVariablesChange(variable.orderIndex, value)
-              }
+              handleVariablesChange={(value: string) => handleVariablesChange(variable.id, value)}
             />
           ),
         }))
@@ -93,7 +88,7 @@ export default function Settings({
 
   useEffect(() => {
     if (!accessToken) return;
-
+    console.log('VVV', promptVariablesList);
     const fetchData = async () => {
       const data = await getPriceEstimate(
         promptId,
