@@ -70,7 +70,7 @@ export default function ProfilePage() {
   };
 
   useEffect(() => {
-    setCurrentPage(1);
+    setCurrentPage(0);
     setProducts([]);
     setHasMore(true);
   }, [activeTab]);
