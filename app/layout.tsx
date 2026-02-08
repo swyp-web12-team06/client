@@ -16,6 +16,11 @@ const roboto = Roboto({
 export const metadata: Metadata = {
   title: 'Redot',
   description: 'A prompt creation and trading platform.',
+  icons: {
+    icon: '/redot.png',
+    apple: '/redot.png',
+    shortcut: '/redot.png',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
