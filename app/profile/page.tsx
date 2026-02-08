@@ -16,7 +16,7 @@ export default function ProfilePage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<'sales' | 'purchases' | 'archive'>('sales');
   const [products, setProducts] = useState<Product[]>([]);
-  const [generatedImages, setGeneratedImages] = useState<PurchasedItem[]>([]);
+  const [purchasedItems, setPurchasedItems] = useState<PurchasedItem[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -95,9 +95,9 @@ export default function ProfilePage() {
         if (activeTab === 'archive') {
           newData = await fetchGeneratedImages(currentPage, pageSize, accessToken);
           if (currentPage === 1) {
-            setGeneratedImages(newData as PurchasedItem[]);
+            setPurchasedItems(newData as PurchasedItem[]);
           } else {
-            setGeneratedImages((prevImages) => [...(prevImages || []), ...(newData as PurchasedItem[])]);
+            setPurchasedItems((prevImages) => [...(prevImages || []), ...(newData as PurchasedItem[])]);
           }
           setHasMore(newData.length === pageSize);
         } else {
@@ -209,13 +209,13 @@ export default function ProfilePage() {
         </div>
         {activeTab === 'archive' ? (
           <div>
-            {loadingMore && generatedImages.length === 0 ? (
+            {loadingMore && purchasedItems.length === 0 ? (
               <div className="flex justify-center items-center h-40">Loading generated images...</div>
-            ) : generatedImages.length === 0 ? (
+            ) : purchasedItems.length === 0 ? (
               <div className="text-center text-gray-500 py-10">생성된 이미지가 없습니다.</div>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                {generatedImages.flatMap(purchasedItem => purchasedItem.generated_images || []).map((image) => (
+                {purchasedItems.flatMap(items => items.generated_images || []).map((image) => (
                   <div key={image.image_id} className="relative aspect-square">
                     <Image
                       src={image.image_url}
