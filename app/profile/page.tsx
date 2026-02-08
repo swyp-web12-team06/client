@@ -8,6 +8,7 @@ import { Product } from '@/type/product';
 import Lookbook from '../_components/Lookbook';
 import ProfileEditModal from '@/app/profile/ProfileEditModal';
 import { cn } from '@/utils/styles';
+import { httpClient } from '@/lib/api';
 
 export default function ProfilePage() {
   const { user, isLoggedIn, isLoading, accessToken, reissueToken } = useAuth();
@@ -21,75 +22,40 @@ export default function ProfilePage() {
   const loadMoreRef = useRef<HTMLDivElement>(null); // 무한 스크롤 트리거 참조
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
-  const fetchLibrary = async (requestType: string, page: number, size: number) => {
-    const headers: HeadersInit = { 'Content-Type': 'application/json' };
-    if (accessToken) {
-      headers['Authorization'] = `Bearer ${accessToken}`;
-    }
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE}/user/me/library/${requestType}?page=${page}&size=${size}`,
-      {
-        method: 'GET',
-        headers: headers,
-      },
+  const fetchLibrary = async (
+    requestType: string,
+    page: number,
+    size: number,
+    accessToken: string,
+  ) => {
+    const libraryResult = await httpClient.get<{ data: Array<{ prompt_id: number }> }>(
+      `/user/me/library/${requestType}?page=${page}&size=${size}`,
+      accessToken,
     );
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message);
-    }
-    const result = await response.json();
+    const libraryItems: { prompt_id: number }[] = libraryResult.data || [];
 
-    let transformedData: Product[];
-
-    if (requestType === 'sales') {
-      // /user/me/library/sales 응답 변환
-      transformedData = result.data.map((item: any) => ({
-        ...item,
-        promptId: item.prompt_id,
-        previewImageUrl: item.preview_image_url,
-        representativeImageUrls: item.preview_image_url ? [item.preview_image_url] : [],
-        createdAt: item.created_at,
-      }));
-    } else if (requestType === 'purchases') {
-      // /user/me/library/purchases 응답 변환
-      transformedData = result.data.map((item: any) => {
-        const generatedImageUrls =
-          item.generated_images && item.generated_images.length > 0
-            ? item.generated_images.map((img: any) => img.image_url)
-            : [];
-        return {
-          // Product 타입에 맞춰 매핑, 없는 필드는 null/undefined 처리
-          promptId: item.prompt_id,
-          title: item.title,
-          price: item.amount,
-          previewImageUrl: generatedImageUrls.length > 0 ? generatedImageUrls[0] : null, // 첫 번째 생성 이미지 URL 사용 또는 null
-          representativeImageUrls: generatedImageUrls, // generated_images에서 URL 추출
-          createdAt: item.purchased_at,
-
-          // Product 타입에 있지만 purchases 응답에 없는 필드들은 null 또는 기본값으로 설정
-          description: null,
-          userStatus: null,
-          categoryId: null,
-          categoryName: null,
-          modelId: null,
-          modelName: null,
-          tags: [],
-          seller: { id: null, nickname: null },
-          updatedAt: null,
-        };
-      });
-    } else {
-      // 예상치 못한 requestType에 대한 처리 (기존 로직 유지)
-      transformedData = result.data.map((item: any) => ({
-        ...item,
-        promptId: item.prompt_id,
-        previewImageUrl: item.preview_image_url,
-        representativeImageUrls: item.preview_image_url ? [item.preview_image_url] : [],
-        createdAt: item.created_at,
-      }));
+    if (libraryItems.length === 0) {
+      return [];
     }
 
-    return transformedData; // 변환된 데이터는 제품 배열
+    const promptIds = libraryItems.map((item) => item.prompt_id);
+
+    const productPromises = promptIds.map(async (promptId) => {
+      try {
+        const productData = await httpClient.get<{ data: Product }>(
+          `/product/${promptId}`,
+          accessToken,
+        );
+        return productData.data;
+      } catch (error) {
+        console.error(`Failed to fetch product with promptId ${promptId}:`, error);
+        return null;
+      }
+    });
+
+    const products = await Promise.all(productPromises);
+    const transformedData = products.filter((product): product is Product => product !== null);
+    return transformedData;
   };
 
   useEffect(() => {
@@ -112,7 +78,7 @@ export default function ProfilePage() {
 
       setLoadingMore(true);
       try {
-        const newProducts = await fetchLibrary(requestType, currentPage, pageSize);
+        const newProducts = await fetchLibrary(requestType, currentPage, pageSize, accessToken);
 
         if (currentPage === 1) {
           setProducts(newProducts);
