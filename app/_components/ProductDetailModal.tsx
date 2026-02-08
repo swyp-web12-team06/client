@@ -103,6 +103,7 @@ export default function ProductDetailModal({
                       src={product.seller.profileImageUrl}
                       width={40}
                       height={40}
+                      className="rounded-full"
                       alt="Picture of the creater"
                     />
                   ) : (
