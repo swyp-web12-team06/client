@@ -62,11 +62,11 @@ export default function ProfilePage() {
   };
 
   const fetchGeneratedImages = async (page: number, size: number, accessToken: string) => {
-    const imagesResult = await httpClient.get<{ data: PurchasedItem[] }>(
+    const imagesResult = await httpClient.get<{ data: { content: PurchasedItem[] } }>(
       `/user/me/library/purchases?page=${page}&size=${size}`,
       accessToken,
     );
-    return imagesResult.data || [];
+    return imagesResult.data.content || [];
   };
 
   useEffect(() => {
