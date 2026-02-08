@@ -1,8 +1,12 @@
 import { Category } from '@/type/category';
 
-import { Balance, Options } from '@/type/credit';
-
 import { PaginatedProducts } from '@/type/paginate';
+import { GeneratedImage, ProductForPurchase } from '@/type/product';
+import { Balance, Options } from '@/type/credit';
+import { ImageDownloadInfo } from '@/type/image';
+
+const TOKEN = process.env.NEXT_PUBLIC_TEST_TOKEN || '';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE || '';
 
 export async function getCategories(): Promise<Category[]> {
   try {
@@ -88,6 +92,101 @@ export async function getProducts(searchParams: {
   }
 }
 
+export async function getProductForPurchase(
+  promptId: string,
+  accessToken: string,
+): Promise<ProductForPurchase> {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/product/${promptId}/purchase`, {
+      cache: 'no-store',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      credentials: 'include',
+    });
+
+    if (!res.ok) {
+      console.error(res.status, await res.text());
+      return {} as ProductForPurchase;
+    }
+    const data = await res.json();
+    return data.data || ({} as ProductForPurchase);
+  } catch (error) {
+    console.error(error);
+    return {} as ProductForPurchase;
+  }
+}
+
+export async function getPriceEstimate(
+  promptId: number,
+  body: {
+    modelId: number;
+    aspectRatio: string;
+    resolution: string;
+  },
+  accessToken: string,
+): Promise<number> {
+  const res = await fetch(`${API_BASE_URL}/product/${promptId}/estimate`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => '');
+    throw new Error(`estimate failed: HTTP ${res.status} ${text}`);
+  }
+
+  const json: { code: string; message: string; data: number } = await res.json();
+
+  if (json.code !== 'SUCCESS') {
+    throw new Error(json.message || 'estimate failed');
+  }
+
+  if (typeof json.data !== 'number') {
+    throw new Error('estimate response data is not a number');
+  }
+
+  return json.data;
+}
+
+export async function generateImage(
+  promptId: number,
+  body: {
+    aspect_ratio: string;
+    resolution: string;
+    variable_value: any;
+  },
+  accessToken?: string,
+): Promise<GeneratedImage> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/product/${promptId}/generate`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) {
+      console.error(res.status, await res.text());
+      return {} as GeneratedImage;
+    }
+    const data = await res.json();
+    console.log(data);
+    return data.data;
+  } catch (error) {
+    console.error(error);
+    return {} as GeneratedImage;
+  }
+}
+
 export async function getCreditOptions(): Promise<Options[]> {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/credit/options`, {
@@ -126,6 +225,34 @@ export async function getCreditBalance(accessToken?: string): Promise<Balance> {
     return { currentCredit: 0 };
   }
 }
+
+// export async function getImageDownloadUrl(
+//   imageId: number,
+//   accessToken?: string,
+// ): Promise<ImageDownloadInfo | null> {
+//   try {
+//     const headers = {
+//       'Content-Type': 'application/json',
+//       Authorization: `Bearer ${accessToken ?? ''}`,
+//     };
+
+//     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/image/${imageId}/download`, {
+//       headers,
+//     });
+
+//     if (!res.ok) {
+//       console.error(res.status, await res.text());
+//       return null;
+//     }
+
+//     const json = await res.json();
+//     return json?.data ?? null;
+//   } catch (error) {
+//     console.error(error);
+//     return null;
+//   }
+// }
+
 export const httpClient = {
   get: async function <T>(path: string, token?: string): Promise<T> {
     const headers: HeadersInit = {

@@ -7,9 +7,8 @@ interface props {
 }
 
 export default async function HomePage({ searchParams: searchParamsPromise }: props) {
-
   const searchParams = await searchParamsPromise;
-  
+
   // 검색 매개변수를 일반 객체로 변환
   const resolvedSearchParams = {
     keyword: searchParams.keyword,
@@ -26,7 +25,7 @@ export default async function HomePage({ searchParams: searchParamsPromise }: pr
   ]);
 
   return (
-    <Suspense fallback={<div className="text-center pt-20">Loading...</div>}>
+    <Suspense fallback={<div className="pt-20 text-center">Loading...</div>}>
       <HomePageClient
         initialProducts={productsData?.content || []}
         totalPages={productsData?.totalPages || 0}

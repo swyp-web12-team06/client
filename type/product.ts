@@ -29,3 +29,31 @@ export type Product = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type PromptVariables = {
+  id: number;
+  keyName: string;
+  description: string;
+  orderIndex: number;
+};
+
+export type ProductForPurchase = {
+  promptId: number;
+  title: string;
+  description: string;
+  previewImageUrl: string;
+  modelInfo: {
+    modelId: number;
+    modelName: string;
+    aspectRatios: string[];
+    resolutions: null;
+  };
+  promptVariables: PromptVariables[];
+};
+
+export type GeneratedImage = {
+  image_id: number;
+  image_url: string;
+  total_price: number;
+  current_credit: number;
+};
