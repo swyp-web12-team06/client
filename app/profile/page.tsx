@@ -218,7 +218,7 @@ export default function ProfilePage() {
                       <div>
                         <Image
                           onClick={() => setIsModalOpen(true)}
-                          alt={image.image_id.toString()}
+                          alt={image.image_url}
                           key={image.image_id}
                           src={image.image_url}
                           width={200}
