@@ -57,7 +57,7 @@ export async function pollImageUntilCompleted(
   opts: PollOptions = {},
 ): Promise<ImageStatusItem> {
   const intervalMs = opts.intervalMs ?? 1500;
-  const timeoutMs = opts.timeoutMs ?? 60_000;
+  const timeoutMs = opts.timeoutMs ?? 300_000;
   const start = Date.now();
 
   while (true) {
