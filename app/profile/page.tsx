@@ -215,7 +215,7 @@ export default function ProfilePage() {
                 {purchasedItems.map((item) => (
                   <div key={item.purchase_id}>
                     {item.generated_images?.map((image) => (
-                      <div className='h-28'>
+                      <div className='h-48'>
                         <Image
                           onClick={() => setIsModalOpen(true)}
                           alt={image.image_url}
