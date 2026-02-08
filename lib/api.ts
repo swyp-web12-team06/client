@@ -226,32 +226,32 @@ export async function getCreditBalance(accessToken?: string): Promise<Balance> {
   }
 }
 
-// export async function getImageDownloadUrl(
-//   imageId: number,
-//   accessToken?: string,
-// ): Promise<ImageDownloadInfo | null> {
-//   try {
-//     const headers = {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${accessToken ?? ''}`,
-//     };
+export async function getImageDownloadUrl(
+  imageId: number,
+  accessToken?: string,
+): Promise<ImageDownloadInfo | null> {
+  try {
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken ?? ''}`,
+    };
 
-//     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/image/${imageId}/download`, {
-//       headers,
-//     });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/image/${imageId}/download`, {
+      headers,
+    });
 
-//     if (!res.ok) {
-//       console.error(res.status, await res.text());
-//       return null;
-//     }
+    if (!res.ok) {
+      console.error(res.status, await res.text());
+      return null;
+    }
 
-//     const json = await res.json();
-//     return json?.data ?? null;
-//   } catch (error) {
-//     console.error(error);
-//     return null;
-//   }
-// }
+    const json = await res.json();
+    return json?.data ?? null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
 
 export const httpClient = {
   get: async function <T>(path: string, token?: string): Promise<T> {
