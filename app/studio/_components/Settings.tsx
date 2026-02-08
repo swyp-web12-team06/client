@@ -21,6 +21,7 @@ interface props {
   promptVariables: PromptVariables[];
   modelId: number;
   setGeneratedImageUrl: Dispatch<SetStateAction<string>>;
+  setImageId: Dispatch<SetStateAction<number>>;
 }
 
 export default function Settings({
@@ -30,6 +31,7 @@ export default function Settings({
   promptVariables,
   modelId,
   setGeneratedImageUrl,
+  setImageId,
 }: props) {
   const promptVariablesList: PromptVariables[] = promptVariables;
   const [ratio, setRatio] = useState(aspectRatios[0]);
@@ -64,8 +66,8 @@ export default function Settings({
 
   const transformData = (obj: Record<number, string>) => {
     return Object.entries(obj).map(([key, value]) => ({
-      id: Number(key),
       value: value,
+      variable_id: Number(key),
     }));
   };
 
@@ -111,20 +113,20 @@ export default function Settings({
   async function handleGenerateImage() {
     if (!accessToken || !promptId) return;
 
-    const variable_value = transformData(variableValues);
+    const variable_values = transformData(variableValues);
     const imageData = await generateImage(
       promptId,
-      { aspect_ratio: ratio, resolution, variable_value },
+      { resolution, aspect_ratio: ratio, variable_values },
       accessToken,
     );
 
-    // ✨ 중요: imageData가 null인지, image_id가 있는지 확실히 체크!
     if (!imageData || !imageData.image_id) {
       alert('이미지 생성 요청에 실패했습니다. 로그를 확인하세요.');
       return;
     }
 
     console.log('성공 - 이미지 ID:', imageData.image_id);
+    setImageId(imageData.image_id);
 
     const status = await pollImageUntilCompleted(imageData.image_id, accessToken, {
       intervalMs: 1500,
@@ -142,9 +144,7 @@ export default function Settings({
         <div className="flex w-full flex-col gap-2">
           <h4 className="typo-body1-semibold">변수입력</h4>
           <div className="flex w-full flex-col gap-6 rounded-[10px] p-5 shadow-[0px_0px_7px_0px_rgba(112,112,112,0.25)]">
-            <div className="rounded-[10px] p-5 shadow-[0px_0px_7px_0px_rgba(112,112,112,0.25)]">
-              <Tabs items={items} value={tab} onValueChange={setTab} />
-            </div>
+            <Tabs items={items} value={tab} onValueChange={setTab} />
           </div>
         </div>
         <div className="inline-flex w-full justify-between">
@@ -158,7 +158,7 @@ export default function Settings({
             )}
             <Select value={ratio} onValueChange={(value) => setRatio(value)} items={ratioItems} />
           </div>
-          <span className="inline-flex items-center justify-start gap-1.5 rounded-full px-2.5 py-1.5 outline outline-1 outline-offset-[-1px] outline-gray-500">
+          <span className="inline-flex w-20 items-center justify-center gap-1.5 rounded-full px-2.5 py-1.5 outline outline-1 outline-offset-[-1px] outline-gray-500">
             <div className="flex items-center justify-start gap-0.5">
               <p className="flex items-center justify-center gap-2.5">{estimate} C</p>
             </div>

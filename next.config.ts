@@ -31,6 +31,16 @@ const nextConfig: NextConfig = {
         hostname: 'picsum.photos',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'image.redot.store',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '437886cb285cde343d4b756b0d406a85.r2.cloudflarestorage.com',
+        pathname: '/**',
+      },
     ],
   },
 };
