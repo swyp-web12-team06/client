@@ -21,6 +21,8 @@ interface props {
   setGeneratedImageUrl: Dispatch<SetStateAction<string>>;
   setImageId: Dispatch<SetStateAction<number>>;
   setIsGenerated: Dispatch<SetStateAction<boolean>>;
+  isLoading: boolean;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function Settings({
@@ -32,6 +34,8 @@ export default function Settings({
   setGeneratedImageUrl,
   setImageId,
   setIsGenerated,
+  isLoading,
+  setIsLoading,
 }: props) {
   const promptVariablesList: PromptVariables[] = promptVariables;
   const [ratio, setRatio] = useState(aspectRatios[0]);
@@ -111,6 +115,7 @@ export default function Settings({
 
   async function handleGenerateImage() {
     if (!accessToken || !promptId) return;
+    setIsLoading(true);
 
     const variable_values = transformData(variableValues);
     const imageData = await generateImage(
@@ -135,6 +140,7 @@ export default function Settings({
       console.log(status);
       setGeneratedImageUrl(status.downloadUrl ?? '');
       setIsGenerated(true);
+      setIsLoading(false);
     }
   }
 
@@ -170,7 +176,7 @@ export default function Settings({
           variant="solid"
           size="md"
           onClick={() => handleGenerateImage()}
-          disabled={promptVariablesList.length != Object.keys(variableValues).length}
+          disabled={promptVariablesList.length != Object.keys(variableValues).length || isLoading}
         >
           생성하기
         </Button>

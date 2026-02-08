@@ -11,11 +11,12 @@ import { Button } from '@/components/commons/Button';
 
 export default function Studio() {
   const params = useParams<{ id: string }>();
-  const { accessToken, isLoading, isLoggedIn, login } = useAuth();
+  const { accessToken, isLoggedIn, login } = useAuth();
   const [data, setData] = useState<ProductForPurchase | null>(null);
   const [generatedImageUrl, setGeneratedImageUrl] = useState('');
   const [imageId, setImageId] = useState<number>(0);
   const [isGenerated, setIsGenerated] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!accessToken) return;
@@ -87,6 +88,8 @@ export default function Studio() {
           setGeneratedImageUrl={setGeneratedImageUrl}
           setImageId={setImageId}
           setIsGenerated={setIsGenerated}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
         />
       </div>
       <div className="w-full">
@@ -112,7 +115,7 @@ export default function Studio() {
             </div>
           ) : (
             <div className="flex h-[588px] w-[588px] items-center justify-center bg-gray-200">
-              이미지를 생성해주세요.
+              {isLoading ? '이미지 생성중...' : '이미지를 생성해주세요.'}
             </div>
           )}
         </div>
