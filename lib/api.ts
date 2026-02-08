@@ -3,6 +3,7 @@ import { Category } from '@/type/category';
 import { PaginatedProducts } from '@/type/paginate';
 import { GeneratedImage, ProductForPurchase } from '@/type/product';
 import { Balance, Options } from '@/type/credit';
+import { ImageDownloadInfo } from '@/type/image';
 
 const TOKEN = process.env.NEXT_PUBLIC_TEST_TOKEN || '';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE || '';
@@ -178,6 +179,7 @@ export async function generateImage(
       return {} as GeneratedImage;
     }
     const data = await res.json();
+    console.log(data);
     return data.data;
   } catch (error) {
     console.error(error);
@@ -223,6 +225,33 @@ export async function getCreditBalance(accessToken?: string): Promise<Balance> {
     return { currentCredit: 0 };
   }
 }
+
+// export async function getImageDownloadUrl(
+//   imageId: number,
+//   accessToken?: string,
+// ): Promise<ImageDownloadInfo | null> {
+//   try {
+//     const headers = {
+//       'Content-Type': 'application/json',
+//       Authorization: `Bearer ${accessToken ?? ''}`,
+//     };
+
+//     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/image/${imageId}/download`, {
+//       headers,
+//     });
+
+//     if (!res.ok) {
+//       console.error(res.status, await res.text());
+//       return null;
+//     }
+
+//     const json = await res.json();
+//     return json?.data ?? null;
+//   } catch (error) {
+//     console.error(error);
+//     return null;
+//   }
+// }
 
 export const httpClient = {
   get: async function <T>(path: string, token?: string): Promise<T> {

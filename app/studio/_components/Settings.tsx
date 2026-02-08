@@ -121,7 +121,8 @@ export default function Settings({
       accessToken,
     );
 
-    console.log('data', variableValues);
+    console.log('data', variable_value);
+    await console.log('data', data);
   }
 
   return (
