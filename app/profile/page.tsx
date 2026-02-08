@@ -25,6 +25,32 @@ export default function ProfilePage() {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleDownload = async (event: React.MouseEvent, imageUrl: string, imageId: number) => {
+    event.preventDefault(); // Prevent default navigation
+
+    try {
+      const response = await fetch(imageUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const blob = await response.blob();
+
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `generated_image_${imageId}.png`;
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error during image download:', error);
+      alert('이미지 다운로드에 실패했습니다. 다시 시도해 주세요.');
+    }
+  };
+
   const fetchProductsLibrary = async (
     requestType: string,
     page: number,
@@ -218,7 +244,7 @@ export default function ProfilePage() {
                       <a
                         key={image.image_id}
                         href={image.image_url}
-                        download
+                        onClick={(e) => handleDownload(e, image.image_url, image.image_id)}
                         className="block h-48"
                       >
                         <Image
