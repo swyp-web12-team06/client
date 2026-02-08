@@ -6,20 +6,23 @@ import ProductDetailModal from './ProductDetailModal';
 export default function Gallery({ data }: { data: Product[] }) {
   const [product, setProduct] = useState<Product | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [currentIdx, setCurrentIdx] = useState(0);
 
-  function handleProductDetail(p: Product) {
+  function handleProductDetail(p: Product, idx: number) {
     setProduct(p);
     setIsOpen(true);
+    console.log(idx);
+    setCurrentIdx(idx);
   }
 
   return (
     <div className="columns-2 gap-4 space-y-4 md:columns-3 lg:columns-4">
-      {data.map((product) => {
+      {data.map((product, idx) => {
         return (
           <div
             key={product.promptId}
             className="group relative break-inside-avoid overflow-hidden rounded-xl"
-            onClick={() => handleProductDetail(product)}
+            onClick={() => handleProductDetail(product, idx)}
           >
             <img
               src={product.previewImageUrl}
@@ -29,7 +32,15 @@ export default function Gallery({ data }: { data: Product[] }) {
           </div>
         );
       })}
-      <ProductDetailModal isOpen={isOpen} product={product} setIsOpen={setIsOpen} />
+      <ProductDetailModal
+        isOpen={isOpen}
+        product={product}
+        setIsOpen={setIsOpen}
+        setProduct={setProduct}
+        currentIdx={currentIdx}
+        setCurrentIdx={setCurrentIdx}
+        data={data}
+      />
     </div>
   );
 }

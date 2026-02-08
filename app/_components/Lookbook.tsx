@@ -13,6 +13,7 @@ export default function Lookbook({ data, userId }: { data: Product[]; userId?: s
   const [isOpen, setIsOpen] = useState(false);
   const [isProductEditModalOpen, setIsProductEditModalOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
+  const [currentIdx, setCurrentIdx] = useState(0);
   const pathName = usePathname();
 
   const options: SelectItem[] = [
@@ -61,7 +62,7 @@ export default function Lookbook({ data, userId }: { data: Product[]; userId?: s
     }
   }
 
-  const userIdNumber = Number(userId)
+  const userIdNumber = Number(userId);
 
   return (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
@@ -123,7 +124,15 @@ export default function Lookbook({ data, userId }: { data: Product[]; userId?: s
         );
       })}
 
-      <ProductDetailModal isOpen={isOpen} product={product} setIsOpen={setIsOpen} />
+      <ProductDetailModal
+        isOpen={isOpen}
+        product={product}
+        setIsOpen={setIsOpen}
+        setProduct={setProduct}
+        currentIdx={currentIdx}
+        setCurrentIdx={setCurrentIdx}
+        data={data}
+      />
       <ProductEditModal
         isOpen={isProductEditModalOpen}
         onClose={() => setIsProductEditModalOpen(false)}
