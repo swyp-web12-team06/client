@@ -39,7 +39,9 @@ export default function Settings({
   const [estimate, setEstimate] = useState<number>(0);
   const [tab, setTab] = useState('0');
   const [variableValues, setVariableValues] = useState<Record<string | number, string>>({});
-  const { accessToken, isLoading, isLoggedIn, login } = useAuth();
+  const { accessToken } = useAuth();
+  const [values, setValues] = useState<Record<number, string>>({});
+
   const ratioItems: SelectItemType[] = [
     {
       type: 'group',

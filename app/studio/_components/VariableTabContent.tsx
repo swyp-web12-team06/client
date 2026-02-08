@@ -1,24 +1,26 @@
 import Input from '@/components/commons/Input';
 import { useEffect, useState } from 'react';
 
-interface props {
+interface Props {
   tab: string;
   index: number;
   variableName: string;
   variableDescription: string;
   handleVariablesChange: (value: string) => void;
-  value?: string;
 }
 
 export function VariableTabContent({
   tab,
-  index,
   variableName,
   variableDescription,
   handleVariablesChange,
-  value,
-}: props) {
-  useEffect(() => {}, [tab]);
+}: Props) {
+  const [localValue, setLocalValue] = useState('');
+
+  useEffect(() => {
+    setLocalValue('');
+  }, [tab]);
+
   return (
     <div className="flex w-full flex-col gap-2">
       <h5 className="text-sm font-bold">{variableName}</h5>
@@ -26,8 +28,12 @@ export function VariableTabContent({
       <Input
         variant="secondary"
         size="small"
-        value={value}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleVariablesChange(e.target.value)}
+        value={localValue}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          const v = e.target.value;
+          setLocalValue(v);
+          handleVariablesChange(v);
+        }}
         placeholder={`${variableName}의 내용을 입력하세요.`}
       />
     </div>
