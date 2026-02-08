@@ -16,7 +16,7 @@ export default function Gallery({ data }: { data: Product[] }) {
   }
 
   return (
-    <div className="columns-2 gap-4 md:columns-3 lg:columns-4">
+    <div className="columns-2 gap-4 md:columns-3">
       {data.map((product, idx) => {
         return (
           <div
