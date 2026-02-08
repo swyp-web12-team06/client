@@ -1,6 +1,6 @@
-const STATUS_ENDPOINT_PATH = '/image/status'; // TODO: 문서에 나온 실제 path로 수정
-
 type ImageStatus = 'PROCESSING' | 'COMPLETED' | 'FAILED';
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE || '';
 
 type ImageStatusItem = {
   status: ImageStatus;
@@ -18,13 +18,9 @@ function sleep(ms: number) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-/** image_id로 1회 상태 조회 */
-export async function getImageStatusOnce(
-  imageId: number,
-  accessToken?: string,
-): Promise<ImageStatusItem | null> {
+export async function getImageStatusOnce(imageId: number, accessToken?: string): Promise<any> {
   try {
-    const url = new URL(`${process.env.NEXT_PUBLIC_API_BASE}/image/${imageId}/status`);
+    const url = new URL(`${API_BASE_URL}/image/${imageId}/status`);
     url.searchParams.set('imageId', String(imageId));
 
     const res = await fetch(url.toString(), {
@@ -42,7 +38,8 @@ export async function getImageStatusOnce(
     }
 
     const json = (await res.json()) as ApiResponse<ImageStatusItem[]>;
-    return json?.data?.[0] ?? null;
+    console.log('json', json);
+    return json?.data;
   } catch (e) {
     console.error(e);
     return null;
@@ -50,11 +47,10 @@ export async function getImageStatusOnce(
 }
 
 type PollOptions = {
-  intervalMs?: number; // 기본 1500ms
-  timeoutMs?: number; // 기본 60초
+  intervalMs?: number; //  1500ms
+  timeoutMs?: number; //  60초
 };
 
-/** status가 COMPLETED 될 때까지 폴링 */
 export async function pollImageUntilCompleted(
   imageId: number,
   accessToken?: string,

@@ -160,11 +160,12 @@ export async function generateImage(
   body: {
     aspect_ratio: string;
     resolution: string;
-    variable_value: any;
+    variable_values: any;
   },
   accessToken?: string,
 ): Promise<GeneratedImage | null> {
   try {
+    console.log(JSON.stringify(body));
     const res = await fetch(`${API_BASE_URL}/product/${promptId}/generate`, {
       method: 'POST',
       headers: {
@@ -180,13 +181,49 @@ export async function generateImage(
       return null;
     }
 
+    console.log('gen', res);
+
     const response = await res.json();
-    console.log('Server Response:', response);
+
+    console.log('gen', response);
 
     return response.data || response;
   } catch (error) {
     console.error('Network Error:', error);
     return null;
+  }
+}
+
+export type ImageDownloadResponse = {
+  image_id: number;
+  download_url: string;
+  file_name: string;
+};
+
+export async function getImageDownloadInfo(
+  imageId: number | string,
+  accessToken?: string,
+): Promise<ImageDownloadResponse> {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/image/${imageId}/download`, {
+      cache: 'no-store',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      credentials: 'include',
+    });
+
+    if (!res.ok) {
+      console.error(res.status, await res.text());
+      return {} as ImageDownloadResponse;
+    }
+
+    const json = await res.json();
+    return json.data || ({} as ImageDownloadResponse);
+  } catch (error) {
+    console.error(error);
+    return {} as ImageDownloadResponse;
   }
 }
 
