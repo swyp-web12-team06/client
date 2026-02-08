@@ -125,7 +125,7 @@ export default function Settings({
 
     const status = await pollImageUntilCompleted(imageData.image_id, accessToken, {
       intervalMs: 1500,
-      timeoutMs: 60_000,
+      timeoutMs: 300_000,
     });
     if (status) {
       console.log(status);
