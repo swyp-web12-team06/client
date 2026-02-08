@@ -87,7 +87,7 @@ export default function ProductEditModal({ isOpen, onClose, product, onProductUp
     if (title !== product.title) payload.title = title;
     if (description !== product.description) payload.description = description;
     if (categoryId !== product.categoryId) payload.categoryId = categoryId;
-    if (price !== product.price) payload.price = price;
+    if (price !== product.price) payload.price = price * 100;
     if (JSON.stringify(tags) !== JSON.stringify(product.tags)) payload.tags = tags;
 
     // product.previewImageUrl을 기반으로 product.images에서 미리보기ImageId 도출
@@ -146,7 +146,7 @@ export default function ProductEditModal({ isOpen, onClose, product, onProductUp
           </label>
           <textarea
             id="description"
-            className="focus:ring-primary-500 typo-body2-regular w-full rounded-md border border-gray-300 p-3 focus:ring-2 focus:outline-none"
+            className="focus-within:border-primary-200 min-h-30 w-full rounded-lg border border-gray-500 bg-gray-100 px-4.75 py-2.5 text-gray-800 outline-none placeholder:text-gray-500 hover:border-gray-800 disabled:bg-gray-300 has-[input:disabled]:hover:border-gray-500"
             rows={4}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -168,18 +168,22 @@ export default function ProductEditModal({ isOpen, onClose, product, onProductUp
         <div className="mb-4">
           <Input
             id="price"
-            label="가격"
             type="number"
-            value={price.toString()}
-            onChange={(e) => setPrice(parseInt(e.target.value) || 0)}
-            placeholder="가격"
-            variant="secondary"
+            label="가격"
             size="small"
+            placeholder="가격"
+            value={price * 100}
+            onChange={(e) => setPrice((parseInt(e.target.value) || 0) / 100)}
+            className="w-full"
+            variant="secondary"
+            sideLabel="C"
+            min={500}
+            max={1000}
+            step={100}
             required
           />
         </div>
 
-        {/* Tags input - simplified for now */}
         <div className="mb-6">
           <Input
             id="tags"

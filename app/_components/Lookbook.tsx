@@ -5,8 +5,9 @@ import Select, { SelectItem } from '@/components/commons/Select';
 import ProductEditModal from '@/app/_components/ProductEditModal';
 import { useAuth } from '@/context/AuthContext';
 import { httpClient } from '@/lib/api';
+import Image from 'next/image';
 
-export default function Lookbook({ data }: { data: Product[] }) {
+export default function Lookbook({ data, userId }: { data: Product[]; userId?: string }) {
   const { accessToken, user } = useAuth();
   const [product, setProduct] = useState<Product | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -58,8 +59,6 @@ export default function Lookbook({ data }: { data: Product[] }) {
     }
   }
 
-  const userId = sessionStorage.getItem('userId');
-
   return (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
       {data.map((p) => {
@@ -69,7 +68,6 @@ export default function Lookbook({ data }: { data: Product[] }) {
             <div
               key={p.promptId}
               className="flex cursor-pointer divide-x divide-gray-300 overflow-hidden rounded-2xl border border-gray-300 bg-gray-400"
-              onClick={() => handleProductDetail(p)}
             >
               <div className="flex h-54 w-full items-center justify-center rounded-2xl border border-gray-300 bg-gray-400 text-gray-500">
                 <span>No Image Available</span>
@@ -81,22 +79,11 @@ export default function Lookbook({ data }: { data: Product[] }) {
         return (
           <div
             key={p.promptId}
-            className="relative flex cursor-pointer divide-x divide-gray-300 overflow-hidden rounded-2xl border border-gray-300 bg-gray-400"
+            className="group relative flex cursor-pointer divide-x divide-gray-300 overflow-hidden rounded-2xl border border-gray-300 bg-gray-400"
           >
-            {p.seller.id.toString() === userId && (
-              <div className="absolute top-8 right-4.5 z-1">
-                <Select
-                  items={options}
-                  value={undefined}
-                  className="h-6! w-6! justify-center! rounded-none border-none bg-transparent! p-0!"
-                  onValueChange={(value: string) => handleMenuSelect(value, p.promptId)}
-                />
-              </div>
-            )}
             {p.representativeImageUrls.slice(0, 3).map((imageUrl, index) => (
               <div key={`${p.promptId}-${index}`} className="relative h-54 w-full">
                 <img
-                  onClick={() => handleProductDetail(p)}
                   src={imageUrl}
                   alt={`${p.title} lookbook image ${index + 1}`}
                   className="h-full w-full object-cover"
@@ -104,6 +91,30 @@ export default function Lookbook({ data }: { data: Product[] }) {
                 />
               </div>
             ))}
+
+            <div
+              onClick={() => handleProductDetail(p)}
+              className="absolute top-0 left-0 z-1 flex h-full w-full translate-y-full items-end bg-linear-to-t from-gray-900/50 to-transparent px-5 pb-3 transition group-hover:translate-y-0"
+            >
+              {p.seller && p.seller.id.toString() === userId && (
+                <div onClick={(e) => e.stopPropagation()} className="absolute top-8 right-4.5">
+                  <Select
+                    items={options}
+                    value={undefined}
+                    className="h-6! w-6! justify-center! rounded-none border-none bg-transparent! p-0!"
+                    onValueChange={(value: string) => handleMenuSelect(value, p.promptId)}
+                  />
+                </div>
+              )}
+              <div>
+                <span className="typo-caption-medium rounded-sm bg-gray-900 px-2 py-1 text-gray-50">
+                  {p.price} C
+                </span>
+                <p className="typo-body2-medium mt-2 text-gray-50">
+                  {p.title} #{p.promptId}
+                </p>
+              </div>
+            </div>
           </div>
         );
       })}

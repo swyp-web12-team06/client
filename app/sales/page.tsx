@@ -10,8 +10,10 @@ import ThumbnailStep from './ThumbnailStep';
 
 export default function SalesPage() {
   const salesForm = useSalesFormLogic();
-  const { handleSubmit, loading, error, successMessage, step, setStep, setError } = salesForm;
+  const { handleSubmit, loading, error, successMessage, step, setStep, setError, errorStep } =
+    salesForm;
   const isLoadingOrError = error !== null || loading;
+  const isCurrentStepError = errorStep !== null && errorStep === step;
   return (
     <SalesFormContext.Provider value={salesForm}>
       <div className="mx-auto flex w-308 flex-wrap justify-between gap-20 pt-43.5">
@@ -69,6 +71,7 @@ export default function SalesPage() {
                     setError(null);
                     setStep(step + 1);
                   }}
+                  disabled={isCurrentStepError}
                 >
                   다음
                 </Button>
