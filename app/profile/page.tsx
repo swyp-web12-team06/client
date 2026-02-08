@@ -23,6 +23,7 @@ export default function ProfilePage() {
   const [hasMore, setHasMore] = useState(true);
   const loadMoreRef = useRef<HTMLDivElement>(null); // 무한 스크롤 트리거 참조
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fetchProductsLibrary = async (
     requestType: string,
@@ -211,20 +212,26 @@ export default function ProfilePage() {
               </div>
             ) : (
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-                {purchasedItems
-                  .flatMap((items) => items.generated_images || [])
-                  .map((image) => (
-                    <div key={image.image_id} className="relative aspect-square">
-                      <Image
-                        src={image.image_url}
-                        alt={`Generated Image ${image.image_id}`}
-                        fill
-                        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-                        style={{ objectFit: 'cover' }}
-                        className="rounded-lg"
-                      />
-                    </div>
-                  ))}
+                {purchasedItems.map((item) => (
+                  <div key={item.purchase_id}>
+                    {item.generated_images?.map((image) => (
+                      <div>
+                        <Image
+                          onClick={() => setIsModalOpen(true)}
+                          alt={image.image_id.toString()}
+                          key={image.image_id}
+                          src={image.image_url}
+                          width={200}
+                          height={180}
+                          className="cursor-pointer rounded-2xl"
+                        />
+                        {item.variables.map((variable) => (
+                          <span className="mr-2">{variable.value}</span>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                ))}
               </div>
             )}
           </div>
