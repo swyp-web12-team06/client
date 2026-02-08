@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import Image from 'next/image';
 import { Product } from '@/type/product';
-import {  PurchasedItem } from '@/type/image';
+import { PurchasedItem } from '@/type/image';
 import Lookbook from '../_components/Lookbook';
 import ProfileEditModal from '@/app/profile/ProfileEditModal';
 import { cn } from '@/utils/styles';
@@ -60,16 +60,12 @@ export default function ProfilePage() {
     return transformedData;
   };
 
-  const fetchGeneratedImages = async (
-    page: number,
-    size: number,
-    accessToken: string,
-  ) => {
-    const imagesResult = await httpClient.get<{ data: { content: PurchasedItem[] } }>(
+  const fetchGeneratedImages = async (page: number, size: number, accessToken: string) => {
+    const imagesResult = await httpClient.get<{ data: PurchasedItem[] }>(
       `/user/me/library/purchases?page=${page}&size=${size}`,
-      accessToken
+      accessToken,
     );
-    return imagesResult.data.content || [];
+    return imagesResult.data || [];
   };
 
   useEffect(() => {
@@ -97,7 +93,10 @@ export default function ProfilePage() {
           if (currentPage === 1) {
             setPurchasedItems(newData as PurchasedItem[]);
           } else {
-            setPurchasedItems((prevImages) => [...(prevImages || []), ...(newData as PurchasedItem[])]);
+            setPurchasedItems((prevImages) => [
+              ...(prevImages || []),
+              ...(newData as PurchasedItem[]),
+            ]);
           }
           setHasMore(newData.length === pageSize);
         } else {
@@ -188,10 +187,7 @@ export default function ProfilePage() {
       </div>
       <div className="mx-auto w-full px-4 pb-28 md:max-w-308">
         <div className="mb-5 flex w-full gap-11 border-b border-gray-500">
-          <button
-            className={libraryTabStyleHandle('sales')}
-            onClick={() => setActiveTab('sales')}
-          >
+          <button className={libraryTabStyleHandle('sales')} onClick={() => setActiveTab('sales')}>
             판매 목록
           </button>
           <button
@@ -210,21 +206,25 @@ export default function ProfilePage() {
         {activeTab === 'archive' ? (
           <div>
             {loadingMore && purchasedItems.length === 0 ? (
-              <div className="flex justify-center items-center h-40">Loading generated images...</div>
+              <div className="flex h-40 items-center justify-center">
+                Loading generated images...
+              </div>
             ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                {purchasedItems.flatMap(items => items.generated_images || []).map((image) => (
-                  <div key={image.image_id} className="relative aspect-square">
-                    <Image
-                      src={image.image_url}
-                      alt={`Generated Image ${image.image_id}`}
-                      fill
-                      sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-                      style={{ objectFit: 'cover' }}
-                      className="rounded-lg"
-                    />
-                  </div>
-                ))}
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+                {purchasedItems
+                  .flatMap((items) => items.generated_images || [])
+                  .map((image) => (
+                    <div key={image.image_id} className="relative aspect-square">
+                      <Image
+                        src={image.image_url}
+                        alt={`Generated Image ${image.image_id}`}
+                        fill
+                        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                        style={{ objectFit: 'cover' }}
+                        className="rounded-lg"
+                      />
+                    </div>
+                  ))}
               </div>
             )}
           </div>
