@@ -5,14 +5,16 @@ import Select, { SelectItem } from '@/components/commons/Select';
 import ProductEditModal from '@/app/_components/ProductEditModal';
 import { useAuth } from '@/context/AuthContext';
 import { httpClient } from '@/lib/api';
-import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 export default function Lookbook({ data, userId }: { data: Product[]; userId?: string }) {
-  const { accessToken, user } = useAuth();
+  const { accessToken } = useAuth();
   const [product, setProduct] = useState<Product | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isProductEditModalOpen, setIsProductEditModalOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
+  const pathName = usePathname();
+
   const options: SelectItem[] = [
     { label: '수정', value: 'edit' },
     { label: '숨김', value: 'hide' },
@@ -96,7 +98,7 @@ export default function Lookbook({ data, userId }: { data: Product[]; userId?: s
               onClick={() => handleProductDetail(p)}
               className="absolute top-0 left-0 z-1 flex h-full w-full translate-y-full items-end bg-linear-to-t from-gray-900/50 to-transparent px-5 pb-3 transition group-hover:translate-y-0"
             >
-              {p.seller && p.seller.id.toString() === userId && (
+              {p.seller && p.seller.id.toString() === userId && pathName !== '/profile' && (
                 <div onClick={(e) => e.stopPropagation()} className="absolute top-8 right-4.5">
                   <Select
                     items={options}
