@@ -35,7 +35,7 @@ export default function ProfilePage() {
       `/user/me/library/${requestType}?page=${page}&size=${size}`,
       accessToken,
     );
-    const libraryItems = libraryResult.data.content
+    const libraryItems = libraryResult.data.content;
 
     if (libraryItems.length === 0) {
       return [];
@@ -215,7 +215,7 @@ export default function ProfilePage() {
                 {purchasedItems.map((item) => (
                   <div key={item.purchase_id}>
                     {item.generated_images?.map((image) => (
-                      <div className='h-48'>
+                      <div className="h-48">
                         <Image
                           onClick={() => setIsModalOpen(true)}
                           alt={image.image_url}
@@ -223,7 +223,7 @@ export default function ProfilePage() {
                           src={image.image_url}
                           width={200}
                           height={180}
-                          className="h-full w-full cursor-pointer rounded-2xl"
+                          className="h-full w-full cursor-pointer rounded-2xl object-cover"
                         />
                       </div>
                     ))}
