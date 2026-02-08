@@ -17,7 +17,7 @@ export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState<'sales' | 'purchases' | 'archive'>('sales');
   const [products, setProducts] = useState<Product[]>([]);
   const [purchasedItems, setPurchasedItems] = useState<PurchasedItem[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -91,7 +91,7 @@ export default function ProfilePage() {
 
         if (activeTab === 'archive') {
           newData = await fetchGeneratedImages(currentPage, pageSize, accessToken);
-          if (currentPage === 1) {
+          if (currentPage === 0) {
             setPurchasedItems(newData as PurchasedItem[]);
           } else {
             setPurchasedItems((prevImages) => [
