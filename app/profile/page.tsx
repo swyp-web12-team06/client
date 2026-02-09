@@ -179,6 +179,8 @@ export default function ProfilePage() {
     return null;
   }
 
+  // 하
+
   const libraryTabStyleHandle = (type: 'sales' | 'purchases' | 'archive') => {
     return cn(
       'typo-body1-medium cursor-pointer',
