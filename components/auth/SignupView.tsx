@@ -79,7 +79,7 @@ export default function SignupView({ onSuccess }: SignupViewProps) {
           Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
-          userId: user.id,
+          userId: user.userId,
           nickname,
           termsAgreed: agreements.service && agreements.privacy,
           marketingConsent: agreements.marketing,
