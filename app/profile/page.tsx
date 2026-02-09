@@ -57,11 +57,11 @@ export default function ProfilePage() {
     size: number,
     accessToken: string,
   ) => {
-    const libraryResult = await httpClient.get<{ data: { content: PurchasedItem[] } }>(
+    const libraryResult = await httpClient.get<{ data: PurchasedItem[] }>(
       `/user/me/library/${requestType}?page=${page}&size=${size}`,
       accessToken,
     );
-    const libraryItems = libraryResult.data.content;
+    const libraryItems = libraryResult.data;
 
     if (libraryItems.length === 0) {
       return [];
@@ -128,7 +128,7 @@ export default function ProfilePage() {
           setHasMore(newData.length === pageSize);
         } else {
           newData = await fetchProductsLibrary(activeTab, currentPage, pageSize, accessToken);
-          if (currentPage === 1) {
+          if (currentPage === 0) {
             setProducts(newData as Product[]);
           } else {
             setProducts((prevProducts) => [...(prevProducts || []), ...(newData as Product[])]);
