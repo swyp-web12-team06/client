@@ -22,7 +22,7 @@ import { upgradeToSeller } from '@/lib/api';
 type ModalView = 'login' | 'signup';
 
 export default function GlobalHeader() {
-  const { isLoggedIn, user, logout, isLoading, accessToken, reissueToken } = useAuth();
+  const { isLoggedIn, user, logout, isLoading, loginDev, accessToken, reissueToken } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathName = usePathname();
@@ -170,6 +170,9 @@ export default function GlobalHeader() {
             <div className="flex items-center gap-2">
               <Button size="md" onClick={() => openModal('login')}>
                 로그인
+              </Button>
+              <Button size="md" variant="outline" onClick={loginDev}>
+                테스트 로그인
               </Button>
             </div>
           ) : (
