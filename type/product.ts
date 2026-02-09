@@ -51,3 +51,13 @@ export type ProductForPurchase = {
   };
   promptVariables: PromptVariables[];
 };
+
+export type ProductEdit = {
+  title: string;
+  description: string;
+  price: number;
+  tags: string[];
+  previewImageId: number;
+  representativeImageIds: number[];
+  isActive: boolean;
+};

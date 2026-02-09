@@ -10,6 +10,7 @@ import Lookbook from '../_components/Lookbook';
 import ProfileEditModal from '@/app/profile/ProfileEditModal';
 import { cn } from '@/utils/styles';
 import { httpClient } from '@/lib/api';
+import { SalesHistoryItem } from '@/type/sales';
 
 export default function ProfilePage() {
   const { user, isLoggedIn, isLoading, accessToken, reissueToken } = useAuth();
@@ -23,10 +24,9 @@ export default function ProfilePage() {
   const [hasMore, setHasMore] = useState(true);
   const loadMoreRef = useRef<HTMLDivElement>(null); // 무한 스크롤 트리거 참조
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDownload = async (event: React.MouseEvent, imageUrl: string, imageId: number) => {
-    event.preventDefault(); // Prevent default navigation
+    event.preventDefault();
 
     try {
       const response = await fetch(imageUrl);
@@ -57,42 +57,86 @@ export default function ProfilePage() {
     size: number,
     accessToken: string,
   ) => {
-    const libraryResult = await httpClient.get<{ data: { content: PurchasedItem[] } }>(
+    const libraryResult = await httpClient.get<{ data?: SalesHistoryItem[] }>(
       `/user/me/library/${requestType}?page=${page}&size=${size}`,
       accessToken,
     );
-    const libraryItems = libraryResult.data.content;
+
+    const libraryItems = libraryResult.data || [];
 
     if (libraryItems.length === 0) {
       return [];
     }
 
-    const promptIds = libraryItems.map((item) => item.prompt_id);
+    if (requestType === 'sales') {
+      const libraryResult = await httpClient.get<{ data?: SalesHistoryItem[] }>(
+        `/user/me/library/${requestType}?page=${page}&size=${size}`,
+        accessToken,
+      );
 
-    const productPromises = promptIds.map(async (promptId) => {
-      try {
-        const productData = await httpClient.get<{ data: Product }>(
-          `/product/${promptId}`,
-          accessToken,
-        );
-        return productData.data;
-      } catch (error) {
-        console.error(`Failed to fetch product with promptId ${promptId}:`, error);
-        return null;
+      const libraryItems = libraryResult.data || [];
+
+      if (libraryItems.length === 0) {
+        return [];
       }
-    });
 
-    const products = await Promise.all(productPromises);
-    const transformedData = products.filter((product): product is Product => product !== null);
-    return transformedData;
+      const promptIds = libraryItems.map((item) => item.prompt_id);
+
+      const productPromises = promptIds.map(async (promptId) => {
+        try {
+          const productData = await httpClient.get<{ data: Product }>(
+            `/product/${promptId}`,
+            accessToken,
+          );
+          const product = productData.data;
+          product.representativeImageUrls = product.images
+            .filter((image) => image.isRepresentative)
+            .map((image) => image.imageUrl);
+          return product;
+        } catch (error) {
+          console.error(`Failed to fetch product with promptId ${promptId}:`, error);
+          return null;
+        }
+      });
+
+      const products = await Promise.all(productPromises);
+
+      const transformedData = products.filter((product): product is Product => product !== null);
+
+      return transformedData;
+    } else {
+      const promptIds = libraryItems.map((item) => item.prompt_id);
+
+      const productPromises = promptIds.map(async (promptId) => {
+        try {
+          const productData = await httpClient.get<{ data: Product }>(
+            `/product/${promptId}`,
+            accessToken,
+          );
+          const product = productData.data;
+          product.representativeImageUrls = product.images
+            .filter((image) => image.isRepresentative)
+            .map((image) => image.imageUrl);
+          return product;
+        } catch (error) {
+          console.error(`Failed to fetch product with promptId ${promptId}:`, error);
+          return null;
+        }
+      });
+
+      const products = await Promise.all(productPromises);
+      const transformedData = products.filter((product): product is Product => product !== null);
+      console.log('fetchProductsLibrary transformedData (other):', transformedData);
+      return transformedData;
+    }
   };
 
   const fetchGeneratedImages = async (page: number, size: number, accessToken: string) => {
-    const imagesResult = await httpClient.get<{ data: { content: PurchasedItem[] } }>(
+    const imagesResult = await httpClient.get<{ data: PurchasedItem[] }>(
       `/user/me/library/purchases?page=${page}&size=${size}`,
       accessToken,
     );
-    return imagesResult.data.content || [];
+    return imagesResult.data || [];
   };
 
   useEffect(() => {
@@ -127,10 +171,13 @@ export default function ProfilePage() {
           }
           setHasMore(newData.length === pageSize);
         } else {
+          // newData will be Product[]
           newData = await fetchProductsLibrary(activeTab, currentPage, pageSize, accessToken);
-          if (currentPage === 1) {
+          if (currentPage === 0) {
+            // Initial load (page 0), replace products
             setProducts(newData as Product[]);
           } else {
+            // Subsequent loads, append products
             setProducts((prevProducts) => [...(prevProducts || []), ...(newData as Product[])]);
           }
           setHasMore(newData.length === pageSize);
@@ -262,7 +309,7 @@ export default function ProfilePage() {
             )}
           </div>
         ) : (
-          <Lookbook data={products} />
+          <Lookbook data={products} userId={user?.userId?.toString()} />
         )}
         <div ref={loadMoreRef} className="h-10 w-full" /> {/* 무한스크롤 트리거 */}
       </div>

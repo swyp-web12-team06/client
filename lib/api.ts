@@ -1,11 +1,12 @@
 import { Category } from '@/type/category';
 
 import { PaginatedProducts } from '@/type/paginate';
-import { ProductForPurchase } from '@/type/product';
+import { Product, ProductEdit, ProductForPurchase } from '@/type/product';
 import { Balance, Options } from '@/type/credit';
 import { GeneratedImage, ImageDownloadInfo } from '@/type/image';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { SalesHistoryItem } from '@/type/sales';
 
-const TOKEN = process.env.NEXT_PUBLIC_TEST_TOKEN || '';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE || '';
 
 export async function getCategories(): Promise<Category[]> {
@@ -376,4 +377,25 @@ export const httpClient = {
 
 export async function upgradeToSeller(token: string, agreeToSellerTerms: boolean): Promise<any> {
   return httpClient.post('/user/upgrade-seller', token, { agreeToSellerTerms });
+}
+
+export async function activeProductHandler(
+  promptId: number,
+  targetStatus: boolean,
+  accessToken: string,
+  router: AppRouterInstance,
+) {
+  try {
+    await httpClient.patch(`/product/${promptId}`, { isActive: targetStatus }, accessToken);
+
+    router.refresh();
+
+    const successMessage = targetStatus
+      ? '상품이 공개되었습니다.'
+      : '상품이 비공개 처리되었습니다.';
+    alert(successMessage);
+  } catch (err: any) {
+    console.error('Product status update failed:', err);
+    alert(err.message || '상품 상태 업데이트에 실패했습니다.');
+  }
 }
