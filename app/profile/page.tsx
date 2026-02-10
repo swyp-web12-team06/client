@@ -57,11 +57,11 @@ export default function ProfilePage() {
     size: number,
     accessToken: string,
   ) => {
-    const libraryResult = await httpClient.get<{ data: PurchasedItem[] }>(
+    const libraryResult = await httpClient.get<{ data: { content: PurchasedItem[] } }>(
       `/user/me/library/${requestType}?page=${page}&size=${size}`,
       accessToken,
     );
-    const libraryItems = libraryResult.data;
+    const libraryItems = libraryResult.data.content;
 
     if (libraryItems.length === 0) {
       return [];
