@@ -189,7 +189,7 @@ export default function ProfilePage() {
   return (
     <main className="no-padding flex w-full flex-col">
       <div className="relative h-85 w-full bg-gray-400">
-        {user?<button className="absolute -bottom-18.5 left-1/2 mx-auto flex h-37 w-37 -translate-x-1/2 items-center justify-center rounded-full border-[6px] border-gray-50 bg-gray-400 text-gray-500">
+        <button className="absolute -bottom-18.5 left-1/2 mx-auto flex h-37 w-37 -translate-x-1/2 items-center justify-center rounded-full border-[6px] border-gray-50 bg-gray-400 text-gray-500">
           {user.profileImageUrl ? (
             <img
               src={user.profileImageUrl}
@@ -199,11 +199,11 @@ export default function ProfilePage() {
           ) : (
             'No image'
           )}
-        </button>:'...'}
+        </button>
       </div>
       <div className="mt-18.5 pt-1.5">
         <h3 className="typo-heading1-semibold flex items-center justify-center text-gray-800">
-          {user?user.nickname:',,,'}
+          {user.nickname}
           <button className="ml-1.5 cursor-pointer" onClick={() => setIsProfileModalOpen(true)}>
             <Image src="/icon/name-edit.svg" alt="Nickname edit icon" width={28} height={28} />
           </button>
@@ -261,10 +261,8 @@ export default function ProfilePage() {
               </div>
             )}
           </div>
-        ) : products ? (
-          <Lookbook data={products} userId={sessionStorage.getItem('userId') ?? undefined} />
         ) : (
-          '...'
+          <Lookbook data={products} userId={sessionStorage.getItem('userId') ?? undefined} />
         )}
         <div ref={loadMoreRef} className="h-10 w-full" /> {/* 무한스크롤 트리거 */}
       </div>

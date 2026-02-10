@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Select from '@/components/commons/Select';
 import ProductEditModal from '@/app/_components/ProductEditModal';
 import { useAuth } from '@/context/AuthContext';
-import { activeProductHandler, httpClient } from '@/lib/api';
+import { httpClient } from '@/lib/api';
 import { useRouter } from 'next/navigation';
 
 export default function Lookbook({ data, userId }: { data: Product[]; userId?: string }) {
@@ -37,9 +37,6 @@ export default function Lookbook({ data, userId }: { data: Product[]; userId?: s
       case 'edit':
         setProductToEdit(product);
         setIsProductEditModalOpen(true);
-        break;
-      case 'open':
-        activeProductHandler(product.promptId, true, accessToken, router);
         break;
       case 'hide':
         const newIsActive = product.userStatus === 'HIDDEN';
