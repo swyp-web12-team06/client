@@ -4,7 +4,8 @@ import { useState } from 'react';
 import Select from '@/components/commons/Select';
 import ProductEditModal from '@/app/_components/ProductEditModal';
 import { useAuth } from '@/context/AuthContext';
-import { httpClient } from '@/lib/api';
+import { activeProductHandler, httpClient } from '@/lib/api';
+import { useRouter } from 'next/navigation';
 
 export default function Lookbook({ data, userId }: { data: Product[]; userId?: string }) {
   const { accessToken } = useAuth();
@@ -13,6 +14,7 @@ export default function Lookbook({ data, userId }: { data: Product[]; userId?: s
   const [isProductEditModalOpen, setIsProductEditModalOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
   const [currentIdx, setCurrentIdx] = useState(0);
+  const router = useRouter();
 
   function handleProductDetail(p: Product) {
     setProduct(p);

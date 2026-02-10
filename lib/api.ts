@@ -1,11 +1,10 @@
 import { Category } from '@/type/category';
 
 import { PaginatedProducts } from '@/type/paginate';
-import { Product, ProductEdit, ProductForPurchase } from '@/type/product';
+import { ProductForPurchase } from '@/type/product';
 import { Balance, Options } from '@/type/credit';
 import { GeneratedImage, ImageDownloadInfo } from '@/type/image';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-import { SalesHistoryItem } from '@/type/sales';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE || '';
 
