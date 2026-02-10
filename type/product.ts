@@ -52,12 +52,13 @@ export type ProductForPurchase = {
   promptVariables: PromptVariables[];
 };
 
-export type ProductEdit = {
+export type SalesItem = {
+  prompt_id: number;
   title: string;
-  description: string;
   price: number;
-  tags: string[];
-  previewImageId: number;
-  representativeImageIds: number[];
-  isActive: boolean;
+  preview_image_url: string;
+  status: string;
+  sales_count: number;
+  total_revenue: number;
+  created_at: string;
 };
