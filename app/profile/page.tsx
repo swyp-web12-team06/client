@@ -174,7 +174,10 @@ export default function ProfilePage() {
           // newData will be Product[]
           newData = await fetchProductsLibrary(activeTab, currentPage, pageSize, accessToken);
           if (currentPage === 0) {
+<<<<<<< HEAD
             // Initial load (page 0), replace products
+=======
+>>>>>>> 9351ff85185fe6a0dd4022b39e1288ae71649105
             setProducts(newData as Product[]);
           } else {
             // Subsequent loads, append products
@@ -225,6 +228,8 @@ export default function ProfilePage() {
   if (!isLoggedIn || !user) {
     return null;
   }
+
+  // 하
 
   const libraryTabStyleHandle = (type: 'sales' | 'purchases' | 'archive') => {
     return cn(
