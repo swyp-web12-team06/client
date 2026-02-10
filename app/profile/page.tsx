@@ -25,7 +25,7 @@ export default function ProfilePage() {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   const handleDownload = async (event: React.MouseEvent, imageUrl: string, imageId: number) => {
-    event.preventDefault(); // Prevent default navigation
+    event.preventDefault();
 
     try {
       const response = await fetch(imageUrl);
@@ -186,6 +186,8 @@ export default function ProfilePage() {
     );
   };
 
+  const userId = sessionStorage.getItem('userId')
+
   return (
     <main className="no-padding flex w-full flex-col">
       <div className="relative h-85 w-full bg-gray-400">
@@ -262,7 +264,7 @@ export default function ProfilePage() {
             )}
           </div>
         ) : (
-          <Lookbook data={products} userId={sessionStorage.getItem('userId') ?? undefined} />
+          <Lookbook data={products} userId={userId ?? undefined} />
         )}
         <div ref={loadMoreRef} className="h-10 w-full" /> {/* 무한스크롤 트리거 */}
       </div>
