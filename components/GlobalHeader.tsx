@@ -167,11 +167,9 @@ export default function GlobalHeader() {
           {!isMounted || isLoading ? (
             <p className="typo-body1-medium">로딩중...</p>
           ) : !isLoggedIn ? (
-            <div className="flex items-center gap-2">
-              <Button size="md" onClick={() => openModal('login')}>
-                로그인
-              </Button>
-            </div>
+            <Button size="md" onClick={() => openModal('login')}>
+              로그인
+            </Button>
           ) : (
             <>
               {pathName !== '/sales' && (

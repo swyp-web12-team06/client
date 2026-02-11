@@ -51,3 +51,14 @@ export type ProductForPurchase = {
   };
   promptVariables: PromptVariables[];
 };
+
+export type SalesItem = {
+  prompt_id: number;
+  title: string;
+  price: number;
+  preview_image_url: string;
+  status: string;
+  sales_count: number;
+  total_revenue: number;
+  created_at: string;
+};

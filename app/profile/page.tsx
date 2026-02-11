@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import Image from 'next/image';
-import { Product } from '@/type/product';
+import { Product, SalesItem } from '@/type/product';
 import { PurchasedItem } from '@/type/image';
 import Lookbook from '../_components/Lookbook';
 import ProfileEditModal from '@/app/profile/ProfileEditModal';
@@ -23,10 +23,9 @@ export default function ProfilePage() {
   const [hasMore, setHasMore] = useState(true);
   const loadMoreRef = useRef<HTMLDivElement>(null); // 무한 스크롤 트리거 참조
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDownload = async (event: React.MouseEvent, imageUrl: string, imageId: number) => {
-    event.preventDefault(); // Prevent default navigation
+    event.preventDefault();
 
     try {
       const response = await fetch(imageUrl);
@@ -57,27 +56,28 @@ export default function ProfilePage() {
     size: number,
     accessToken: string,
   ) => {
-    const libraryResult = await httpClient.get<{ data: { content: PurchasedItem[] } }>(
-      `/user/me/library/${requestType}?page=${page}&size=${size}`,
-      accessToken,
-    );
+    const libraryResult = await httpClient.get<{
+      data: { content: (PurchasedItem | SalesItem)[] };
+    }>(`/user/me/library/${requestType}?page=${page}&size=${size}`, accessToken);
     const libraryItems = libraryResult.data.content;
 
     if (libraryItems.length === 0) {
       return [];
     }
 
-    const promptIds = libraryItems.map((item) => item.prompt_id);
-
-    const productPromises = promptIds.map(async (promptId) => {
+    const productPromises = libraryItems.map(async (item) => {
       try {
         const productData = await httpClient.get<{ data: Product }>(
-          `/product/${promptId}`,
+          `/product/${item.prompt_id}`,
           accessToken,
         );
-        return productData.data;
+        const productWithStatus: Product = { ...productData.data };
+        if (requestType === 'sales' && 'status' in item) {
+          productWithStatus.userStatus = (item as SalesItem).status;
+        }
+        return productWithStatus;
       } catch (error) {
-        console.error(`Failed to fetch product with promptId ${promptId}:`, error);
+        console.error(`Failed to fetch product with promptId ${item.prompt_id}:`, error);
         return null;
       }
     });
@@ -179,14 +179,14 @@ export default function ProfilePage() {
     return null;
   }
 
-  // 하
-
   const libraryTabStyleHandle = (type: 'sales' | 'purchases' | 'archive') => {
     return cn(
       'typo-body1-medium cursor-pointer',
       activeTab === type ? 'text-primary-200 border-primary-200 border-b-2' : 'text-gray-500',
     );
   };
+
+  const userId = sessionStorage.getItem('userId')
 
   return (
     <main className="no-padding flex w-full flex-col">
@@ -264,7 +264,7 @@ export default function ProfilePage() {
             )}
           </div>
         ) : (
-          <Lookbook data={products} />
+          <Lookbook data={products} userId={userId ?? undefined} />
         )}
         <div ref={loadMoreRef} className="h-10 w-full" /> {/* 무한스크롤 트리거 */}
       </div>

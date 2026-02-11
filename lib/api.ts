@@ -5,7 +5,6 @@ import { ProductForPurchase } from '@/type/product';
 import { Balance, Options } from '@/type/credit';
 import { GeneratedImage, ImageDownloadInfo } from '@/type/image';
 
-const TOKEN = process.env.NEXT_PUBLIC_TEST_TOKEN || '';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE || '';
 
 export async function getCategories(): Promise<Category[]> {

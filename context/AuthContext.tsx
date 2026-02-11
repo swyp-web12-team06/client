@@ -52,11 +52,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         if (role !== 'GUEST') {
           await fetchUser(newAccessToken);
-          setUserInfo({ id: userId });
+          setUserInfo({ userId: userId });
           sessionStorage.setItem('userId', userId.toString());
         } else {
-          setUserInfo({ id: userId });
-          setUser({ id: userId, role });
+          setUserInfo({ userId: userId });
+          setUser({ userId: userId, role });
           sessionStorage.setItem('userId', userId.toString());
         }
         return { isNewUser, role, userId };
@@ -121,8 +121,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (user) {
       setUser({ ...user, ...newUserInfo });
     }
-    if (newUserInfo.id) {
-      const userIdtoString = newUserInfo.id.toString();
+    if (newUserInfo.userId) { // Changed id to userId
+      const userIdtoString = newUserInfo.userId.toString();
       sessionStorage.setItem('userId', userIdtoString);
     }
   };

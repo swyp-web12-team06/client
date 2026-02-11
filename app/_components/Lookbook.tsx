@@ -1,11 +1,11 @@
 import { Product } from '@/type/product';
 import ProductDetailModal from './ProductDetailModal';
 import { useState } from 'react';
-import Select, { SelectItem } from '@/components/commons/Select';
+import Select from '@/components/commons/Select';
 import ProductEditModal from '@/app/_components/ProductEditModal';
 import { useAuth } from '@/context/AuthContext';
 import { httpClient } from '@/lib/api';
-import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function Lookbook({ data, userId }: { data: Product[]; userId?: string }) {
   const { accessToken } = useAuth();
@@ -14,13 +14,7 @@ export default function Lookbook({ data, userId }: { data: Product[]; userId?: s
   const [isProductEditModalOpen, setIsProductEditModalOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
   const [currentIdx, setCurrentIdx] = useState(0);
-  const pathName = usePathname();
-
-  const options: SelectItem[] = [
-    { label: '수정', value: 'edit' },
-    { label: '숨김', value: 'hide' },
-    { label: '삭제', value: 'delete' },
-  ];
+  const router = useRouter();
 
   function handleProductDetail(p: Product) {
     setProduct(p);
@@ -45,14 +39,23 @@ export default function Lookbook({ data, userId }: { data: Product[]; userId?: s
         setIsProductEditModalOpen(true);
         break;
       case 'hide':
-        alert(`숨김 기능: Product ID ${promptId} 숨김 처리 (API 미연결)`);
+        const newIsActive = product.userStatus === 'HIDDEN';
+        try {
+          await httpClient.patch(`/product/${promptId}`, { isActive: newIsActive }, accessToken);
+          console.log(product.userStatus);
+          alert(`상품이 성공적으로 ${newIsActive ? '보이기' : '숨김'} 처리되었습니다!`);
+          window.location.reload();
+        } catch (err: any) {
+          console.error('Failed to update product status:', err);
+          alert(err.message || `상품 상태 변경에 실패했습니다.`);
+        }
         break;
       case 'delete':
         if (window.confirm(`${product.title} 상품을 정말 삭제하시겠습니까?`)) {
           try {
             await httpClient.delete(`/product/${promptId}`, accessToken);
             alert('상품이 성공적으로 삭제되었습니다!');
-            window.location.reload();
+            router.refresh();
           } catch (err: any) {
             console.error('Product deletion failed:', err);
             alert(err.message || '상품 삭제에 실패했습니다.');
@@ -101,10 +104,14 @@ export default function Lookbook({ data, userId }: { data: Product[]; userId?: s
               onClick={() => handleProductDetail(p)}
               className="absolute top-0 left-0 z-1 flex h-full w-full translate-y-full items-end bg-linear-to-t from-gray-900/50 to-transparent px-5 pb-3 transition group-hover:translate-y-0"
             >
-              {p.seller && p.seller.id === userIdNumber && pathName !== '/profile' && (
+              {p.seller && p.seller.id === userIdNumber && (
                 <div onClick={(e) => e.stopPropagation()} className="absolute top-8 right-4.5">
                   <Select
-                    items={options}
+                    items={[
+                      { label: '수정', value: 'edit' },
+                      { label: p.userStatus !== 'HIDDEN' ? '숨김' : '보이기', value: 'hide' },
+                      { label: '삭제', value: 'delete' },
+                    ]}
                     value={undefined}
                     className="h-6! w-6! justify-center! rounded-none border-none bg-transparent! p-0!"
                     onValueChange={(value: string) => handleMenuSelect(value, p.promptId)}
@@ -139,7 +146,7 @@ export default function Lookbook({ data, userId }: { data: Product[]; userId?: s
         product={productToEdit}
         onProductUpdated={() => {
           setIsProductEditModalOpen(false);
-          window.location.reload();
+          router.refresh();
         }}
       />
     </div>
