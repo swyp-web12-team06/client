@@ -2,12 +2,14 @@
 
 import Image from 'next/image';
 import Settings from '../_components/Settings';
-import { getImageDownloadInfo, getProductForPurchase } from '@/lib/api';
+import { httpClient } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 import { useEffect, useState } from 'react';
 import { ProductForPurchase } from '@/type/product';
 import { useParams } from 'next/navigation';
 import { Button } from '@/components/commons/Button';
+import { ImageDownloadInfo } from '@/type/image';
+import { downloadImage } from '@/app/utils/downloadImage';
 
 export default function Studio() {
   const params = useParams<{ id: string }>();
@@ -21,41 +23,32 @@ export default function Studio() {
   useEffect(() => {
     if (!accessToken) return;
 
-    const fetchData = async () => {
-      const result = await getProductForPurchase(params.id, accessToken);
-      setData(result);
+    const fetchProduct = async () => {
+      const productResult = await httpClient.get<{ data: ProductForPurchase }>(
+        `/product/${params.id}/purchase`,
+        accessToken,
+      );
+      setData(productResult.data);
     };
-
-    fetchData();
+    fetchProduct();
   }, [accessToken, params.id]);
 
-  async function downloadWithSavePicker() {
-    const info = await getImageDownloadInfo(imageId, accessToken ?? undefined);
-    const url = info?.download_url;
-    if (!url) throw new Error('download_url이 없습니다.');
-
-    const fileRes = await fetch(url, { cache: 'no-store' });
-    if (!fileRes.ok) throw new Error('파일 다운로드 실패');
-    const blob = await fileRes.blob();
-
-    const handle = await (window as any).showSaveFilePicker({
-      suggestedName: info.file_name ?? `image_${imageId}.png`,
-      types: [
-        {
-          description: 'Image',
-          accept: {
-            'image/png': ['.png'],
-            'image/jpeg': ['.jpg', '.jpeg'],
-            'image/webp': ['.webp'],
-          },
-        },
-      ],
-    });
-
-    const writable = await handle.createWritable();
-    await writable.write(blob);
-    await writable.close();
+  async function fetchImageDownloadUrl(imageId: number) {
+    if (!accessToken) return;
+    const imageDownloadInfoResult = await httpClient.get<{ data: ImageDownloadInfo }>(
+      `/image/${imageId}/download`,
+      accessToken,
+    );
+    return imageDownloadInfoResult.data;
   }
+
+  const handleDownloadImage = async (imageId: number) => {
+    console.log('✅ 이미지 다운로드 시작');
+    const imageDownloadInfo = await fetchImageDownloadUrl(imageId);
+    if (!imageDownloadInfo) throw new Error('다운로드 정보가 없습니다.');
+    console.log(imageDownloadInfo.download_url);
+    downloadImage(imageDownloadInfo.download_url);
+  };
 
   if (!data) return null;
 
@@ -99,7 +92,7 @@ export default function Studio() {
             <Button
               variant="solid"
               size="sm"
-              onClick={downloadWithSavePicker}
+              onClick={() => handleDownloadImage(imageId)}
               disabled={!isGenerated}
             >
               Download

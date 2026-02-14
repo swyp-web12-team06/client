@@ -91,32 +91,6 @@ export async function getProducts(searchParams: {
   }
 }
 
-export async function getProductForPurchase(
-  promptId: string,
-  accessToken: string,
-): Promise<ProductForPurchase> {
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/product/${promptId}/purchase`, {
-      cache: 'no-store',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      credentials: 'include',
-    });
-
-    if (!res.ok) {
-      console.error(res.status, await res.text());
-      return {} as ProductForPurchase;
-    }
-    const data = await res.json();
-    return data.data || ({} as ProductForPurchase);
-  } catch (error) {
-    console.error(error);
-    return {} as ProductForPurchase;
-  }
-}
-
 export async function getPriceEstimate(
   promptId: number,
   body: {
@@ -190,39 +164,6 @@ export async function generateImage(
   } catch (error) {
     console.error('Network Error:', error);
     return null;
-  }
-}
-
-export type ImageDownloadResponse = {
-  image_id: number;
-  download_url: string;
-  file_name: string;
-};
-
-export async function getImageDownloadInfo(
-  imageId: number | string,
-  accessToken?: string,
-): Promise<ImageDownloadResponse> {
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/image/${imageId}/download`, {
-      cache: 'no-store',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      credentials: 'include',
-    });
-
-    if (!res.ok) {
-      console.error(res.status, await res.text());
-      return {} as ImageDownloadResponse;
-    }
-
-    const json = await res.json();
-    return json.data || ({} as ImageDownloadResponse);
-  } catch (error) {
-    console.error(error);
-    return {} as ImageDownloadResponse;
   }
 }
 

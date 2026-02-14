@@ -10,6 +10,7 @@ import Lookbook from '../_components/Lookbook';
 import ProfileEditModal from '@/app/profile/ProfileEditModal';
 import { cn } from '@/utils/styles';
 import { httpClient } from '@/lib/api';
+import { downloadImage } from '../utils/downloadImage';
 
 export default function ProfilePage() {
   const { user, isLoggedIn, isLoading, accessToken, reissueToken } = useAuth();
@@ -24,30 +25,10 @@ export default function ProfilePage() {
   const loadMoreRef = useRef<HTMLDivElement>(null); // 무한 스크롤 트리거 참조
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
-  const handleDownload = async (event: React.MouseEvent, imageUrl: string, imageId: number) => {
-    event.preventDefault();
-
-    try {
-      const response = await fetch(imageUrl);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const blob = await response.blob();
-
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `generated_image_${imageId}.png`;
-
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Error during image download:', error);
-      alert('이미지 다운로드에 실패했습니다. 다시 시도해 주세요.');
-    }
+  const handleDownloadImage = async (imageUrl: string) => {
+    console.log('✅ 이미지 다운로드 시작');
+    console.log(imageUrl);
+    downloadImage(imageUrl);
   };
 
   const fetchProductsLibrary = async (
@@ -186,7 +167,7 @@ export default function ProfilePage() {
     );
   };
 
-  const userId = sessionStorage.getItem('userId')
+  const userId = sessionStorage.getItem('userId');
 
   return (
     <main className="no-padding flex w-full flex-col">
@@ -243,20 +224,14 @@ export default function ProfilePage() {
                 {purchasedItems.map((item) => (
                   <div key={item.purchase_id}>
                     {item.generated_images?.map((image) => (
-                      <a
-                        key={image.image_id}
-                        href={image.image_url}
-                        onClick={(e) => handleDownload(e, image.image_url, image.image_id)}
-                        className="block h-48"
-                      >
-                        <Image
-                          alt={`Generated Image ${image.image_id}`}
-                          src={image.image_url}
-                          width={200}
-                          height={180}
-                          className="h-full w-full rounded-2xl object-cover"
-                        />
-                      </a>
+                      <Image
+                        alt={`Generated Image ${image.image_id}`}
+                        src={image.image_url}
+                        width={200}
+                        height={180}
+                        className="h-full w-full rounded-2xl object-cover"
+                        onClick={() => handleDownloadImage(image.image_url)}
+                      />
                     ))}
                   </div>
                 ))}
