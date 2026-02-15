@@ -8,6 +8,8 @@ import { TabContent } from './_components/TabContent';
 import CreditCard from '../credit/_components/CreditCard';
 import { Radio } from '@/components/commons/Radio';
 import { useState } from 'react';
+import Skeleton from '@/components/commons/Skeleton';
+import Placeholder from '@/components/commons/Placeholder';
 
 export default function Test() {
   const [tab, setTab] = useState('1');
@@ -355,6 +357,35 @@ export default function Test() {
           label="옵션 C"
           disabled
         />
+      </div>
+
+      <div className="flex w-[80%] flex-col gap-10">
+        <h1 className="text-4xl font-semibold">skeleton</h1>
+        <div className="h-20 w-20">
+          <Skeleton className="h-full w-full" />
+        </div>
+      </div>
+
+      <div className="flex w-[80%] flex-col gap-10">
+        <h1 className="text-4xl font-semibold">placeholder</h1>
+        <div className="h-20 w-20">
+          <Placeholder />
+        </div>
+        <div className="h-[608px] w-[608px]">
+          <Placeholder variant="image" />
+        </div>
+        <div className="h-[234px] w-[400px]">
+          <Placeholder />
+        </div>
+        <div className="h-11 w-11">
+          <Placeholder variant="avatar" />
+        </div>
+        <div className="h-5 w-5">
+          <Placeholder variant="avatar" />
+        </div>
+        <div className="h-37 w-37">
+          <Placeholder variant="avatar" />
+        </div>
       </div>
     </main>
   );
