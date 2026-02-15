@@ -5,12 +5,12 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import Image from 'next/image';
 import { Product, SalesItem } from '@/type/product';
-import { PurchasedItem } from '@/type/image';
+import { ImageDownloadInfo, PurchasedItem } from '@/type/image';
 import Lookbook from '../_components/Lookbook';
 import ProfileEditModal from '@/app/profile/ProfileEditModal';
 import { cn } from '@/utils/styles';
 import { httpClient } from '@/lib/api';
-import { downloadImage } from '../utils/downloadImage';
+import { downloadImageWithImageId } from '../utils/downloadImage';
 
 export default function ProfilePage() {
   const { user, isLoggedIn, isLoading, accessToken, reissueToken } = useAuth();
@@ -25,10 +25,9 @@ export default function ProfilePage() {
   const loadMoreRef = useRef<HTMLDivElement>(null); // 무한 스크롤 트리거 참조
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
-  const handleDownloadImage = async (imageUrl: string) => {
-    console.log('✅ 이미지 다운로드 시작');
-    console.log(imageUrl);
-    downloadImage(imageUrl);
+  const handleDownloadImage = async (imageId: number) => {
+    if (!imageId || !accessToken) return;
+    downloadImageWithImageId(imageId, accessToken);
   };
 
   const fetchProductsLibrary = async (
@@ -223,15 +222,20 @@ export default function ProfilePage() {
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
                 {purchasedItems.map((item) => (
                   <div key={item.purchase_id}>
-                    {item.generated_images?.map((image) => (
-                      <Image
-                        alt={`Generated Image ${image.image_id}`}
-                        src={image.image_url}
-                        width={200}
-                        height={180}
-                        className="h-full w-full rounded-2xl object-cover"
-                        onClick={() => handleDownloadImage(image.image_url)}
-                      />
+                    {item.generated_images?.map((image, idx) => (
+                      <div
+                        key={idx}
+                        onClick={() => handleDownloadImage(image.image_id)}
+                        className="cursor-pointer"
+                      >
+                        <Image
+                          alt={`Generated Image ${image.image_id}`}
+                          src={image.image_url}
+                          width={200}
+                          height={180}
+                          className="h-full w-full rounded-2xl object-cover"
+                        />
+                      </div>
                     ))}
                   </div>
                 ))}

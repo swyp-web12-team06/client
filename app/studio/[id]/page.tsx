@@ -9,7 +9,7 @@ import { ProductForPurchase } from '@/type/product';
 import { useParams } from 'next/navigation';
 import { Button } from '@/components/commons/Button';
 import { ImageDownloadInfo } from '@/type/image';
-import { downloadImage } from '@/app/utils/downloadImage';
+import { downloadImageWithImageId } from '@/app/utils/downloadImage';
 
 export default function Studio() {
   const params = useParams<{ id: string }>();
@@ -22,7 +22,6 @@ export default function Studio() {
 
   useEffect(() => {
     if (!accessToken) return;
-
     const fetchProduct = async () => {
       const productResult = await httpClient.get<{ data: ProductForPurchase }>(
         `/product/${params.id}/purchase`,
@@ -33,21 +32,9 @@ export default function Studio() {
     fetchProduct();
   }, [accessToken, params.id]);
 
-  async function fetchImageDownloadUrl(imageId: number) {
-    if (!accessToken) return;
-    const imageDownloadInfoResult = await httpClient.get<{ data: ImageDownloadInfo }>(
-      `/image/${imageId}/download`,
-      accessToken,
-    );
-    return imageDownloadInfoResult.data;
-  }
-
   const handleDownloadImage = async (imageId: number) => {
-    console.log('✅ 이미지 다운로드 시작');
-    const imageDownloadInfo = await fetchImageDownloadUrl(imageId);
-    if (!imageDownloadInfo) throw new Error('다운로드 정보가 없습니다.');
-    console.log(imageDownloadInfo.download_url);
-    downloadImage(imageDownloadInfo.download_url);
+    if (!imageId || !accessToken) return;
+    downloadImageWithImageId(imageId, accessToken);
   };
 
   if (!data) return null;
@@ -99,7 +86,7 @@ export default function Studio() {
             </Button>
           </div>
           {generatedImageUrl ? (
-            <div className="bg-tranprentcy h-[588px] w-[588px]">
+            <div className="h-[588px] w-[588px] bg-transparent">
               <img
                 src={generatedImageUrl}
                 className="h-full w-full object-contain"
