@@ -362,8 +362,18 @@ export default function Test() {
       <div className="flex w-[80%] flex-col gap-10">
         <h1 className="text-4xl font-semibold">skeleton</h1>
         <div className="h-20 w-20">
-          <Skeleton className="h-full w-full" />
+          <Skeleton variant="text" lines={4} />
         </div>
+        <div className="h-20 w-20">
+          <Skeleton variant="image" />
+        </div>
+        <div className="h-20 w-20">
+          <Skeleton variant="avatar" />
+        </div>
+        <div className="h-20 w-20">
+          <Skeleton />
+        </div>
+        <Skeleton className="h-10 w-10" />
       </div>
 
       <div className="flex w-[80%] flex-col gap-10">

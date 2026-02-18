@@ -10,6 +10,8 @@ import { useParams } from 'next/navigation';
 import { Button } from '@/components/commons/Button';
 import { ImageDownloadInfo } from '@/type/image';
 import { downloadImageWithImageId } from '@/app/utils/downloadImage';
+import Placeholder from '@/components/commons/Placeholder';
+import Skeleton from '@/components/commons/Skeleton';
 
 export default function Studio() {
   const params = useParams<{ id: string }>();
@@ -18,16 +20,22 @@ export default function Studio() {
   const [generatedImageUrl, setGeneratedImageUrl] = useState('');
   const [imageId, setImageId] = useState<number>(0);
   const [isGenerated, setIsGenerated] = useState<boolean>(false);
+  const [isImgLoading, setIsImgLoading] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!accessToken) return;
     const fetchProduct = async () => {
-      const productResult = await httpClient.get<{ data: ProductForPurchase }>(
-        `/product/${params.id}/purchase`,
-        accessToken,
-      );
-      setData(productResult.data);
+      try {
+        setIsLoading(true);
+        const productResult = await httpClient.get<{ data: ProductForPurchase }>(
+          `/product/${params.id}/purchase`,
+          accessToken,
+        );
+        setData(productResult.data);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchProduct();
   }, [accessToken, params.id]);
@@ -44,19 +52,27 @@ export default function Studio() {
       <div className="align-end flex w-full flex-col gap-6">
         <div className="flex w-full justify-center gap-5">
           <div className="flex w-full flex-col">
-            <h4 className="typo-body1-semibold">{data.title}</h4>
-            <p className="typo-body2-regular line-clamp-7">{data.description}</p>
+            {isLoading ? (
+              <Skeleton variant="text" lines={4} />
+            ) : (
+              <>
+                <h4 className="typo-body1-semibold">{data.title}</h4>
+                <p className="typo-body2-regular line-clamp-7">{data.description}</p>
+              </>
+            )}
           </div>
 
-          <div className="relative h-[174px] w-[240px] shrink-0 overflow-hidden bg-gray-400">
-            <Image
-              src={data?.previewImageUrl}
-              alt={data?.title ?? 'product image'}
-              fill
-              sizes="240px"
-              className="object-cover object-center"
-              style={{ objectFit: 'cover' }}
-            />
+          <div className="relative h-[174px] w-[240px] shrink-0">
+            {isLoading ? (
+              <Skeleton />
+            ) : (
+              <Image
+                src={data.previewImageUrl}
+                alt={data.title}
+                fill
+                className="object-cover object-center"
+              />
+            )}
           </div>
         </div>
         <Settings
@@ -68,8 +84,8 @@ export default function Studio() {
           setGeneratedImageUrl={setGeneratedImageUrl}
           setImageId={setImageId}
           setIsGenerated={setIsGenerated}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
+          isLoading={isImgLoading}
+          setIsLoading={setIsImgLoading}
         />
       </div>
       <div className="w-full">
@@ -95,7 +111,7 @@ export default function Studio() {
             </div>
           ) : (
             <div className="flex h-[588px] w-[588px] items-center justify-center bg-gray-200">
-              {isLoading ? '이미지 생성중...' : '이미지를 생성해주세요.'}
+              {isImgLoading ? <Skeleton /> : <Placeholder />}
             </div>
           )}
         </div>
