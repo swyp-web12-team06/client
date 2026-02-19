@@ -2,12 +2,16 @@
 
 import Image from 'next/image';
 import Settings from '../_components/Settings';
-import { getImageDownloadInfo, getProductForPurchase } from '@/lib/api';
+import { httpClient } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 import { useEffect, useState } from 'react';
 import { ProductForPurchase } from '@/type/product';
 import { useParams } from 'next/navigation';
 import { Button } from '@/components/commons/Button';
+import { ImageDownloadInfo } from '@/type/image';
+import { downloadImageWithImageId } from '@/app/utils/downloadImage';
+import Placeholder from '@/components/commons/Placeholder';
+import Skeleton from '@/components/commons/Skeleton';
 
 export default function Studio() {
   const params = useParams<{ id: string }>();
@@ -16,46 +20,30 @@ export default function Studio() {
   const [generatedImageUrl, setGeneratedImageUrl] = useState('');
   const [imageId, setImageId] = useState<number>(0);
   const [isGenerated, setIsGenerated] = useState<boolean>(false);
+  const [isImgLoading, setIsImgLoading] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!accessToken) return;
-
-    const fetchData = async () => {
-      const result = await getProductForPurchase(params.id, accessToken);
-      setData(result);
+    const fetchProduct = async () => {
+      try {
+        setIsLoading(true);
+        const productResult = await httpClient.get<{ data: ProductForPurchase }>(
+          `/product/${params.id}/purchase`,
+          accessToken,
+        );
+        setData(productResult.data);
+      } finally {
+        setIsLoading(false);
+      }
     };
-
-    fetchData();
+    fetchProduct();
   }, [accessToken, params.id]);
 
-  async function downloadWithSavePicker() {
-    const info = await getImageDownloadInfo(imageId, accessToken ?? undefined);
-    const url = info?.download_url;
-    if (!url) throw new Error('download_url이 없습니다.');
-
-    const fileRes = await fetch(url, { cache: 'no-store' });
-    if (!fileRes.ok) throw new Error('파일 다운로드 실패');
-    const blob = await fileRes.blob();
-
-    const handle = await (window as any).showSaveFilePicker({
-      suggestedName: info.file_name ?? `image_${imageId}.png`,
-      types: [
-        {
-          description: 'Image',
-          accept: {
-            'image/png': ['.png'],
-            'image/jpeg': ['.jpg', '.jpeg'],
-            'image/webp': ['.webp'],
-          },
-        },
-      ],
-    });
-
-    const writable = await handle.createWritable();
-    await writable.write(blob);
-    await writable.close();
-  }
+  const handleDownloadImage = async (imageId: number) => {
+    if (!imageId || !accessToken) return;
+    downloadImageWithImageId(imageId, accessToken);
+  };
 
   if (!data) return null;
 
@@ -64,19 +52,27 @@ export default function Studio() {
       <div className="align-end flex w-full flex-col gap-6">
         <div className="flex w-full justify-center gap-5">
           <div className="flex w-full flex-col">
-            <h4 className="typo-body1-semibold">{data.title}</h4>
-            <p className="typo-body2-regular line-clamp-7">{data.description}</p>
+            {isLoading ? (
+              <Skeleton variant="text" lines={4} />
+            ) : (
+              <>
+                <h4 className="typo-body1-semibold">{data.title}</h4>
+                <p className="typo-body2-regular line-clamp-7">{data.description}</p>
+              </>
+            )}
           </div>
 
-          <div className="relative h-[174px] w-[240px] shrink-0 overflow-hidden bg-gray-400">
-            <Image
-              src={data?.previewImageUrl}
-              alt={data?.title ?? 'product image'}
-              fill
-              sizes="240px"
-              className="object-cover object-center"
-              style={{ objectFit: 'cover' }}
-            />
+          <div className="relative h-[174px] w-[240px] shrink-0">
+            {isLoading ? (
+              <Skeleton />
+            ) : (
+              <Image
+                src={data.previewImageUrl}
+                alt={data.title}
+                fill
+                className="object-cover object-center"
+              />
+            )}
           </div>
         </div>
         <Settings
@@ -88,8 +84,8 @@ export default function Studio() {
           setGeneratedImageUrl={setGeneratedImageUrl}
           setImageId={setImageId}
           setIsGenerated={setIsGenerated}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
+          isLoading={isImgLoading}
+          setIsLoading={setIsImgLoading}
         />
       </div>
       <div className="w-full">
@@ -99,14 +95,14 @@ export default function Studio() {
             <Button
               variant="solid"
               size="sm"
-              onClick={downloadWithSavePicker}
+              onClick={() => handleDownloadImage(imageId)}
               disabled={!isGenerated}
             >
               Download
             </Button>
           </div>
           {generatedImageUrl ? (
-            <div className="bg-tranprentcy h-[588px] w-[588px]">
+            <div className="h-[588px] w-[588px] bg-transparent">
               <img
                 src={generatedImageUrl}
                 className="h-full w-full object-contain"
@@ -115,7 +111,7 @@ export default function Studio() {
             </div>
           ) : (
             <div className="flex h-[588px] w-[588px] items-center justify-center bg-gray-200">
-              {isLoading ? '이미지 생성중...' : '이미지를 생성해주세요.'}
+              {isImgLoading ? <Skeleton /> : <Placeholder />}
             </div>
           )}
         </div>

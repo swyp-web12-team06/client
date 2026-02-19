@@ -5,11 +5,12 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import Image from 'next/image';
 import { Product, SalesItem } from '@/type/product';
-import { PurchasedItem } from '@/type/image';
+import { ImageDownloadInfo, PurchasedItem } from '@/type/image';
 import Lookbook from '../_components/Lookbook';
 import ProfileEditModal from '@/app/profile/ProfileEditModal';
 import { cn } from '@/utils/styles';
 import { httpClient } from '@/lib/api';
+import { downloadImageWithImageId } from '../utils/downloadImage';
 
 export default function ProfilePage() {
   const { user, isLoggedIn, isLoading, accessToken, reissueToken } = useAuth();
@@ -24,30 +25,9 @@ export default function ProfilePage() {
   const loadMoreRef = useRef<HTMLDivElement>(null); // 무한 스크롤 트리거 참조
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
-  const handleDownload = async (event: React.MouseEvent, imageUrl: string, imageId: number) => {
-    event.preventDefault();
-
-    try {
-      const response = await fetch(imageUrl);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const blob = await response.blob();
-
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `generated_image_${imageId}.png`;
-
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Error during image download:', error);
-      alert('이미지 다운로드에 실패했습니다. 다시 시도해 주세요.');
-    }
+  const handleDownloadImage = async (imageId: number) => {
+    if (!imageId || !accessToken) return;
+    downloadImageWithImageId(imageId, accessToken);
   };
 
   const fetchProductsLibrary = async (
@@ -186,7 +166,7 @@ export default function ProfilePage() {
     );
   };
 
-  const userId = sessionStorage.getItem('userId')
+  const userId = sessionStorage.getItem('userId');
 
   return (
     <main className="no-padding flex w-full flex-col">
@@ -242,12 +222,11 @@ export default function ProfilePage() {
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
                 {purchasedItems.map((item) => (
                   <div key={item.purchase_id}>
-                    {item.generated_images?.map((image) => (
-                      <a
-                        key={image.image_id}
-                        href={image.image_url}
-                        onClick={(e) => handleDownload(e, image.image_url, image.image_id)}
-                        className="block h-48"
+                    {item.generated_images?.map((image, idx) => (
+                      <div
+                        key={idx}
+                        onClick={() => handleDownloadImage(image.image_id)}
+                        className="cursor-pointer"
                       >
                         <Image
                           alt={`Generated Image ${image.image_id}`}
@@ -256,7 +235,7 @@ export default function ProfilePage() {
                           height={180}
                           className="h-full w-full rounded-2xl object-cover"
                         />
-                      </a>
+                      </div>
                     ))}
                   </div>
                 ))}
