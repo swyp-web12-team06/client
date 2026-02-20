@@ -10,8 +10,7 @@ import { Options, Balance, Result } from '@/type/credit';
 import ArrowRightIcon from '@/public/icon/arrow-right.svg';
 import SuccessCheckIcon from '@/public/icon/success-check.svg';
 import { useAuth } from '@/context/AuthContext';
-
-const TOKEN = process.env.NEXT_PUBLIC_TEST_TOKEN;
+import { useRouter } from 'next/navigation';
 
 export default function Credit() {
   const [paymentStatus, setPaymentStatus] = useState<{
@@ -26,6 +25,7 @@ export default function Credit() {
   const [isPurchased, setIsPurchased] = useState(false);
   const [result, setResult] = useState<Result>({} as Result);
   const { accessToken, isLoading: isAuthLoading } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     if (!accessToken) return;
@@ -164,7 +164,9 @@ export default function Credit() {
               <ArrowRightIcon className="h-6 w-6" />
             </div>
           </div>
-          <Button className="w-[20%]">결제</Button>
+          <Button className="w-[20%]" onClick={() => router.push('/')}>
+            확인
+          </Button>
         </section>
       ) : (
         <>
