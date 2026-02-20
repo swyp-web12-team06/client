@@ -178,7 +178,9 @@ export default function ProfilePage() {
             if (currentPage === 0) {
               setProducts(getUniqueProducts(newData as Product[]));
             } else {
-              setProducts((prev) => getUniqueProducts([...(prev || []), ...(newData as Product[])]));
+              setProducts((prev) =>
+                getUniqueProducts([...(prev || []), ...(newData as Product[])]),
+              );
             }
           } else {
             if (currentPage === 0) {
@@ -200,7 +202,16 @@ export default function ProfilePage() {
     if (isLoggedIn && accessToken) {
       getLibrary();
     }
-  }, [isLoading, isLoggedIn, router, activeTab, accessToken, currentPage, pageSize, getUniqueProducts]);
+  }, [
+    isLoading,
+    isLoggedIn,
+    router,
+    activeTab,
+    accessToken,
+    currentPage,
+    pageSize,
+    getUniqueProducts,
+  ]);
 
   // 옵저버
   useEffect(() => {
@@ -245,7 +256,7 @@ export default function ProfilePage() {
     if (activeTab === 'archive') {
       if (loadingMore && purchasedItems.length === 0) {
         return (
-          <div className="columns-2 md:columns-3 gap-4">
+          <div className="columns-2 gap-4 md:columns-3">
             {Array.from({ length: 3 }).map((_, i) => (
               <div key={i} className="h-54">
                 <Skeleton />
@@ -263,12 +274,10 @@ export default function ProfilePage() {
         );
       }
       return (
-        <div className="columns-2 md:columns-3 gap-4">
+        <div className="flex flex-wrap gap-4">
           {purchasedItems.map((item) => (
-            <div
-              key={item.purchase_id}
-            >
-              {item.generated_images?.map((image) =>
+            <>
+              {item.generated_images?.map((image, index) =>
                 image.image_url ? (
                   <Link
                     key={image.image_id}
@@ -285,14 +294,15 @@ export default function ProfilePage() {
                     />
                   </Link>
                 ) : (
-                  <Placeholder
-                    key={image.image_id}
-                    variant="image"
-                    className="h-54 w-full bg-gray-300"
-                  />
+                  <div
+                    className="block h-54 w-[calc(33.333%-.669rem)]"
+                    key={image.image_id + index}
+                  >
+                    <Placeholder variant="image" className="h-full w-full bg-gray-300" />
+                  </div>
                 ),
               )}
-            </div>
+            </>
           ))}
         </div>
       );
