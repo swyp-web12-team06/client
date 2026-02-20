@@ -62,3 +62,15 @@ export type SalesItem = {
   total_revenue: number;
   created_at: string;
 };
+
+// 타인 판매 목록 API 응답 인터페이스
+export interface SalesItemFromApi {
+  prompt_id: number;
+  title: string;
+  price: number;
+  preview_image_url: string;
+  status: string;
+  created_at: string;
+  sales_count: number;
+  total_revenue: number;
+}

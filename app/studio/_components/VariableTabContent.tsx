@@ -3,36 +3,38 @@ import { useEffect, useState } from 'react';
 
 interface Props {
   tab: string;
-  index: number;
+  id: number;
   variableName: string;
   variableDescription: string;
-  handleVariablesChange: (value: string) => void;
+  settedValue: string;
+  changeVariable: (id: number, value: string) => void;
 }
 
 export function VariableTabContent({
   tab,
+  id,
   variableName,
   variableDescription,
-  handleVariablesChange,
+  settedValue,
+  changeVariable,
 }: Props) {
-  const [localValue, setLocalValue] = useState('');
+  const [localVariable, setLocalVariable] = useState(settedValue);
 
   useEffect(() => {
-    setLocalValue('');
-  }, [tab]);
+    setLocalVariable(settedValue);
+  }, [tab, settedValue]);
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <h5 className="text-sm font-bold">{variableName}</h5>
-      <p className="text-xs text-gray-500">{variableDescription}</p>
+      <h5 className="typo-body2-semibold">{variableName}</h5>
+      <p className="typo-caption-regular text-gray-700">{variableDescription}</p>
       <Input
         variant="secondary"
         size="small"
-        value={localValue}
+        value={localVariable}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          const v = e.target.value;
-          setLocalValue(v);
-          handleVariablesChange(v);
+          setLocalVariable(e.target.value);
+          changeVariable(id, e.target.value);
         }}
         placeholder={`${variableName}의 내용을 입력하세요.`}
       />

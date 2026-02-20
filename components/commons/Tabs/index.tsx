@@ -2,21 +2,21 @@ import * as React from 'react';
 import { cn } from '@/utils/styles';
 import { Tab } from './Tab';
 
-type Item = {
+export type TabItem = {
   value: string;
   label: React.ReactNode;
   disabled?: boolean;
   content: React.ReactNode;
 };
 
-type TabsProps = {
-  items: Item[];
+type props = {
+  items: TabItem[];
   value: string;
   onValueChange: (v: string) => void;
   className?: string;
 };
 
-export function Tabs({ items, value, onValueChange, className }: TabsProps) {
+export function Tabs({ items, value, onValueChange, className }: props) {
   const current = items.find((item) => item.value === value) ?? items[0];
 
   if (items.length === 0) {

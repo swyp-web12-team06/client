@@ -5,10 +5,12 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Searching from '@/components/Searching';
 import Gallery from './_components/Gallery';
 import Lookbook from './_components/Lookbook';
+import Skeleton from '@/components/commons/Skeleton';
 import { Product } from '@/type/product';
 import { Category } from '@/type/category';
 import { getProducts } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
+import AuthModal from '@/components/auth/AuthModal';
 
 interface props {
   initialProducts: Product[];
@@ -22,10 +24,29 @@ function View({ data, userId }: { data: Product[]; userId?: string }) {
   return view === 'gallery' ? <Gallery data={data} /> : <Lookbook data={data} userId={userId} />;
 }
 
+function LookbookSkeleton({ count }: { count: number }) {
+  const skeletonItems = Array.from({ length: count });
+  return (
+    <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+      {skeletonItems.map((_, i) => (
+        <div
+          key={i}
+          className="flex cursor-pointer divide-x divide-gray-300 overflow-hidden rounded-2xl border border-gray-300"
+        >
+          <div className="relative h-54 w-full">
+            <Skeleton />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function HomePageClient({ initialProducts, totalPages, categories }: props) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { isLoggedIn, reissueToken, user } = useAuth();
+  const { isLoggedIn, reissueToken } = useAuth();
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   // 무한스크롤 상태
   const [products, setProducts] = useState(initialProducts);
@@ -43,6 +64,21 @@ export default function HomePageClient({ initialProducts, totalPages, categories
     setPage(1); // 다음 페이지 번호를 1로 리셋
     setHasMore(totalPages > 1); // 더 많은 페이지가 있는지 여부 리셋
   }, [initialProducts, totalPages]);
+
+  // 로그인 파라미터 감지 모달 오픈
+  useEffect(() => {
+    if (searchParams.get('login') === 'true') {
+      setIsAuthModalOpen(true);
+    }
+  }, [searchParams]);
+
+  // AuthModal 닫기 핸들러: 모달을 닫고 URL에서 'login' 파라미터 제거
+  const handleAuthModalClose = useCallback(() => {
+    setIsAuthModalOpen(false);
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete('login');
+    router.replace(`?${params.toString()}`, { scroll: false });
+  }, [router, searchParams]);
 
   // 검색 및 필터링 상태
   const selectedCategory = searchParams.get('categoryId');
@@ -211,17 +247,20 @@ export default function HomePageClient({ initialProducts, totalPages, categories
         />
       </div>
       <div className="pt-15">
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<LookbookSkeleton count={6} />}>
           {userId ? <View data={products} userId={userId} /> : <View data={products} />}
         </Suspense>
       </div>
 
       {/* 무한스크롤 로딩 인디케이터 */}
       {hasMore && (
-        <div ref={observerRef} className="flex justify-center py-8">
-          {isLoadingMore && <p>Loading more...</p>}
+        <div ref={observerRef} className="w-full justify-center py-8">
+          {isLoadingMore && <LookbookSkeleton count={6} />}
         </div>
       )}
+
+      {/* 로그인을 위한 모달 */}
+      <AuthModal isOpen={isAuthModalOpen} onClose={handleAuthModalClose} />
     </main>
   );
 }
