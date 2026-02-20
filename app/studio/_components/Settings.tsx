@@ -4,13 +4,16 @@ import { Button } from '@/components/commons/Button';
 import Input from '@/components/commons/Input';
 import Select, { SelectItemType } from '@/components/commons/Select';
 import Image from 'next/image';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { PromptVariables } from '@/type/product';
-import { generateImage, getPriceEstimate } from '@/lib/api';
-import { Tabs } from '@/components/commons/Tabs';
+import { httpClient } from '@/lib/api';
+import { Tabs, TabItem } from '@/components/commons/Tabs';
 import { VariableTabContent } from './VariableTabContent';
 import { useAuth } from '@/context/AuthContext';
 import { pollImageUntilCompleted } from '@/lib/polling';
+import { GeneratedImage } from '@/type/image';
+import ImageIcon from '@/public/icon/image.svg';
+import ArrowRightIcon from '@/public/icon/arrow-right.svg';
 
 interface props {
   promptId: number;
@@ -44,7 +47,6 @@ export default function Settings({
   const [tab, setTab] = useState('0');
   const [variableValues, setVariableValues] = useState<Record<string | number, string>>({});
   const { accessToken } = useAuth();
-  const [values, setValues] = useState<Record<number, string>>({});
 
   const ratioItems: SelectItemType[] = [
     {
@@ -63,12 +65,60 @@ export default function Settings({
     },
   ];
 
-  const handleVariablesChange = (key: number, newValue: string) => {
-    setVariableValues((prev) => ({
-      ...prev,
-      [key]: newValue,
-    }));
+  const changeVariable = (id: number, newValue: string) => {
+    setVariableValues((prev) => {
+      const value = newValue.trim();
+
+      if (value === '') {
+        const { [id]: _, ...rest } = prev;
+        return rest;
+      }
+
+      return {
+        ...prev,
+        [id]: value,
+      };
+    });
   };
+
+  const items = useMemo(
+    () =>
+      promptVariablesList.map((variable) => ({
+        value: String(variable.id),
+        label: variableValues[variable.id] ?? variable.keyName,
+        content: (
+          <VariableTabContent
+            key={variable.id}
+            tab={tab}
+            id={variable.id}
+            variableName={variable.keyName}
+            variableDescription={variable.description}
+            settedValue={variableValues[variable.id] ?? ''}
+            changeVariable={changeVariable}
+          />
+        ),
+      })),
+    [promptVariablesList, variableValues, tab, changeVariable],
+  );
+
+  useEffect(() => {
+    if (!accessToken) return;
+    const fetchPriceEstimate = async () => {
+      const priceEstimateResult = await httpClient.post<{ data: number }>(
+        `/product/${promptId}/estimate`,
+        accessToken,
+        {
+          modelId,
+          aspectRatio: ratio,
+          resolution,
+        },
+      );
+      setEstimate(priceEstimateResult.data);
+      console.log('✅ estimate:', priceEstimateResult.data);
+    };
+
+    fetchPriceEstimate();
+  }, [ratio, resolution]);
 
   const transformData = (obj: Record<number, string>) => {
     return Object.entries(obj).map(([key, value]) => ({
@@ -77,62 +127,38 @@ export default function Settings({
     }));
   };
 
-  const items =
-    promptVariablesList.length > 0
-      ? promptVariablesList.map((variable) => ({
-          value: String(variable.id),
-          label: variableValues[variable.id] ? variableValues[variable.id] : variable.keyName,
-          content: (
-            <VariableTabContent
-              tab={tab}
-              index={variable.id}
-              variableName={variable.keyName}
-              variableDescription={variable.description}
-              handleVariablesChange={(value: string) => handleVariablesChange(variable.id, value)}
-            />
-          ),
-        }))
-      : [];
-
-  useEffect(() => {
-    if (!accessToken) return;
-    console.log('VVV', promptVariablesList);
-    const fetchData = async () => {
-      const data = await getPriceEstimate(
-        promptId,
-        {
-          modelId,
-          aspectRatio: ratio,
-          resolution,
-        },
-        accessToken,
-      );
-      setEstimate(data);
-    };
-
-    fetchData();
-  }, [ratio, resolution]);
-
   async function handleGenerateImage() {
-    if (!accessToken || !promptId) return;
+    if (!accessToken) return;
+
+    if (!promptId) return;
+
+    console.log('✅ promptVariablesList:', promptVariablesList);
+    console.log('✅ variableValues:', variableValues);
+    console.log('✅ items:', items);
+
     setIsLoading(true);
 
     const variable_values = transformData(variableValues);
-    const imageData = await generateImage(
-      promptId,
-      { resolution, aspect_ratio: ratio, variable_values },
+    console.log('✅ RealVariableValues:', variable_values);
+
+    const imageResult = await httpClient.post<GeneratedImage>(
+      `/product/${promptId}/generate`,
       accessToken,
+      { resolution, aspect_ratio: ratio, variable_values }, //TODO: 스네이크 카멜로 바꾸기 백엔드 바뀌면
     );
 
-    if (!imageData || !imageData.image_id) {
+    console.log('✅ imageResult:', imageResult);
+
+    if (!imageResult?.image_id) {
       alert('이미지 생성 요청에 실패했습니다. 로그를 확인하세요.');
+      setIsLoading(false);
       return;
     }
 
-    console.log('성공 - 이미지 ID:', imageData.image_id);
-    setImageId(imageData.image_id);
+    console.log('✅ image ID:', imageResult.image_id);
+    setImageId(imageResult.image_id);
 
-    const status = await pollImageUntilCompleted(imageData.image_id, accessToken, {
+    const status = await pollImageUntilCompleted(imageResult.image_id, accessToken, {
       intervalMs: 1500,
       timeoutMs: 300_000,
     });
@@ -144,7 +170,28 @@ export default function Settings({
     }
   }
 
-  return (
+  return isLoading ? (
+    <div className="flex h-full w-full flex-col items-center justify-center gap-6 rounded-[10px] p-5 shadow-[0px_0px_7px_0px_rgba(112,112,112,0.25)]">
+      <h3 className="typo-heading2-regular">이미지 생성중...</h3>
+      <div className="flex items-center justify-center gap-6 rounded-[10px] p-5">
+        <div>
+          {Object.entries(variableValues).map(([id, value]) => {
+            const variable = promptVariablesList.find((v) => v.id === Number(id));
+            const name = variable?.keyName ?? id;
+
+            return (
+              <div key={id} className="flex items-center gap-2">
+                <span className="text-gray-500">{name}</span>
+                <span className="font-medium">{value}</span>
+              </div>
+            );
+          })}
+        </div>
+        <ArrowRightIcon className="text-primary-200 h-15 w-15 animate-pulse" />
+        <ImageIcon className="hidden h-auto w-1/2 max-w-16 text-gray-500 sm:block" />
+      </div>
+    </div>
+  ) : (
     <div className="flex w-full flex-col gap-17">
       <div className="flex flex-col gap-5">
         <div className="flex w-full flex-col gap-2">
@@ -176,7 +223,7 @@ export default function Settings({
           variant="solid"
           size="md"
           onClick={() => handleGenerateImage()}
-          disabled={promptVariablesList.length != Object.keys(variableValues).length || isLoading}
+          disabled={promptVariablesList.length !== Object.keys(variableValues).length || isLoading}
         >
           생성하기
         </Button>

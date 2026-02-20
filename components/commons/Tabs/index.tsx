@@ -2,7 +2,7 @@ import * as React from 'react';
 import { cn } from '@/utils/styles';
 import { Tab } from './Tab';
 
-type Item = {
+export type TabItem = {
   value: string;
   label: React.ReactNode;
   disabled?: boolean;
@@ -10,7 +10,7 @@ type Item = {
 };
 
 type TabsProps = {
-  items: Item[];
+  items: TabItem[];
   value: string;
   onValueChange: (v: string) => void;
   className?: string;

@@ -101,19 +101,19 @@ export default function Studio() {
               Download
             </Button>
           </div>
-          {generatedImageUrl ? (
-            <div className="h-[588px] w-[588px] bg-transparent">
+          <div className="h-[588px] w-[588px] bg-transparent">
+            {isImgLoading ? (
+              <Skeleton />
+            ) : generatedImageUrl ? (
               <img
                 src={generatedImageUrl}
                 className="h-full w-full object-contain"
                 alt="Generated Image"
               />
-            </div>
-          ) : (
-            <div className="flex h-[588px] w-[588px] items-center justify-center bg-gray-200">
-              {isImgLoading ? <Skeleton /> : <Placeholder />}
-            </div>
-          )}
+            ) : (
+              <Placeholder />
+            )}
+          </div>
         </div>
       </div>
     </main>
