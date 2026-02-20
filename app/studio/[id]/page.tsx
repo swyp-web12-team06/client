@@ -11,6 +11,7 @@ import { Button } from '@/components/commons/Button';
 import { downloadImageWithImageId } from '@/app/utils/downloadImage';
 import Placeholder from '@/components/commons/Placeholder';
 import Skeleton from '@/components/commons/Skeleton';
+import Modal from '@/components/Modal';
 
 export default function Studio() {
   const params = useParams<{ id: string }>();
@@ -21,6 +22,13 @@ export default function Studio() {
   const [isGenerated, setIsGenerated] = useState<boolean>(false);
   const [isImgLoading, setIsImgLoading] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorModalOpen, setErrorModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const openErrorModal = (msg: string) => {
+    setErrorMessage(msg);
+    setErrorModalOpen(true);
+  };
 
   useEffect(() => {
     if (!accessToken) return;
@@ -41,7 +49,13 @@ export default function Studio() {
 
   const handleDownloadImage = async (imageId: number) => {
     if (!imageId || !accessToken) return;
-    downloadImageWithImageId(imageId, accessToken);
+
+    try {
+      await downloadImageWithImageId(imageId, accessToken);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : '이미지 다운로드 중 오류가 발생했습니다.';
+      openErrorModal(msg);
+    }
   };
 
   if (!data) return null;
@@ -95,26 +109,35 @@ export default function Studio() {
               variant="solid"
               size="sm"
               onClick={() => handleDownloadImage(imageId)}
-              disabled={!isGenerated}
+              disabled={!generatedImageUrl || isImgLoading}
             >
               Download
             </Button>
           </div>
-          {generatedImageUrl ? (
-            <div className="h-147 w-147 bg-transparent">
+          <div className="h-[588px] w-[588px] bg-transparent">
+            {isImgLoading ? (
+              <Skeleton />
+            ) : generatedImageUrl ? (
               <img
                 src={generatedImageUrl}
                 className="h-full w-full object-contain"
                 alt="Generated Image"
               />
-            </div>
-          ) : (
-            <div className="flex h-147 w-147 items-center justify-center bg-gray-200">
-              {isImgLoading ? <Skeleton /> : <Placeholder />}
-            </div>
-          )}
+            ) : (
+              <Placeholder />
+            )}
+          </div>
         </div>
       </div>
+      <Modal isOpen={errorModalOpen} onClose={() => setErrorModalOpen(false)}>
+        <div className="flex flex-col gap-4">
+          <h3 className="typo-heading2-semibold text-gray-900">오류</h3>
+          <p className="typo-body2-regular mb-4 text-gray-700">{errorMessage}</p>
+          <Button variant="solid" size="sm" onClick={() => setErrorModalOpen(false)}>
+            확인
+          </Button>
+        </div>
+      </Modal>
     </main>
   );
 }

@@ -91,82 +91,6 @@ export async function getProducts(searchParams: {
   }
 }
 
-export async function getPriceEstimate(
-  promptId: number,
-  body: {
-    modelId: number;
-    aspectRatio: string;
-    resolution: string;
-  },
-  accessToken: string,
-): Promise<number> {
-  const res = await fetch(`${API_BASE_URL}/product/${promptId}/estimate`, {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify(body),
-  });
-
-  if (!res.ok) {
-    const text = await res.text().catch(() => '');
-    throw new Error(`estimate failed: HTTP ${res.status} ${text}`);
-  }
-
-  const json: { code: string; message: string; data: number } = await res.json();
-
-  if (json.code !== 'SUCCESS') {
-    throw new Error(json.message || 'estimate failed');
-  }
-
-  if (typeof json.data !== 'number') {
-    throw new Error('estimate response data is not a number');
-  }
-
-  return json.data;
-}
-
-export async function generateImage(
-  promptId: number,
-  body: {
-    aspect_ratio: string;
-    resolution: string;
-    variable_values: any;
-  },
-  accessToken?: string,
-): Promise<GeneratedImage | null> {
-  try {
-    console.log(JSON.stringify(body));
-    const res = await fetch(`${API_BASE_URL}/product/${promptId}/generate`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(body),
-    });
-
-    if (!res.ok) {
-      const errorDetail = await res.text();
-      console.error(`[API Error ${res.status}]:`, errorDetail);
-      return null;
-    }
-
-    console.log('gen', res);
-
-    const response = await res.json();
-
-    console.log('gen', response);
-
-    return response.data || response;
-  } catch (error) {
-    console.error('Network Error:', error);
-    return null;
-  }
-}
-
 export async function getCreditOptions(): Promise<Options[]> {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/credit/options`, {
@@ -203,33 +127,6 @@ export async function getCreditBalance(accessToken?: string): Promise<Balance> {
   } catch (error) {
     console.error(error);
     return { currentCredit: 0 };
-  }
-}
-
-export async function getImageDownloadUrl(
-  imageId: number,
-  accessToken?: string,
-): Promise<ImageDownloadInfo | null> {
-  try {
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken ?? ''}`,
-    };
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/image/${imageId}/download`, {
-      headers,
-    });
-
-    if (!res.ok) {
-      console.error(res.status, await res.text());
-      return null;
-    }
-
-    const json = await res.json();
-    return json?.data ?? null;
-  } catch (error) {
-    console.error(error);
-    return null;
   }
 }
 
