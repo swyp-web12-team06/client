@@ -1,9 +1,7 @@
 'use client';
 
 import { Button } from '@/components/commons/Button';
-import Input from '@/components/commons/Input';
 import Select, { SelectItemType } from '@/components/commons/Select';
-import Image from 'next/image';
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { PromptVariables } from '@/type/product';
 import { httpClient } from '@/lib/api';

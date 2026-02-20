@@ -9,14 +9,14 @@ export type TabItem = {
   content: React.ReactNode;
 };
 
-type TabsProps = {
+type props = {
   items: TabItem[];
   value: string;
   onValueChange: (v: string) => void;
   className?: string;
 };
 
-export function Tabs({ items, value, onValueChange, className }: TabsProps) {
+export function Tabs({ items, value, onValueChange, className }: props) {
   const current = items.find((item) => item.value === value) ?? items[0];
 
   if (items.length === 0) {
