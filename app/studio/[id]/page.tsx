@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 import { ProductForPurchase } from '@/type/product';
 import { useParams } from 'next/navigation';
 import { Button } from '@/components/commons/Button';
-import { ImageDownloadInfo } from '@/type/image';
 import { downloadImageWithImageId } from '@/app/utils/downloadImage';
 import Placeholder from '@/components/commons/Placeholder';
 import Skeleton from '@/components/commons/Skeleton';
@@ -48,7 +47,7 @@ export default function Studio() {
   if (!data) return null;
 
   return (
-    <main className="mt-46 flex w-[70%] gap-15">
+    <main className="mt-46 flex w-full flex-wrap gap-15 md:w-[70%] lg:w-[70%] lg:flex-nowrap">
       <div className="align-end flex w-full flex-col gap-6">
         <div className="flex w-full justify-center gap-5">
           <div className="flex w-full flex-col">
@@ -62,7 +61,7 @@ export default function Studio() {
             )}
           </div>
 
-          <div className="relative h-[174px] w-[240px] shrink-0">
+          <div className="relative h-43.5 w-60 shrink-0">
             {isLoading ? (
               <Skeleton />
             ) : (
@@ -102,7 +101,7 @@ export default function Studio() {
             </Button>
           </div>
           {generatedImageUrl ? (
-            <div className="h-[588px] w-[588px] bg-transparent">
+            <div className="h-147 w-147 bg-transparent">
               <img
                 src={generatedImageUrl}
                 className="h-full w-full object-contain"
@@ -110,7 +109,7 @@ export default function Studio() {
               />
             </div>
           ) : (
-            <div className="flex h-[588px] w-[588px] items-center justify-center bg-gray-200">
+            <div className="flex h-147 w-147 items-center justify-center bg-gray-200">
               {isImgLoading ? <Skeleton /> : <Placeholder />}
             </div>
           )}
