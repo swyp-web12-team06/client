@@ -8,6 +8,8 @@ import FavouriteIcon from '@/public/icon/favourite.svg';
 import HeartIcon from '@/public/icon/heart.svg';
 import LinkExternalIcon from '@/public/icon/link-external.svg';
 import Image from 'next/image';
+import Placeholder from '@/components/commons/Placeholder';
+import { usePathname } from 'next/navigation';
 
 export default function ProductDetailModal({
   isOpen,
@@ -17,6 +19,7 @@ export default function ProductDetailModal({
   currentIdx,
   setCurrentIdx,
   data,
+  userId,
 }: {
   isOpen: boolean;
   product: Product | null;
@@ -25,8 +28,10 @@ export default function ProductDetailModal({
   currentIdx: number;
   setCurrentIdx: Dispatch<SetStateAction<number>>;
   data: Product[];
+  userId?: number;
 }) {
   const contentRef = useRef<HTMLDivElement | null>(null);
+  const path = usePathname();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -73,6 +78,7 @@ export default function ProductDetailModal({
 
   const isPrevDisabled = currentIdx <= 0;
   const isNextDisabled = !data?.length || currentIdx >= data.length - 1;
+  const isUser = product?.seller.id === userId; // 현재 상품의 판매자가 로그인한 사용자와 동일한지 여부
 
   return (
     <div
@@ -98,21 +104,37 @@ export default function ProductDetailModal({
               {/* 스크롤 영역 */}
               <div className="h-full overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 <div className="flex items-center gap-2 px-5 py-4">
-                  {product.seller.profileImageUrl ? (
-                    <div className="h-10 w-10 overflow-hidden rounded-full">
-                      <Image
-                        src={product.seller.profileImageUrl}
-                        width={40}
-                        height={40}
-                        alt="Picture of the creator"
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
+                  {path.includes('/profile') ? null : product.seller ? (
+                    <Link
+                      href={isUser ? '/profile' : `/profile/${product.seller.id}`}
+                      className="h-10 w-10 overflow-hidden rounded-full"
+                    >
+                      {product.seller.profileImageUrl ? (
+                        <Image
+                          src={product.seller.profileImageUrl}
+                          width={40}
+                          height={40}
+                          alt="Picture of the creator"
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <div className="h-full w-full rounded-full bg-gray-400" />
+                      )}
+                    </Link>
                   ) : (
-                    <div className="h-[40px] w-[40px] rounded-full bg-gray-400" />
+                    <div className="h-10 w-10 overflow-hidden rounded-full">
+                      <Placeholder variant="avatar" />
+                    </div>
                   )}
-
-                  <p className="typo-body1-medium text-white">{product.seller.nickname}</p>
+                  {path.includes('/profile') ? null : product.seller && product.seller.nickname ? (
+                    <Link href={isUser ? '/profile' : `/profile/${product.seller.id}`}>
+                      <p className="typo-body1-medium text-white">{product.seller.nickname}</p>
+                    </Link>
+                  ) : (
+                    <p className="typo-body1-medium text-white">
+                      {product.seller.nickname || 'Unknown'}
+                    </p>
+                  )}
                 </div>
 
                 <div className="flex flex-col gap-2 rounded-tl-xl rounded-tr-xl bg-white p-5">
@@ -147,20 +169,48 @@ export default function ProductDetailModal({
               {/* 사이드 버튼 (컨텐츠 박스 기준으로 배치) */}
               <div className="pointer-events-auto absolute top-60 -right-16 z-40 -translate-y-1/2">
                 <div className="flex flex-col gap-4">
-                  {[1, 2, 3, 4].map((i) => (
-                    <button
-                      key={i}
-                      className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-gray-400 bg-gray-200 text-gray-500"
-                    >
-                      {i === 1 ? null : i === 2 ? (
-                        <HeartIcon className="h-6 w-6" />
-                      ) : i === 3 ? (
-                        <FavouriteIcon className="h-6 w-6" />
-                      ) : (
-                        <LinkExternalIcon className="h-6 w-6" />
-                      )}
-                    </button>
-                  ))}
+                  {[1, 2, 3, 4].map((i) => {
+                    // 현재 경로가 /profile을 포함하고, 아이템 번호가 1번이면 렌더링 스킵!
+                    if (i === 1 && path.includes('/profile')) return null;
+
+                    return (
+                      <button
+                        key={i}
+                        className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-gray-400 bg-gray-200 text-gray-500"
+                      >
+                        {i === 1 ? (
+                          product.seller ? (
+                            <Link
+                              href={isUser ? '/profile' : `/profile/${product.seller.id}`}
+                              className="h-10 w-10 overflow-hidden rounded-full"
+                            >
+                              <Image
+                                src={product.seller.profileImageUrl}
+                                width={40}
+                                height={40}
+                                alt="Picture of the creator"
+                                className="h-full w-full object-cover"
+                              />
+                            </Link>
+                          ) : (
+                            <Placeholder variant="avatar" />
+                          )
+                        ) : i === 2 ? (
+                          <div onClick={() => alert('좋아요 기능은 개발 중 입니다.')}>
+                            <HeartIcon className="h-6 w-6" />
+                          </div>
+                        ) : i === 3 ? (
+                          <div onClick={() => alert('북마크 기능은 개발 중 입니다.')}>
+                            <FavouriteIcon className="h-6 w-6" />
+                          </div>
+                        ) : i === 4 ? (
+                          <div onClick={() => alert('링크 외부로 열기 기능은 개발 중 입니다.')}>
+                            <LinkExternalIcon className="h-6 w-6" />
+                          </div>
+                        ) : null}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -184,7 +234,7 @@ export default function ProductDetailModal({
               {/* 하단 바 (컨텐츠 박스 기준) */}
               <div className="pointer-events-auto absolute bottom-6 left-1/2 z-30 flex w-[45%] -translate-x-1/2 items-center justify-between gap-4 rounded-2xl border border-white/20 bg-gray-900/80 p-4 shadow-2xl backdrop-blur-xl">
                 <div className="flex items-center gap-3">
-                  <div className="h-[48px] w-[48px] rounded-full border border-gray-500 bg-gray-600" />
+                  <div className="h-12 w-12 rounded-full border border-gray-500 bg-gray-600" />
                   <div className="flex flex-col text-white">
                     <span className="text-xs text-gray-400">Total Price</span>
                     <span className="typo-body1-bold text-lg">
