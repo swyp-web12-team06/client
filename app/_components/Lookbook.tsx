@@ -6,6 +6,8 @@ import ProductEditModal from '@/app/_components/ProductEditModal';
 import { useAuth } from '@/context/AuthContext';
 import { httpClient } from '@/lib/api';
 import { useRouter } from 'next/navigation';
+import Placeholder from '@/components/commons/Placeholder';
+import Image from 'next/image';
 
 export default function Lookbook({ data, userId }: { data: Product[]; userId?: string }) {
   const { accessToken } = useAuth();
@@ -75,11 +77,9 @@ export default function Lookbook({ data, userId }: { data: Product[]; userId?: s
           return (
             <div
               key={p.promptId}
-              className="flex cursor-pointer divide-x divide-gray-300 overflow-hidden rounded-2xl border border-gray-300 bg-gray-400"
+              className="flex cursor-pointer divide-x divide-gray-300 overflow-hidden rounded-2xl border border-gray-300"
             >
-              <div className="flex h-54 w-full items-center justify-center rounded-2xl border border-gray-300 bg-gray-400 text-gray-500">
-                <span>No Image Available</span>
-              </div>
+              <Placeholder variant="image" className="bg-gray-400" />
             </div>
           );
         }
@@ -91,7 +91,9 @@ export default function Lookbook({ data, userId }: { data: Product[]; userId?: s
           >
             {p.representativeImageUrls.slice(0, 3).map((imageUrl, index) => (
               <div key={`${p.promptId}-${index}`} className="relative h-54 w-full">
-                <img
+                <Image
+                  width={400}
+                  height={400}
                   src={imageUrl}
                   alt={`${p.title} lookbook image ${index + 1}`}
                   className="h-full w-full object-cover"
@@ -139,6 +141,7 @@ export default function Lookbook({ data, userId }: { data: Product[]; userId?: s
         currentIdx={currentIdx}
         setCurrentIdx={setCurrentIdx}
         data={data}
+        userId={userIdNumber}
       />
       <ProductEditModal
         isOpen={isProductEditModalOpen}
