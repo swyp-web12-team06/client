@@ -8,6 +8,7 @@ import FavouriteIcon from '@/public/icon/favourite.svg';
 import HeartIcon from '@/public/icon/heart.svg';
 import LinkExternalIcon from '@/public/icon/link-external.svg';
 import Image from 'next/image';
+import Placeholder from '@/components/commons/Placeholder';
 
 export default function ProductDetailModal({
   isOpen,
@@ -80,26 +81,21 @@ export default function ProductDetailModal({
       role="dialog"
       aria-modal="true"
       onMouseDown={(e) => {
-        // ✅ “진짜 컨텐츠 박스(contentRef)” 밖이면 닫기
         if (contentRef.current && !contentRef.current.contains(e.target as Node)) {
           handleClose();
         }
       }}
     >
-      {/* 회색 오버레이 */}
       <div className="absolute inset-0 bg-black/40" />
 
-      {/* ✅ 화면 중앙 레이아웃(컨텐츠 박스 기준) */}
       <div className="relative z-10 h-full w-full">
-        {/* ✅ 이게 진짜 모달 컨텐츠 영역(70%) — 여기만 ref 걸기 */}
         <div ref={contentRef} className="relative mx-auto h-full w-[70%]">
           {product && (
             <>
-              {/* 스크롤 영역 */}
               <div className="h-full overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                <div className="flex items-center gap-2 px-5 py-4">
-                  {product.seller.profileImageUrl ? (
-                    <div className="h-10 w-10 overflow-hidden rounded-full">
+                <div className="flex items-center gap-2 py-4">
+                  <div className="h-10 w-10 overflow-hidden rounded-full">
+                    {product.seller.profileImageUrl ? (
                       <Image
                         src={product.seller.profileImageUrl}
                         width={40}
@@ -107,11 +103,10 @@ export default function ProductDetailModal({
                         alt="Picture of the creator"
                         className="h-full w-full object-cover"
                       />
-                    </div>
-                  ) : (
-                    <div className="h-[40px] w-[40px] rounded-full bg-gray-400" />
-                  )}
-
+                    ) : (
+                      <Placeholder variant="avatar" />
+                    )}
+                  </div>
                   <p className="typo-body1-medium text-white">{product.seller.nickname}</p>
                 </div>
 
@@ -152,12 +147,35 @@ export default function ProductDetailModal({
                       key={i}
                       className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-gray-400 bg-gray-200 text-gray-500"
                     >
-                      {i === 1 ? null : i === 2 ? (
-                        <HeartIcon className="h-6 w-6" />
+                      {i === 1 ? (
+                        <div className="overflow-hidden rounded-full">
+                          {product.seller.profileImageUrl ? (
+                            <Image
+                              src={product.seller.profileImageUrl}
+                              width={40}
+                              height={40}
+                              alt="Picture of the creator"
+                              className="h-full w-full object-cover"
+                            />
+                          ) : (
+                            <Placeholder variant="avatar" />
+                          )}
+                        </div>
+                      ) : i === 2 ? (
+                        <HeartIcon
+                          className="h-6 w-6 cursor-pointer"
+                          onClick={() => alert('개발중입니다')}
+                        />
                       ) : i === 3 ? (
-                        <FavouriteIcon className="h-6 w-6" />
+                        <FavouriteIcon
+                          className="h-6 w-6 cursor-pointer"
+                          onClick={() => alert('개발중입니다')}
+                        />
                       ) : (
-                        <LinkExternalIcon className="h-6 w-6" />
+                        <LinkExternalIcon
+                          className="h-6 w-6 cursor-pointer"
+                          onClick={() => alert('개발중입니다')}
+                        />
                       )}
                     </button>
                   ))}
@@ -184,7 +202,19 @@ export default function ProductDetailModal({
               {/* 하단 바 (컨텐츠 박스 기준) */}
               <div className="pointer-events-auto absolute bottom-6 left-1/2 z-30 flex w-[45%] -translate-x-1/2 items-center justify-between gap-4 rounded-2xl border border-white/20 bg-gray-900/80 p-4 shadow-2xl backdrop-blur-xl">
                 <div className="flex items-center gap-3">
-                  <div className="h-[48px] w-[48px] rounded-full border border-gray-500 bg-gray-600" />
+                  <div className="h-12 w-12 overflow-hidden rounded-full">
+                    {product.seller.profileImageUrl ? (
+                      <Image
+                        src={product.seller.profileImageUrl}
+                        width={48}
+                        height={48}
+                        alt="Picture of the creator"
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <Placeholder variant="avatar" />
+                    )}
+                  </div>
                   <div className="flex flex-col text-white">
                     <span className="text-xs text-gray-400">Total Price</span>
                     <span className="typo-body1-bold text-lg">
