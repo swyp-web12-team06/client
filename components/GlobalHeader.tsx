@@ -18,6 +18,7 @@ import { getCreditBalance } from '@/lib/api';
 import Modal from './Modal';
 import SellerTermsAndConditions from './terms/TC-seller';
 import { upgradeToSeller } from '@/lib/api';
+import Placeholder from './commons/Placeholder';
 
 type ModalView = 'login' | 'signup';
 
@@ -33,33 +34,35 @@ export default function GlobalHeader() {
   const [isMounted, setIsMounted] = useState(false);
   const [balance, setBalance] = useState<number>(0);
   const [showUpgradeSellerModal, setShowUpgradeSellerModal] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
-    // 서버와 클라이언트의 렌더링 불일치 문제 (Hydration Mismatch) 해결 위한 isMounted 상태를 이용한 렌더링 시점 제어
   }, []);
+
+  // 모바일 메뉴가 열려있는 상태에서 경로가 변경되면 메뉴 닫기
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      setIsMobileMenuOpen(false);
+    }
+  }, [pathName]);
 
   useEffect(() => {
     if (!accessToken) return;
     const fetchDatas = async () => {
       const balance = await getCreditBalance(accessToken);
       setBalance(balance.currentCredit);
-      console.log('balance', balance.currentCredit);
     };
     fetchDatas();
   }, [accessToken]);
 
   useEffect(() => {
-    // 직전 렌더링에서 회원가입이 막 완료되었다면, GUEST->USER 역할 변경이
-    // 반영되기 전이라도 모달을 띄우는 로직을 한 번 건너뜁니다.
     if (justSignedUp.current) {
       justSignedUp.current = false;
       return;
     }
 
     const isSignup = searchParams.get('signup');
-    // GUEST 역할 사용자가 회원가입을 완료하지 않고 새로고침하거나 다른 페이지로 이동한 경우,
-    // 홈페이지로 돌아왔을 때 다시 회원가입 모달을 띄워주기 위함.
     if ((isSignup === 'true' || user?.role === 'GUEST') && isLoggedIn) {
       setModalView('signup');
       setIsModalOpen(true);
@@ -73,18 +76,15 @@ export default function GlobalHeader() {
 
   const closeModal = (signupSuccess: boolean = false) => {
     if (signupSuccess) {
-      // 다음 useEffect 실행을 건너뛰도록 플래그를 설정합니다.
       justSignedUp.current = true;
     }
 
     setIsModalOpen(false);
 
-    // 사용자가 (성공적으로 가입하지 않고) 회원가입 모달을 닫고, 아직 GUEST 역할이라면 로그아웃 처리
     if (!signupSuccess && modalView === 'signup' && user?.role === 'GUEST') {
       logout();
     }
 
-    // 모달이 닫힐 때 URL에서 'signup' 파라미터를 제거합니다.
     const params = new URLSearchParams(searchParams.toString());
     if (params.has('signup')) {
       params.delete('signup');
@@ -100,9 +100,7 @@ export default function GlobalHeader() {
 
   const handlePromptButtonInteraction = async () => {
     if (accessToken && isLoggedIn && user) {
-      // 사용자 데이터(특히 역할)의 신선함을 보장하기 위해 토큰을 재발급
       const reissuedAuth = await reissueToken();
-      // 재발행된 토큰의 데이터에서 업데이트된 역할 사용
       const currentRole = reissuedAuth.role;
       if (currentRole === 'SELLER') {
         router.push('/sales');
@@ -124,7 +122,7 @@ export default function GlobalHeader() {
     }
     try {
       await upgradeToSeller(accessToken, true);
-      await reissueToken(); // 서버에서 사용자 데이터 새로 고침
+      await reissueToken();
       alert('판매자로 등록되었습니다!');
       setShowUpgradeSellerModal(false);
       router.push('/sales');
@@ -135,6 +133,53 @@ export default function GlobalHeader() {
     }
   };
 
+  const renderNavLinks = () => (
+    <>
+      {pathName !== '/sales' && (
+        <Button
+          onClick={handlePromptButtonInteraction}
+          variant="gradientSolid"
+          size="md"
+          suffixIcon={<SubmitStarIcon />}
+        >
+          프롬프트 등록
+        </Button>
+      )}
+      <div className="inline-flex items-center gap-1 rounded-full">
+        <span className="inline-flex items-center gap-1 rounded-full px-5 py-2.5 outline-2 -outline-offset-2 outline-gray-500">
+          <p className="typo-body1-bold">{balance}</p>
+          <CreditIcon className="h-5 w-5" />
+        </span>
+        <Link href="/credit">
+          <Button size="md" prefixIcon={<PlusIcon />} className="p-3" />
+        </Link>
+      </div>
+      <div className="inline-flex items-center gap-1 rounded-full">
+        <Link href="/profile" className="h-10 w-10 overflow-hidden rounded-full">
+          {user?.profileImageUrl ? (
+            <Image
+              width={40}
+              height={40}
+              className="h-full w-full object-cover"
+              src={user.profileImageUrl}
+              alt="Profile image"
+            />
+          ) : (
+            <div className="h-10 w-10 rounded-full">
+              <Placeholder className="bg-gray-300 p-1" variant="avatar" />
+            </div>
+          )}
+        </Link>
+        <Link href="/profile" className="typo-body1-medium">
+          {user?.nickname}
+        </Link>
+      </div>
+      <Button variant="outline" size="md" className="text-gray-600" onClick={logout}>
+        로그아웃
+      </Button>
+    </>
+  );
+
   return (
     <>
       <header className="fixed top-3 z-15 flex w-[calc(100%-32px)] items-center justify-between rounded-3xl bg-white px-7 py-3 shadow-[0px_0px_10px_0px_rgba(20,20,20,0.10)]">
@@ -142,7 +187,7 @@ export default function GlobalHeader() {
           <Link href="/">
             <Image src="/icon/logo.svg" alt="Logo" width={133} height={31} />
           </Link>
-          <div className="inline-flex items-center justify-center rounded-full outline outline-1 outline-offset-[-1px] outline-gray-500 hover:bg-gray-300">
+          <div className="hidden items-center justify-center rounded-full outline-1 -outline-offset-1 outline-gray-500 hover:bg-gray-300 [@media(width>=1150px)]:inline-flex">
             <Button
               className={`w-40 bg-transparent text-gray-500 transition-none ${currentView == 'lookbook' ? 'bg-gray-900 text-gray-50 hover:bg-gray-900' : 'hover:bg-transparent hover:text-gray-600'}`}
               prefixIcon={
@@ -163,7 +208,9 @@ export default function GlobalHeader() {
             </Button>
           </div>
         </div>
-        <div className="inline-flex items-center gap-7">
+
+        {/* 데스크탑 메뉴 */}
+        <div className="hidden items-center gap-7 [@media(width>=1150px)]:inline-flex">
           {!isMounted || isLoading ? (
             <p className="typo-body1-medium">로딩중...</p>
           ) : !isLoggedIn ? (
@@ -171,46 +218,82 @@ export default function GlobalHeader() {
               로그인
             </Button>
           ) : (
-            <>
-              {pathName !== '/sales' && (
-                <Button
-                  onClick={handlePromptButtonInteraction}
-                  variant="gradientSolid"
-                  size="md"
-                  suffixIcon={<SubmitStarIcon />}
-                >
-                  프롬프트 등록
-                </Button>
-              )}
-              <div className="inline-flex items-center gap-1 rounded-full">
-                <span className="inline-flex items-center gap-1 rounded-full px-5 py-2.5 outline outline-2 outline-offset-[-2px] outline-gray-500">
-                  <p className="typo-body1-bold">{balance}</p>
-                  <CreditIcon className="h-5 w-5" />
-                </span>
-                <Link href="/credit">
-                  <Button size="md" prefixIcon={<PlusIcon />} className="p-3" />
-                </Link>
-              </div>
-              <div className="inline-flex items-center gap-1 rounded-full">
-                <Link
-                  href="/profile"
-                  className="h-10 w-10 overflow-hidden rounded-full bg-gray-500"
-                >
-                  {user?.profileImageUrl ? (
-                    <img className="h-full w-full" src={user.profileImageUrl} alt="Profile image" />
-                  ) : (
-                    <div className="h-10 w-10 rounded-full bg-gray-500" />
-                  )}
-                </Link>
-                <p className="typo-body1-medium">{user?.nickname}</p>
-              </div>
-              <Button variant="outline" size="md" className="text-gray-600" onClick={logout}>
-                로그아웃
-              </Button>
-            </>
+            renderNavLinks()
           )}
         </div>
+
+        {/* 모바일 햄버거 버튼 */}
+        <div className="[@media(width>=1150px)]:hidden">
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="cursor-pointer p-2 text-gray-800"
+          >
+            {isMobileMenuOpen ? (
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            ) : (
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16m-7 6h7"
+                />
+              </svg>
+            )}
+          </button>
+        </div>
       </header>
+
+      {/* 모바일 메뉴 패널 */}
+      {isMobileMenuOpen && (
+        <div className="fixed top-24 right-4 z-15 w-[calc(100%-32px)] rounded-2xl bg-gray-50 p-5 shadow-[0px_0px_10px_0px_rgba(20,20,20,0.10)] [@media(width>=1150px)]:hidden">
+          <div className="flex flex-wrap justify-end gap-4">
+            <div className="w-full border-b border-gray-300 pb-4 text-end">
+              <div className="inline-flex items-center justify-center rounded-full outline-1 -outline-offset-1 outline-gray-500 hover:bg-gray-300">
+                <Button
+                  className={`w-40 bg-transparent text-gray-500 transition-none ${currentView == 'lookbook' ? 'bg-gray-900 text-gray-50 hover:bg-gray-900' : 'hover:bg-transparent hover:text-gray-600'}`}
+                  prefixIcon={
+                    currentView !== 'lookbook' ? <LookBookInActiveIcon /> : <LookBookActiveIcon />
+                  }
+                  onClick={() => handleViewChange('lookbook')}
+                >
+                  룩북
+                </Button>
+                <Button
+                  className={`w-40 bg-transparent text-gray-500 transition-none ${currentView == 'gallery' ? 'bg-gray-900 text-gray-50 hover:bg-gray-900' : 'hover:bg-transparent hover:text-gray-600'}`}
+                  prefixIcon={
+                    currentView !== 'gallery' ? <GalleryInActiveIcon /> : <GalleryActiveIcon />
+                  }
+                  onClick={() => handleViewChange('gallery')}
+                >
+                  갤러리
+                </Button>
+              </div>
+            </div>
+            {!isMounted || isLoading ? (
+              <p className="typo-body1-medium text-center">로딩중...</p>
+            ) : !isLoggedIn ? (
+              <Button
+                className="w-full justify-center"
+                size="md"
+                onClick={() => openModal('login')}
+              >
+                로그인
+              </Button>
+            ) : (
+              renderNavLinks()
+            )}
+          </div>
+        </div>
+      )}
+
       <AuthModal isOpen={isModalOpen} onClose={closeModal} initialView={modalView} />
 
       <Modal
