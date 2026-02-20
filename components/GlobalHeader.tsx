@@ -11,7 +11,6 @@ import LookBookActiveIcon from '@/public/icon/lookbook-active.svg';
 import LookBookInActiveIcon from '@/public/icon/lookbook-inactive.svg';
 import SubmitStarIcon from '@/public/icon/submit-star.svg';
 import PlusIcon from '@/public/icon/plus.svg';
-import CreditIcon from '@/public/icon/credit.svg';
 import { useState, useEffect, useRef } from 'react';
 import AuthModal from './auth/AuthModal';
 import { getCreditBalance } from '@/lib/api';
@@ -49,11 +48,22 @@ export default function GlobalHeader() {
 
   useEffect(() => {
     if (!accessToken) return;
-    const fetchDatas = async () => {
-      const balance = await getCreditBalance(accessToken);
-      setBalance(balance.currentCredit);
+
+    const refreshBalance = async () => {
+      try {
+        const b = await getCreditBalance(accessToken);
+        setBalance(b.currentCredit);
+      } catch (e) {
+        console.error('Failed to fetch balance:', e);
+      }
     };
-    fetchDatas();
+
+    refreshBalance();
+
+    const onCreditChanged = () => refreshBalance();
+    window.addEventListener('credit:changed', onCreditChanged);
+
+    return () => window.removeEventListener('credit:changed', onCreditChanged);
   }, [accessToken]);
 
   useEffect(() => {
@@ -136,23 +146,17 @@ export default function GlobalHeader() {
   const renderNavLinks = () => (
     <>
       {pathName !== '/sales' && (
-        <Button
-          onClick={handlePromptButtonInteraction}
-          variant="gradientSolid"
-          size="md"
-          suffixIcon={<SubmitStarIcon />}
-        >
+        <Button onClick={handlePromptButtonInteraction} size="md" suffixIcon={<SubmitStarIcon />}>
           프롬프트 등록
         </Button>
       )}
       <div className="inline-flex items-center gap-1 rounded-full">
-        <span className="inline-flex items-center gap-1 rounded-full px-5 py-2.5 outline-2 -outline-offset-2 outline-gray-500">
-          <p className="typo-body1-bold">{balance}</p>
-          <CreditIcon className="h-5 w-5" />
+        <span className="inline-flex items-center justify-between gap-1 gap-2 rounded-full px-4 py-3 outline-2 -outline-offset-2 outline-gray-500">
+          <p className="typo-body2-regular">C {balance}</p>
+          <Link href="/credit">
+            <PlusIcon className="text-primary-200 h-3 w-3" />
+          </Link>
         </span>
-        <Link href="/credit">
-          <Button size="md" prefixIcon={<PlusIcon />} className="p-3" />
-        </Link>
       </div>
       <div className="inline-flex items-center gap-1 rounded-full">
         <Link href="/profile" className="h-10 w-10 overflow-hidden rounded-full">

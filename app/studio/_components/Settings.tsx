@@ -153,6 +153,8 @@ export default function Settings({
 
       setImageId(imageResult.image_id);
 
+      window.dispatchEvent(new Event('credit:changed'));
+
       const status = await pollImageUntilCompleted(imageResult.image_id, accessToken, {
         intervalMs: 1500,
         timeoutMs: 300_000,
