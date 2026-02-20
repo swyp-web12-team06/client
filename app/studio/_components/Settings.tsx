@@ -12,6 +12,7 @@ import { pollImageUntilCompleted } from '@/lib/polling';
 import { GeneratedImage } from '@/type/image';
 import ImageIcon from '@/public/icon/image.svg';
 import ArrowRightIcon from '@/public/icon/arrow-right.svg';
+import Modal from '@/components/Modal';
 
 interface props {
   promptId: number;
@@ -45,6 +46,13 @@ export default function Settings({
   const [tab, setTab] = useState('0');
   const [variableValues, setVariableValues] = useState<Record<string | number, string>>({});
   const { accessToken } = useAuth();
+  const [errorModalOpen, setErrorModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const openErrorModal = (msg: string) => {
+    setErrorMessage(msg);
+    setErrorModalOpen(true);
+  };
 
   const ratioItems: SelectItemType[] = [
     {
@@ -124,108 +132,125 @@ export default function Settings({
       variable_id: Number(key),
     }));
   };
-
   async function handleGenerateImage() {
-    if (!accessToken) return;
-
-    if (!promptId) return;
-
-    console.log('✅ promptVariablesList:', promptVariablesList);
-    console.log('✅ variableValues:', variableValues);
-    console.log('✅ items:', items);
+    if (!accessToken || !promptId) return;
 
     setIsLoading(true);
 
-    const variable_values = transformData(variableValues);
-    console.log('✅ RealVariableValues:', variable_values);
+    try {
+      const variable_values = transformData(variableValues);
 
-    const imageResult = await httpClient.post<GeneratedImage>(
-      `/product/${promptId}/generate`,
-      accessToken,
-      { resolution, aspect_ratio: ratio, variable_values }, //TODO: 스네이크 카멜로 바꾸기 백엔드 바뀌면
-    );
+      const imageResult = await httpClient.post<GeneratedImage>(
+        `/product/${promptId}/generate`,
+        accessToken,
+        { resolution, aspect_ratio: ratio, variable_values },
+      );
 
-    console.log('✅ imageResult:', imageResult);
+      if (!imageResult?.image_id) {
+        openErrorModal('이미지 생성 요청에 실패했습니다. (image_id 없음)');
+        return;
+      }
 
-    if (!imageResult?.image_id) {
-      alert('이미지 생성 요청에 실패했습니다. 로그를 확인하세요.');
-      setIsLoading(false);
-      return;
-    }
+      setImageId(imageResult.image_id);
 
-    console.log('✅ image ID:', imageResult.image_id);
-    setImageId(imageResult.image_id);
+      const status = await pollImageUntilCompleted(imageResult.image_id, accessToken, {
+        intervalMs: 1500,
+        timeoutMs: 300_000,
+      });
 
-    const status = await pollImageUntilCompleted(imageResult.image_id, accessToken, {
-      intervalMs: 1500,
-      timeoutMs: 300_000,
-    });
-    if (status) {
-      console.log(status);
+      if (!status) {
+        openErrorModal('이미지 생성이 시간 내 완료되지 않았습니다.');
+        return;
+      }
+
       setGeneratedImageUrl(status.downloadUrl ?? '');
       setIsGenerated(true);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : '이미지 생성 중 알 수 없는 오류가 발생했습니다.';
+      openErrorModal(msg);
+      console.log(msg);
+    } finally {
       setIsLoading(false);
     }
   }
 
-  return isLoading ? (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-6 rounded-[10px] p-5 shadow-[0px_0px_7px_0px_rgba(112,112,112,0.25)]">
-      <h3 className="typo-heading2-regular">이미지 생성중...</h3>
-      <div className="flex items-center justify-center gap-6 rounded-[10px] p-5">
-        <div>
-          {Object.entries(variableValues).map(([id, value]) => {
-            const variable = promptVariablesList.find((v) => v.id === Number(id));
-            const name = variable?.keyName ?? id;
+  return (
+    <>
+      {isLoading ? (
+        <div className="flex h-full w-full flex-col items-center justify-center gap-6 rounded-[10px] p-5 shadow-[0px_0px_7px_0px_rgba(112,112,112,0.25)]">
+          <h3 className="typo-heading2-regular">이미지 생성중...</h3>
+          <div className="flex items-center justify-center gap-6 rounded-[10px] p-5">
+            <div>
+              {Object.entries(variableValues).map(([id, value]) => {
+                const variable = promptVariablesList.find((v) => v.id === Number(id));
+                const name = variable?.keyName ?? id;
 
-            return (
-              <div key={id} className="flex items-center gap-2">
-                <span className="text-gray-500">{name}</span>
-                <span className="font-medium">{value}</span>
-              </div>
-            );
-          })}
-        </div>
-        <ArrowRightIcon className="text-primary-200 h-15 w-15 animate-pulse" />
-        <ImageIcon className="hidden h-auto w-1/2 max-w-16 text-gray-500 sm:block" />
-      </div>
-    </div>
-  ) : (
-    <div className="flex w-full flex-col gap-17">
-      <div className="flex flex-col gap-5">
-        <div className="flex w-full flex-col gap-2">
-          <h4 className="typo-body1-semibold">변수입력</h4>
-          <div className="flex w-full flex-col gap-6 rounded-[10px] p-5 shadow-[0px_0px_7px_0px_rgba(112,112,112,0.25)]">
-            <Tabs items={items} value={tab} onValueChange={setTab} />
-          </div>
-        </div>
-        <div className="inline-flex w-full justify-between">
-          <div className="inline-flex gap-3">
-            {resolutions && (
-              <Select
-                value={resolution}
-                onValueChange={(value) => setResolution(value)}
-                items={resolutionItems}
-              />
-            )}
-            <Select value={ratio} onValueChange={(value) => setRatio(value)} items={ratioItems} />
-          </div>
-          <span className="inline-flex w-20 items-center justify-center gap-1.5 rounded-full px-2.5 py-1.5 outline outline-1 outline-offset-[-1px] outline-gray-500">
-            <div className="flex items-center justify-start gap-0.5">
-              <p className="flex items-center justify-center gap-2.5">{estimate} C</p>
+                return (
+                  <div key={id} className="flex items-center gap-2">
+                    <span className="text-gray-500">{name}</span>
+                    <span className="font-medium">{value}</span>
+                  </div>
+                );
+              })}
             </div>
-          </span>
+            <ArrowRightIcon className="text-primary-200 h-15 w-15 animate-pulse" />
+            <ImageIcon className="hidden h-auto w-1/2 max-w-16 text-gray-500 sm:block" />
+          </div>
         </div>
-      </div>
-      <div className="flex w-full justify-end">
-        <Button
-          variant="solid"
-          size="md"
-          onClick={() => handleGenerateImage()}
-          disabled={promptVariablesList.length !== Object.keys(variableValues).length || isLoading}
-        >
-          생성하기
-        </Button>
-      </div>
-    </div>
+      ) : (
+        <div className="flex w-full flex-col gap-17">
+          <div className="flex flex-col gap-5">
+            <div className="flex w-full flex-col gap-2">
+              <h4 className="typo-body1-semibold">변수입력</h4>
+              <div className="flex w-full flex-col gap-6 rounded-[10px] p-5 shadow-[0px_0px_7px_0px_rgba(112,112,112,0.25)]">
+                <Tabs items={items} value={tab} onValueChange={setTab} />
+              </div>
+            </div>
+            <div className="inline-flex w-full justify-between">
+              <div className="inline-flex gap-3">
+                {resolutions && (
+                  <Select
+                    value={resolution}
+                    onValueChange={(value) => setResolution(value)}
+                    items={resolutionItems}
+                  />
+                )}
+                <Select
+                  value={ratio}
+                  onValueChange={(value) => setRatio(value)}
+                  items={ratioItems}
+                />
+              </div>
+              <span className="inline-flex w-20 items-center justify-center gap-1.5 rounded-full px-2.5 py-1.5 outline outline-1 outline-offset-[-1px] outline-gray-500">
+                <div className="flex items-center justify-start gap-0.5">
+                  <p className="flex items-center justify-center gap-2.5">{estimate} C</p>
+                </div>
+              </span>
+            </div>
+          </div>
+          <div className="flex w-full justify-end">
+            <Button
+              variant="solid"
+              size="md"
+              onClick={() => handleGenerateImage()}
+              disabled={
+                promptVariablesList.length !== Object.keys(variableValues).length || isLoading
+              }
+            >
+              생성하기
+            </Button>
+          </div>
+        </div>
+      )}
+      <Modal isOpen={errorModalOpen} onClose={() => setErrorModalOpen(false)}>
+        <div className="flex flex-col gap-4">
+          <h3 className="typo-heading2-semibold text-gray-900">오류</h3>
+          <p className="typo-body2-regular mb-4 text-gray-700">{errorMessage}</p>
+          <Button variant="solid" size="sm" onClick={() => setErrorModalOpen(false)}>
+            확인
+          </Button>
+        </div>
+      </Modal>
+    </>
   );
 }
