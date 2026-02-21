@@ -102,13 +102,12 @@ export default function Credit() {
 
     if (completeResponse.ok) {
       const paymentComplete = await completeResponse.json();
-      setPaymentStatus({
-        status: paymentComplete.status,
-      });
-      console.log(paymentComplete);
-      console.log(paymentComplete.data);
+
+      setPaymentStatus({ status: paymentComplete.status });
       setResult(paymentComplete.data);
       setIsPurchased(true);
+
+      window.dispatchEvent(new Event('credit:changed'));
     } else {
       setPaymentStatus({
         status: 'FAILED',
