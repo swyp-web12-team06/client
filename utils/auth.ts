@@ -1,4 +1,4 @@
-export function decodeJwt(token: string): any {
+export function decodeJwt(token: string): { sub: string; [key: string]: unknown } {
   try {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -10,9 +10,12 @@ export function decodeJwt(token: string): any {
         })
         .join(''),
     );
-    return JSON.parse(jsonPayload);
+    const payload = JSON.parse(jsonPayload);
+    if (typeof payload.sub !== 'string') {
+      throw new Error('JWT payload missing "sub" claim');
+    }
+    return payload;
   } catch (e) {
-    console.error('Failed to decode JWT:', e);
-    return null;
+    throw new Error('Failed to decode JWT');
   }
 }
